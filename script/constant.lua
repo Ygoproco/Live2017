@@ -268,7 +268,7 @@ EFFECT_FLAG_NAGA			=0x10000000 --N/A
 EFFECT_FLAG_COF				=0x20000000 --N/A
 EFFECT_FLAG_CVAL_CHECK		=0x40000000	--以卡为COST的诱发效果需要使用
 EFFECT_FLAG_IMMEDIATELY_APPLY	=0x80000000	--卡在发动时效果就立即适用（卡通王國）
-EFFECT_FLAG_XMDETACH		=0x100000000	--Effect That Activates using Xyz Materials as cost
+EFFECT_FLAG_XMDETACH		=0x100000000	--Effect That Activates by Detaching Xyz Materials as cost
 
 EFFECT_FLAG2_NAGA			=0x0001 --特殊情况时发动不会被无效（神卡纳迦的特殊处理）
 EFFECT_FLAG2_COF			=0x0002 --通常魔法卡在MP1以外发动（邪恶的仪式的特殊处理）
