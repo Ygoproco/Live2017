@@ -5,39 +5,6 @@
 --xyz limit by edo9300
 --add fusion and xyz limit by MLD
 function c73941492.initial_effect(c)
-	--[[local xmck=Duel.CheckXyzMaterial
-	Duel.CheckXyzMaterial=function(c,f,lv,minc,maxc,og)
-		local og2=Group.CreateGroup()
-		if not og then
-			og=Duel.GetMatchingGroup(c73941492.xyzfil2,tp,LOCATION_MZONE,LOCATION_MZONE,nil,c:GetControler())
-		end
-		if og:IsExists(Card.IsCode,1,nil,73941492) then
-			og2=og:Filter(c73941492.xyzfil3,nil)
-			og=og:Filter(c73941492.xyzfil,nil,c,lv)
-		end		
-		return xmck(c,f,lv,minc,maxc,og) or xmck(c,f,lv,minc,maxc,og2)
-	end
-	local xsel=Duel.SelectXyzMaterial
-	Duel.SelectXyzMaterial=function(tp,c,f,lv,minc,maxc,og)
-		if not og then
-			og=Duel.GetMatchingGroup(c73941492.xyzfil2,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
-		end
-		local og2=og:Filter(c73941492.xyzfil3,nil)
-		if og:IsExists(Card.IsCode,1,nil,73941492) then
-			if xmck(c,f,lv,minc,maxc,og:Filter(c73941492.xyzfil,nil,c,lv)) and xmck(c,f,lv,minc,maxc,og2) then
-				if Duel.SelectYesNo(tp,aux.Stringid(73941492,1)) then
-					og=og:Filter(c73941492.xyzfil,nil,c,lv)
-				else 
-					og=og2
-				end
-			elseif xmck(c,f,lv,minc,maxc,og:Filter(c73941492.xyzfil,nil,c,lv)) and not xmck(c,f,lv,minc,maxc,og2) then
-				og=og:Filter(c73941492.xyzfil,nil,c,lv)
-			elseif not xmck(c,f,lv,minc,maxc,og:Filter(c73941492.xyzfil,nil,c,lv)) and xmck(c,f,lv,minc,maxc,og2) then
-				og=og2
-			end
-		end
-		return xsel(tp,c,f,lv,minc,maxc,og)
-	end]]
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
 	--atk&def
@@ -68,7 +35,7 @@ function c73941492.initial_effect(c)
 	e4:SetValue(1)
 	e4:SetOperation(c73941492.synop)
 	c:RegisterEffect(e4)
-	--fusion and xyz custom not implemented
+	--fusion and xyz custom not implemented, or is it?
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetCode(73941492)
