@@ -32,7 +32,7 @@ function c48934760.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		local fc2=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
 		if fc2 and Duel.IsDuelType(DUEL_OBSOLETE_RULING) then
-			Duel.SendtoGrave(fc2,REASON_RULE)
+			Duel.Destroy(fc2,REASON_RULE)
 			Duel.BreakEffect()
 		end
 		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
