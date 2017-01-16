@@ -253,8 +253,8 @@ end
 function Auxiliary.TuneMagFilter2(c,f,tp)
 	return not f(c,nil,tp)
 end
-function Auxiliary.XyzAlterFilter(c,alterf,xyzc)
-	return alterf(c) and c:IsCanBeXyzMaterial(xyzc)
+function Auxiliary.XyzAlterFilter(c,alterf,xyzc,tp)
+	return alterf(c) and c:IsCanBeXyzMaterial(xyzc) and (c:IsControler(tp) or c:IsHasEffect(EFFECT_XYZ_MATERIAL))
 end
 --Xyz monster, lv k*n
 function Auxiliary.AddXyzProcedure(c,f,lv,ct,alterf,desc,maxct,op,mustbemat)
@@ -323,11 +323,12 @@ function Auxiliary.XyzMatGenerate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 --Xyz Summon(normal)
-function Auxiliary.XyzM12(c,f,lv,xyz,xg,mustbemat)
-	return Auxiliary.XyzMatFilter(c,f,lv,xyz) or Auxiliary.XyzSubMatFilter(c,rk,xyz,xg,mustbemat)
+function Auxiliary.XyzM12(c,f,lv,xyz,xg,mustbemat,tp)
+	return Auxiliary.XyzMatFilter(c,f,lv,xyz,tp) or Auxiliary.XyzSubMatFilter(c,rk,xyz,xg,mustbemat)
 end
-function Auxiliary.XyzMatFilter(c,f,lv,xyz)
-	return c:IsFaceup() and (not f or f(c)) and c:IsXyzLevel(xyz,lv) and c:IsCanBeXyzMaterial(xyz)
+function Auxiliary.XyzMatFilter(c,f,lv,xyz,tp)
+	return c:IsFaceup() and (not f or f(c)) and c:IsXyzLevel(xyz,lv) and c:IsCanBeXyzMaterial(xyz) 
+		and (c:IsControler(tp) or c:IsHasEffect(EFFECT_XYZ_MATERIAL))
 end
 function Auxiliary.XyzSubMatFilter(c,f,lv,xyz,xg,mustbemat)
 	if c:IsLocation(LOCATION_GRAVE) then
@@ -420,24 +421,28 @@ function Auxiliary.XyzCondition(f,lv,minc,maxc,mustbemat)
 				local mg
 				local sg=false
 				if og then
-					mg=og:Filter(Auxiliary.XyzM12,nil,f,lv,c,xg,mustbemat)
+					mg=og:Filter(Auxiliary.XyzM12,nil,f,lv,c,xg,mustbemat,tp)
 					sg=mg:Clone()
 					if not mustbemat then
 						local mg2=Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_ONFIELD,0,nil,511002116)
 						mg:Merge(mg2)
 					end
 				else
-					mg=Duel.GetMatchingGroup(Auxiliary.XyzMatFilter,tp,LOCATION_MZONE,0,nil,f,lv,c)
+					mg=Duel.GetMatchingGroup(Auxiliary.XyzMatFilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,f,lv,c,tp)
 					local mg2=Duel.GetMatchingGroup(Auxiliary.XyzSubMatFilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil,f,lv,c,xg,mustbemat)
 					mg:Merge(mg2)
 				end
 				local minc=minc
 				local maxc=maxc
-				return ct<minc and mg:IsExists(Auxiliary.XyzFilterChk,1,nil,mg,c,tp,minc,maxc,nil,0,false,false,sg,min,0,mustbemat)
+				if ct>=minc then return false end
+				local minchk=min
+				if minchk==-1 then minchk=nil end
+				return mg:IsExists(Auxiliary.XyzFilterChk,1,nil,mg,c,tp,minc,maxc,nil,0,false,false,sg,minchk,0,mustbemat)
 			end
 end
 function Auxiliary.XyzTarget(f,lv,minc,maxc,mustbemat)
 	return	function(e,tp,eg,ep,ev,re,r,rp,chk,c,og,min,max)
+				if min==-1 then min=1 end
 				if og and not min then
 					if not og:IsExists(Auxiliary.XyzFilterChk,1,nil,og,c,tp,minc,maxc,nil,0,false,false,og,og:GetCount(),0,mustbemat) then
 						local matg=Group.CreateGroup()
@@ -502,20 +507,22 @@ function Auxiliary.XyzTarget(f,lv,minc,maxc,mustbemat)
 					local mg
 					local sg=false
 					if og then
-						mg=og:Filter(Auxiliary.XyzM12,nil,f,lv,c,xg,mustbemat)
+						mg=og:Filter(Auxiliary.XyzM12,nil,f,lv,c,xg,mustbemat,tp)
 						sg=mg:Clone()
 						if not mustbemat then
 							local mg2=Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_ONFIELD,0,nil,511002116)
 							mg:Merge(mg2)
 						end
 					else
-						mg=Duel.GetMatchingGroup(Auxiliary.XyzM12,tp,LOCATION_MZONE,0,nil,f,lv,c,mustbemat)
+						mg=Duel.GetMatchingGroup(Auxiliary.XyzM12,tp,LOCATION_MZONE,LOCATION_MZONE,nil,f,lv,c,xg,mustbemat,tp)
 						local mg2=Duel.GetMatchingGroup(Auxiliary.XyzSubMatFilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil,f,lv,c,xg,mustbemat)
 						mg:Merge(mg2)
 					end
 					local ct=0
 					local minc=minc
 					local maxc=maxc
+					local min=min
+					if min==-1 then min=1 end
 					if min then
 						if min>minc then minc=min end
 						if max<maxc then maxc=max end
@@ -608,7 +615,7 @@ function Auxiliary.XyzCondition2(alterf,op)
 				else
 					mg=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 				end
-				return ct<1 and (not min or min<=1) and mg:IsExists(Auxiliary.XyzAlterFilter,1,nil,alterf,c)
+				return ct<1 and (not min or min<=1) and mg:IsExists(Auxiliary.XyzAlterFilter,1,nil,alterf,c,tp)
 					and (not op or op(e,tp,0))
 			end
 end
@@ -624,10 +631,10 @@ function Auxiliary.XyzTarget2(alterf,op)
 						if og then
 							mg=og
 						else
-							mg=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
+							mg=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
 						end
 						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-						local g=mg:FilterSelect(tp,Auxiliary.XyzAlterFilter,1,1,nil,alterf,c)
+						local g=mg:FilterSelect(tp,Auxiliary.XyzAlterFilter,1,1,nil,alterf,c,tp)
 						g:KeepAlive()
 						e:SetLabelObject(g)
 					end
