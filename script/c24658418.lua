@@ -62,6 +62,7 @@ function c24658418.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
 		g:KeepAlive()
-		Duel.XyzSummon(tp,xyz,g,-1,5)
+		xyz:RegisterFlagEffect(999,RESET_CHAIN,0,0)
+		Duel.XyzSummon(tp,xyz,g,1,63)
 	end
 end
