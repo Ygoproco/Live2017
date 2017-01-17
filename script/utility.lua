@@ -436,13 +436,12 @@ function Auxiliary.XyzCondition(f,lv,minc,maxc,mustbemat)
 				local maxc=maxc
 				if ct>=minc then return false end
 				local minchk=min
-				if minchk==-1 then minchk=nil end
+				if c:GetFlagEffect(999)~=0 then minchk=nil end
 				return mg:IsExists(Auxiliary.XyzFilterChk,1,nil,mg,c,tp,minc,maxc,nil,0,false,false,sg,minchk,0,mustbemat)
 			end
 end
 function Auxiliary.XyzTarget(f,lv,minc,maxc,mustbemat)
 	return	function(e,tp,eg,ep,ev,re,r,rp,chk,c,og,min,max)
-				if min==-1 then min=1 end
 				if og and not min then
 					if not og:IsExists(Auxiliary.XyzFilterChk,1,nil,og,c,tp,minc,maxc,nil,0,false,false,og,og:GetCount(),0,mustbemat) then
 						local matg=Group.CreateGroup()
