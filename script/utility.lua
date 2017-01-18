@@ -620,25 +620,26 @@ function Auxiliary.XyzCondition2(alterf,op)
 end
 function Auxiliary.XyzTarget2(alterf,op)
 	return	function(e,tp,eg,ep,ev,re,r,rp,chk,c,og,min,max)
-				if og or Duel.GetCurrentChain()>0 or Duel.SelectYesNo(tp,123) then
-					if op then op(e,tp,1) end
-					if og and not min then
-						og:KeepAlive()
-						e:SetLabelObject(og)
+				if op then op(e,tp,1) end
+				if og and not min then
+					og:KeepAlive()
+					e:SetLabelObject(og)
+					return true
+				else
+					local mg=nil
+					if og then
+						mg=og
 					else
-						local mg=nil
-						if og then
-							mg=og
-						else
-							mg=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
-						end
-						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-						local g=mg:FilterSelect(tp,Auxiliary.XyzAlterFilter,1,1,nil,alterf,c,tp)
+						mg=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
+					end
+					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
+					local g=mg:FilterSelect(tp,Auxiliary.XyzAlterFilter,1,1,nil,alterf,c,tp)
+					if g then
 						g:KeepAlive()
 						e:SetLabelObject(g)
-					end
-					return true
-				else return false end
+						return true
+					else return false end
+				end
 			end
 end	
 function Auxiliary.XyzOperation2(alterf,op)
