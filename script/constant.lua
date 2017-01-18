@@ -272,6 +272,7 @@ EFFECT_FLAG_XMDETACH		=0x100000000	--Effect That Activates using Xyz Materials a
 
 EFFECT_FLAG2_NAGA			=0x0001 --特殊情况时发动不会被无效（神卡纳迦的特殊处理）
 EFFECT_FLAG2_COF			=0x0002 --通常魔法卡在MP1以外发动（邪恶的仪式的特殊处理）
+EFFECT_FLAG2_XMDETACH		=0x0004	--Effect That Activates by Detaching Xyz Materials as cost
 --========== Codes ==========	--对永续性效果表示效果类型(EFFECT开头)，对诱发型效果表示触发效果的事件/时点(EVENT开头)
 EFFECT_IMMUNE_EFFECT			=1		--效果免疫
 EFFECT_DISABLE					=2		--效果无效（技能抽取）
