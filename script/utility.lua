@@ -484,13 +484,13 @@ function Auxiliary.XyzTarget(f,lv,minc,maxc,mustbemat)
 							mg:Sub(sg)
 							matg:Merge(sg)
 						end
-						if matg or Duel.GetCurrentChain()>0 then
+						if matg then
 							matg:KeepAlive()
 							e:SetLabelObject(matg)
 							return true
 						else return false end
 					else
-						if og or Duel.GetCurrentChain()>0 then
+						if og then
 							og:KeepAlive()
 							e:SetLabelObject(og)
 							return true
@@ -568,7 +568,7 @@ function Auxiliary.XyzTarget(f,lv,minc,maxc,mustbemat)
 							ct=ct+1
 						end
 					end
-					if og or Duel.GetCurrentChain()>0 or Duel.SelectYesNo(tp,123) then --change this to undeclared system var
+					if matg then
 						matg:KeepAlive()
 						e:SetLabelObject(matg)
 						return true
