@@ -65,17 +65,18 @@ function c81109178.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x142,1)
 end
 function c81109178.damtg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetCounter(0x142)>0 end
-	local dmg=e:GetHandler():GetCounter(0x142)*300
+	if chk==0 then return true end
+	local ct=e:GetHandler():GetCounter(0x142)
 	Duel.SetTargetPlayer(1-tp)
-	Duel.SetTargetParam(dmg)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,dmg)
+	Duel.SetTargetParam(ct)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct)
 end
 function c81109178.damop2(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	local ct=e:GetHandler():GetCounter(0x142)
+	local c=e:GetHandler()
+	local ct=c:GetCounter(0x142)
 	if ct>0 then
 		c:RemoveCounter(tp,0x142,ct,REASON_EFFECT)
-		Duel.Damage(p,d,REASON_EFFECT)
+		Duel.Damage(p,ct*300,REASON_EFFECT)
 	end
 end
