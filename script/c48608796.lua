@@ -28,6 +28,7 @@ function c48608796.initial_effect(c)
 	--Protection
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(48608796,0))
+	e4:SetProperty(EFFECT_FLAG2_XMDETACH)
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetRange(LOCATION_MZONE)
