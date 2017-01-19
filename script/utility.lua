@@ -2047,8 +2047,9 @@ function Auxiliary.EquipEquip(e,tp,eg,ep,ev,re,r,rp)
 end
 
 --add procedure to persistent traps
-function Auxiliary.AddPersistentProcedure(c,p,f,category,property,hint1,hint2,con,cost,tg,op)
+function Auxiliary.AddPersistentProcedure(c,p,f,category,property,hint1,hint2,con,cost,tg,op,anypos)
 	--Note: p==0 is check persistent trap controler, p==1 for opponent's, PLAYER_ALL for both player's monsters
+	--anypos is check for face-up/any
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(1068)
@@ -2089,7 +2090,7 @@ function Auxiliary.AddPersistentProcedure(c,p,f,category,property,hint1,hint2,co
 	e2:SetCode(EVENT_CHAIN_SOLVED)
 	e2:SetLabelObject(e1)
 	e2:SetCondition(Auxiliary.PersistentTgCon)
-	e2:SetOperation(Auxiliary.PersistentTgOp)
+	e2:SetOperation(Auxiliary.PersistentTgOp(anypos))
 	c:RegisterEffect(e2)
 end
 function Auxiliary.PersistentFilter(c,p,f,e,tp)
@@ -2115,12 +2116,14 @@ end
 function Auxiliary.PersistentTgCon(e,tp,eg,ep,ev,re,r,rp)
 	return re==e:GetLabelObject()
 end
-function Auxiliary.PersistentTgOp(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local tc=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS):GetFirst()
-	if c:IsRelateToEffect(re) and tc and tc:IsRelateToEffect(re) then
-		c:SetCardTarget(tc)
-	end
+function Auxiliary.PersistentTgOp(anypos)
+	return function(e,tp,eg,ep,ev,re,r,rp)
+			local c=e:GetHandler()
+			local tc=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS):GetFirst()
+			if c:IsRelateToEffect(re) and tc and (anypos or tc:IsFaceup()) and tc:IsRelateToEffect(re) then
+				c:SetCardTarget(tc)
+			end
+		end
 end
 
 pcall(dofile,"init.lua")
