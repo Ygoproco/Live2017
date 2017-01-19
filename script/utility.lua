@@ -457,11 +457,11 @@ function Auxiliary.XyzTarget(f,lv,minc,maxc,mustbemat)
 						local ct=0
 						while tc do
 							local isDouble=false
-							if not mustbemat and tc:IsHasEffect(511001225) and (not tc.xyzlimit2 or tc.xyzlimit2(c)) 
+							if not mustbemat and tc:IsHasEffect(511001225) and (not tc.xyzlimit2 or tc.xyzlimit2(c)) and ct+1<minc
 								and (not Auxiliary.XyzFilterChk(tc,mg,c,tp,minc,maxc,matg,ct,true,true,og,og:GetCount(),matct,mustbemat) or Duel.SelectYesNo(tp,65)) then
 								isDouble=true
 							end
-							if not mustbemat and tc:IsHasEffect(511003001) and (not tc.xyzlimit3 or tc.xyzlimit3(c)) then
+							if not mustbemat and tc:IsHasEffect(511003001) and (not tc.xyzlimit3 or tc.xyzlimit3(c)) and ct+2<minc then
 								if (isDouble and not Auxiliary.XyzFilterChk(tc,mg,c,tp,minc,maxc,matg,ct,false,true,og,og:GetCount(),matct,mustbemat)) 
 									or (not isDouble and not Auxiliary.XyzFilterChk(tc,mg,c,tp,minc,maxc,matg,ct,true,true,og,og:GetCount(),matct,mustbemat)) 
 									or Duel.SelectYesNo(tp,65) then
@@ -532,11 +532,11 @@ function Auxiliary.XyzTarget(f,lv,minc,maxc,mustbemat)
 						local g=mg:FilterSelect(tp,Auxiliary.XyzFilterChk,1,1,nil,mg,c,tp,minc,maxc,matg,ct,false,false,sg,nil,nil,mustbemat)
 						local tc=g:GetFirst()
 						local isDouble=false
-						if not mustbemat and tc:IsHasEffect(511001225) and (not tc.xyzlimit2 or tc.xyzlimit2(c)) 
+						if not mustbemat and tc:IsHasEffect(511001225) and (not tc.xyzlimit2 or tc.xyzlimit2(c)) and ct+1<minc 
 							and (not Auxiliary.XyzFilterChk(tc,mg,c,tp,minc,maxc,matg,ct,true,true,sg,nil,nil,mustbemat) or Duel.SelectYesNo(tp,65)) then
 							isDouble=true
 						end
-						if not mustbemat and tc:IsHasEffect(511003001) and (not tc.xyzlimit3 or tc.xyzlimit3(c)) then
+						if not mustbemat and tc:IsHasEffect(511003001) and (not tc.xyzlimit3 or tc.xyzlimit3(c)) and ct+2<minc then
 							if (isDouble and not Auxiliary.XyzFilterChk(tc,mg,c,tp,minc,maxc,matg,ct,false,true,sg,nil,nil,mustbemat)) 
 								or (not isDouble and not Auxiliary.XyzFilterChk(tc,mg,c,tp,minc,maxc,matg,ct,true,true,sg,nil,nil,mustbemat)) 
 								or Duel.SelectYesNo(tp,65) then
