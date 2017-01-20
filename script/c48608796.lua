@@ -28,7 +28,6 @@ function c48608796.initial_effect(c)
 	--Protection
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(48608796,0))
-	e4:SetProperty(EFFECT_FLAG2_XMDETACH)
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetRange(LOCATION_MZONE)
@@ -71,5 +70,5 @@ function c48608796.indop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e3,tp)
 end
 function c48608796.indtg(e,c)
-	return c:IsSetCard(0x1f8) or c:IsCode(8491961)
+	return c:IsSetCard(0xf7) or c:IsCode(8491961)
 end
