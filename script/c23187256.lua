@@ -68,7 +68,7 @@ function c23187256.xyzfilter1(c,tp,mg,xyz,matg,ct,sg,min,matct,nodoub,notrip)
 		matct2=matct+1
 	end
 	if min and matct2>min then return false end
-	if (not min or matct2==min) and ctc>=2 then return tg:IsExists(c23187256.matfchk,1,nil,tp) end
+	if (not min or matct2==min) and ctc>=2 then return tg:IsExists(aux.XyzFCheck,1,nil,tp) end
 	if c:IsType(TYPE_XYZ) then g=g:Filter(c23187256.xyzfilter2,nil,c:GetRank()) end
 	local res2=false
 	local res3=false
@@ -80,7 +80,7 @@ function c23187256.xyzfilter1(c,tp,mg,xyz,matg,ct,sg,min,matct,nodoub,notrip)
 	if not nodoub and c:IsHasEffect(511001225) and (not c.xyzlimit2 or c.xyzlimit2(xyz)) then
 		isDouble=true
 		res2=true
-		if (not min or matct2==min) and ctc+1>=2 then return tg:IsExists(c23187256.matfchk,1,nil,tp) end
+		if (not min or matct2==min) and ctc+1>=2 then return tg:IsExists(aux.XyzFCheck,1,nil,tp) end
 	end
 	if not notrip and c:IsHasEffect(511003001) and (not c.xyzlimit3 or c.xyzlimit3(xyz)) then
 		res3=true
@@ -92,9 +92,6 @@ function c23187256.xyzfilter1(c,tp,mg,xyz,matg,ct,sg,min,matct,nodoub,notrip)
 end
 function c23187256.xyzfilter2(c,rk)
 	return c:GetRank()==rk or c:IsHasEffect(511002116) or c:IsHasEffect(511001175)
-end
-function c23187256.matfchk(c,tp)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or (c:IsLocation(LOCATION_MZONE) and c:IsControler(tp))
 end
 function c23187256.xyzcon(e,c,og,min,max)
 	if c==nil then return true end

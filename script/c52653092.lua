@@ -104,7 +104,7 @@ function c52653092.xyzfilter1(c,tp,mg,xyz,matg,ct,sg,min,matct,nodoub,notrip)
 		matct2=matct+1
 	end
 	if min and matct2>min then return false end
-	if (not min or matct2==min) and ctc>=3 and ctc<=3 then return tg:IsExists(c52653092.matfchk,1,nil,tp) end
+	if (not min or matct2==min) and ctc>=3 and ctc<=3 then return tg:IsExists(aux.XyzFCheck,1,nil,tp) end
 	if c:IsType(TYPE_XYZ) then g=g:Filter(c52653092.xyzfilter2,nil,c:GetRank()) end
 	if ctc>3 then return false end
 	local res2=false
@@ -119,13 +119,13 @@ function c52653092.xyzfilter1(c,tp,mg,xyz,matg,ct,sg,min,matct,nodoub,notrip)
 			isDouble=true
 			res2=true
 		end
-		if (not min or matct2==min) and ctc+1>=3 and ctc+1<=3 then return tg:IsExists(c52653092.matfchk,1,nil,tp) end
+		if (not min or matct2==min) and ctc+1>=3 and ctc+1<=3 then return tg:IsExists(aux.XyzFCheck,1,nil,tp) end
 	end
 	if not notrip and c:IsHasEffect(511003001) and (not c.xyzlimit3 or c.xyzlimit3(xyz)) then
 		if ctc+2<=3 then
 			res3=true
 		end
-		if (not min or matct2==min) and ctc+2>=3 and ctc+2<=3 then return true end
+		if (not min or matct2==min) and ctc+2>=3 and ctc+2<=3 then return tg:IsExists(aux.XyzFCheck,1,nil,tp) end
 	end
 	return g:IsExists(c52653092.xyzfilter1,1,nil,tp,g,xyz,tg,ctc,tsg,min,matct2,false,false) 
 		or (res2 and g:IsExists(c52653092.xyzfilter1,1,nil,tp,g,xyz,tg,ctc+1,tsg,min,matct2,false,false))
@@ -133,9 +133,6 @@ function c52653092.xyzfilter1(c,tp,mg,xyz,matg,ct,sg,min,matct,nodoub,notrip)
 end
 function c52653092.xyzfilter2(c,rk)
 	return c:GetRank()==rk or c:IsHasEffect(511002116) or c:IsHasEffect(511001175)
-end
-function c52653092.matfchk(c,tp)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or (c:IsLocation(LOCATION_MZONE) and c:IsControler(tp))
 end
 function c52653092.xyzcon(e,c,og,min,max)
 	if c==nil then return true end
