@@ -327,7 +327,7 @@ function Auxiliary.XyzM12(c,f,lv,xyz,xg,mustbemat,tp)
 	return Auxiliary.XyzMatFilter(c,f,lv,xyz,tp) or Auxiliary.XyzSubMatFilter(c,rk,xyz,xg,mustbemat)
 end
 function Auxiliary.XyzMatFilter(c,f,lv,xyz,tp)
-	return c:IsFaceup() and (not f or f(c)) and c:IsXyzLevel(xyz,lv) and c:IsCanBeXyzMaterial(xyz) 
+	return (c:IsFaceup() or not c:IsOnField()) and (not f or f(c)) and c:IsXyzLevel(xyz,lv) and c:IsCanBeXyzMaterial(xyz) 
 		and (c:IsControler(tp) or c:IsHasEffect(EFFECT_XYZ_MATERIAL))
 end
 function Auxiliary.XyzSubMatFilter(c,f,lv,xyz,xg,mustbemat)
@@ -362,7 +362,7 @@ function Auxiliary.XyzFilterChk(c,mg,xyz,tp,minc,maxc,matg,ct,nodoub,notrip,sg,m
 		matct2=matct+1
 	end
 	if min and matct2>min then return false end
-	if (not min or matct2==min) and ctc>=minc and ctc<=maxc then return true end
+	if (not min or matct2==min) and ctc>=minc and ctc<=maxc then return tg:IsExists(Auxiliary.XyzFCheck,1,nil,tp) end
 	if ctc>maxc then return false end
 	local res2=false
 	local res3=false
@@ -378,18 +378,21 @@ function Auxiliary.XyzFilterChk(c,mg,xyz,tp,minc,maxc,matg,ct,nodoub,notrip,sg,m
 			isDouble=true
 			res2=true
 		end
-		if (not min or matct2==min) and ctc+1>=minc and ctc+1<=maxc then return true end
+		if (not min or matct2==min) and ctc+1>=minc and ctc+1<=maxc then return tg:IsExists(Auxiliary.XyzFCheck,1,nil,tp) end
 	end
 	--Triple Material
 	if not mustbemat and not notrip and c:IsHasEffect(511003001) and (not c.xyzlimit3 or c.xyzlimit3(xyz)) then
 		if ctc+2<=maxc then
 			res3=true
 		end
-		if (not min or matct2==min) and ctc+2>=minc and ctc+2<=maxc then return true end
+		if (not min or matct2==min) and ctc+2>=minc and ctc+2<=maxc then return tg:IsExists(Auxiliary.XyzFCheck,1,nil,tp) end
 	end
 	return g:IsExists(Auxiliary.XyzFilterChk,1,nil,g,xyz,tp,minc,maxc,tg,ctc,false,false,tsg,min,matct2,mustbemat) 
 		or (res2 and g:IsExists(Auxiliary.XyzFilterChk,1,nil,g,xyz,tp,minc,maxc,tg,ctc+1,false,false,tsg,min,matct2,mustbemat))
 		or (res3 and g:IsExists(Auxiliary.XyzFilterChk,1,nil,g,xyz,tp,minc,maxc,tg,ctc+2,false,false,tsg,min,matct2,mustbemat))
+end
+function Auxiliary.XyzFCheck(c,tp)
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or (c:IsLocation(LOCATION_MZONE) and c:IsControler(tp))
 end
 function Auxiliary.ValidXyzMaterial(c)
 	return not c:IsHasEffect(511001175) and not c:IsHasEffect(511002116)
