@@ -303,24 +303,10 @@ function Auxiliary.AddXyzProcedure(c,f,lv,ct,alterf,desc,maxct,op,mustbemat)
 	end
 end
 function Auxiliary.XyzMatGenerate(e,tp,eg,ep,ev,re,r,rp)
-	for i=1,15 do
-		local tck=Duel.CreateToken(0,419)
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_XYZ_LEVEL)
-		e1:SetValue(i)
-		tck:RegisterEffect(e1)
-		xyztempg0:AddCard(tck)
-	end
-	for i=1,15 do
-		local tck=Duel.CreateToken(1,419)
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_XYZ_LEVEL)
-		e1:SetValue(i)
-		tck:RegisterEffect(e1)
-		xyztempg1:AddCard(tck)
-	end
+	local tck0=Duel.CreateToken(0,419)
+	xyztempg0:AddCard(tck0)
+	local tck1=Duel.CreateToken(1,419)
+	xyztempg1:AddCard(tck1)
 end
 --Xyz Summon(normal)
 function Auxiliary.XyzM12(c,f,lv,xyz,xg,mustbemat,tp)
@@ -337,11 +323,12 @@ function Auxiliary.XyzSubMatFilter(c,f,lv,xyz,xg,mustbemat)
 	else
 		--Solid Overlay-type OR Orichalcum Chain (minus material)
 		if mustbemat then return false end
-		return (c:GetFlagEffect(511000189)==lv and xg:IsExists(Auxiliary.XyzSubFilterChk,1,nil,f,lv,xyz)) or c:IsHasEffect(511002116)
+		if c:IsHasEffect(511002116) then return true end
+		return c:GetFlagEffect(511000189)==lv and xg:IsExists(Auxiliary.XyzSubFilterChk,1,nil,f)
 	end
 end
-function Auxiliary.XyzSubFilterChk(c,f,lv,xyz)
-	return (not f or f(c)) and c:IsXyzLevel(xyz,lv)
+function Auxiliary.XyzSubFilterChk(c,f)
+	return (not f or f(c))
 end
 function Auxiliary.XyzFilterChk(c,mg,xyz,tp,minc,maxc,matg,ct,nodoub,notrip,sg,min,matct,mustbemat)
 	local tg
