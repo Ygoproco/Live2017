@@ -349,7 +349,8 @@ function Auxiliary.XyzFilterChk(c,mg,xyz,tp,minc,maxc,matg,ct,nodoub,notrip,sg,m
 		matct2=matct+1
 	end
 	if min and matct2>min then return false end
-	if (not min or matct2==min) and ctc>=minc and ctc<=maxc then return tg:IsExists(Auxiliary.XyzFCheck,1,nil,tp) end
+	if (not min or matct2==min) and ctc>=minc and ctc<=maxc and tg:IsExists(Auxiliary.XyzFCheck,1,nil,tp) 
+		and not tg:IsExists(Auxiliary.XyzMatNumCheck,1,nil,tg:GetCount()) then return true end
 	if ctc>maxc then return false end
 	local res2=false
 	local res3=false
@@ -365,18 +366,23 @@ function Auxiliary.XyzFilterChk(c,mg,xyz,tp,minc,maxc,matg,ct,nodoub,notrip,sg,m
 			isDouble=true
 			res2=true
 		end
-		if (not min or matct2==min) and ctc+1>=minc and ctc+1<=maxc then return tg:IsExists(Auxiliary.XyzFCheck,1,nil,tp) end
+		if (not min or matct2==min) and ctc+1>=minc and ctc+1<=maxc and tg:IsExists(Auxiliary.XyzFCheck,1,nil,tp) 
+			and not tg:IsExists(Auxiliary.XyzMatNumCheck,1,nil,tg:GetCount()) then return true end
 	end
 	--Triple Material
 	if not mustbemat and not notrip and c:IsHasEffect(511003001) and (not c.xyzlimit3 or c.xyzlimit3(xyz)) then
 		if ctc+2<=maxc then
 			res3=true
 		end
-		if (not min or matct2==min) and ctc+2>=minc and ctc+2<=maxc then return tg:IsExists(Auxiliary.XyzFCheck,1,nil,tp) end
+		if (not min or matct2==min) and ctc+2>=minc and ctc+2<=maxc and tg:IsExists(Auxiliary.XyzFCheck,1,nil,tp) 
+			and not tg:IsExists(Auxiliary.XyzMatNumCheck,1,nil,tg:GetCount()) then return true end
 	end
 	return g:IsExists(Auxiliary.XyzFilterChk,1,nil,g,xyz,tp,minc,maxc,tg,ctc,false,false,tsg,min,matct2,mustbemat) 
 		or (res2 and g:IsExists(Auxiliary.XyzFilterChk,1,nil,g,xyz,tp,minc,maxc,tg,ctc+1,false,false,tsg,min,matct2,mustbemat))
 		or (res3 and g:IsExists(Auxiliary.XyzFilterChk,1,nil,g,xyz,tp,minc,maxc,tg,ctc+2,false,false,tsg,min,matct2,mustbemat))
+end
+function Auxiliary.XyzMatNumCheck(c,ct)
+	return c:GetFlagEffect(91110378)>0 and c:GetFlagEffectLabel(91110378)~=ct
 end
 function Auxiliary.XyzFCheck(c,tp)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or (c:IsLocation(LOCATION_MZONE) and c:IsControler(tp))
@@ -517,7 +523,7 @@ function Auxiliary.XyzTarget(f,lv,minc,maxc,mustbemat)
 						if max<maxc then maxc=max end
 					end
 					local matg=Group.CreateGroup()
-					while ct<minc do
+					while ct<minc or matg:IsExists(Auxiliary.XyzMatNumCheck,1,nil,matg:GetCount()) do
 						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 						local g=mg:FilterSelect(tp,Auxiliary.XyzFilterChk,1,1,nil,mg,c,tp,minc,maxc,matg,ct,false,false,sg,nil,nil,mustbemat)
 						local tc=g:GetFirst()
