@@ -52,10 +52,12 @@ function c100911082.cbtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ag=eg:GetFirst():GetAttackableTarget()
 	local at=Duel.GetAttackTarget()
 	ag:RemoveCard(at)
-	if chk==0 then return at:IsPosition(POS_FACEDOWN) and ag:IsExists(c100911082.cbfilter,1,e:GetHandler(),e) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=ag:FilterSelect(tp,c100911082.cbfilter,1,1,e:GetHandler(),e)
-	Duel.SetTargetCard(g)
+	if at~=nil then
+		if chk==0 then return at:IsPosition(POS_FACEDOWN) and ag:IsExists(c100911082.cbfilter,1,e:GetHandler(),e) end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+		local g=ag:FilterSelect(tp,c100911082.cbfilter,1,1,e:GetHandler(),e)
+		Duel.SetTargetCard(g)
+	end
 end
 function c100911082.cbop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
