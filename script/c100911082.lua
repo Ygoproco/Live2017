@@ -51,8 +51,8 @@ function c100911082.cbtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local ag=eg:GetFirst():GetAttackableTarget()
 	local at=Duel.GetAttackTarget()
-	ag:RemoveCard(at)
 	if at~=nil then
+		ag:RemoveCard(at)
 		if chk==0 then return at:IsPosition(POS_FACEDOWN) and ag:IsExists(c100911082.cbfilter,1,e:GetHandler(),e) end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 		local g=ag:FilterSelect(tp,c100911082.cbfilter,1,1,e:GetHandler(),e)
