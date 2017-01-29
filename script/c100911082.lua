@@ -79,7 +79,7 @@ end
 function c100911082.cetg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tf=re:GetTarget()
 	local res,ceg,cep,cev,cre,cr,crp=Duel.CheckEvent(re:GetCode(),true)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100911082.cefilter(chkc,re,rp,tf,ceg,cep,cev,cre,cr,crp,e:GetHandler()) end
+	if chkc then return chkc~=e:GetLabelObject() and chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100911082.cefilter(chkc,re,rp,tf,ceg,cep,cev,cre,cr,crp,chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c100911082.cefilter,tp,LOCATION_MZONE,0,1,e:GetLabelObject(),re,rp,tf,ceg,cep,cev,cre,cr,crp,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,c100911082.cefilter,tp,LOCATION_MZONE,0,1,1,e:GetLabelObject(),re,rp,tf,ceg,cep,cev,cre,cr,crp,e:GetHandler())
