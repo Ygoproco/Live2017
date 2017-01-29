@@ -76,8 +76,8 @@ function c62899696.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_CHAIN)
 			tc:RegisterEffect(e1)
 		end
+		local g=Duel.GetMatchingGroup(c62899696.synfilter,tp,LOCATION_EXTRA,0,nil,c,tc)
 		c:RegisterFlagEffect(62899696,RESET_CHAIN,0,1)
-		local g=Duel.GetMatchingGroup(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,nil,nil)
 		if g:GetCount()>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sg=g:Select(tp,1,1,nil)
