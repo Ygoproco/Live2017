@@ -1372,6 +1372,7 @@ function Auxiliary.FConditionFunRep(f,cc,insf)
 				if g==nil then return insf end
 				local chkf=bit.band(chkfnf,0xff)
 				local mg=g:Filter(Card.IsCanBeFusionMaterial,nil,e:GetHandler())
+				mg=mg:Filter(Auxiliary.FConditionFilterConAndSub,nil,f,true)
 				if gc then
 					if not gc:IsCanBeFusionMaterial(e:GetHandler()) then return false end
 					return Auxiliary.FConditionFilterConN(gc,f,cc,e:GetHandler(),chkf,mg,g2,0)
@@ -1383,6 +1384,7 @@ function Auxiliary.FOperationFunRep(f,cc,insf)
 	return	function(e,tp,eg,ep,ev,re,r,rp,gc,chkfnf)
 				local chkf=bit.band(chkfnf,0xff)
 				local g=eg:Filter(Card.IsCanBeFusionMaterial,nil,e:GetHandler())
+				g=g:Filter(Auxiliary.FConditionFilterConAndSub,nil,f,true)
 				local p=tp
 				local sfhchk=false
 				--511004008 - Spiritual Fusion
