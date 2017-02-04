@@ -592,6 +592,7 @@ function Auxiliary.XyzOperation(f,lv,minc,maxc,mustbemat)
 				end
 				Duel.SendtoGrave(sg,REASON_RULE)
 				c:SetMaterial(g)
+				Duel.Overlay(c,g:Filter(function(c) return c:GetEquipTarget() end,nil))
 				Duel.Overlay(c,g)
 				g:DeleteGroup()
 			end
