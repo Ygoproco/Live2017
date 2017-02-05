@@ -1571,7 +1571,7 @@ function Auxiliary.FConditionFunRep(f,cc,insf)
 				mg=mg:Filter(Auxiliary.FConditionFilterConAndSub,nil,f,true)
 				local mg1=mg:Filter(function(c) return not c:IsHasEffect(73941492) or not c.fuslimitfilter end,nil)
 				if gc then
-					if not gc:IsCanBeFusionMaterial(e:GetHandler()) or not Auxiliary.FConditionFilterConAndSub(c,f,true) then return false end
+					if not gc:IsCanBeFusionMaterial(e:GetHandler()) or not Auxiliary.FConditionFilterConAndSub(gc,f,true) then return false end
 					mg:RemoveCard(gc)
 					if (gc:IsLocation(LOCATION_MZONE) or chkf==PLAYER_NONE or mg1:IsExists(Auxiliary.FConditionCheckF,1,nil,chkf)) 
 						and (not gc:IsHasEffect(73941492) or not gc.fuslimitfilter) and mg1:GetCount()>=cc-1 then return true end
