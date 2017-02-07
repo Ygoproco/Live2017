@@ -30,7 +30,7 @@ function c100215001.initial_effect(c)
 	--multi attack
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(100215001,0))
-	e4:SetProperty(EFFECT_FLAG2_XMDETACH)
+	e4:SetProperty(0,EFFECT_FLAG2_XMDETACH)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
