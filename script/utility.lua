@@ -1560,7 +1560,7 @@ function Auxiliary.FConditionFilterConNChk(f,cc,fc,chkf,g)
 	if g:IsExists(Auxiliary.TuneMagFusFilter,1,nil,g,chkf) then return false end
 	local g1=g:Filter(Auxiliary.FConditionFilterConAndSub,nil,f,true)
 	if chkf~=PLAYER_NONE then
-		return g1:FilterCount(Card.IsOnField,nil)~=0 and g1:GetCount()>=cc
+		return g1:FilterCount(Auxiliary.FConditionCheckF,nil,chkf)~=0 and g1:GetCount()>=cc
 	else return g1:GetCount()>=cc end
 end
 function Auxiliary.FConditionFunRep(f,cc,insf)
