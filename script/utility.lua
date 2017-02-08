@@ -652,7 +652,7 @@ function Auxiliary.XyzOperation2(alterf,op)
 			end
 end
 function Auxiliary.FConditionCheckF(c,chkf)
-	return c:IsOnField() and c:IsControler(chkf)
+	return c:IsLocation(LOCATION_MZONE) and c:IsControler(chkf)
 end
 --Fusion monster, name + name
 --material_count: number of different names in material list
