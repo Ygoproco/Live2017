@@ -1430,7 +1430,7 @@ function Auxiliary.FConditionFilterCodeChk(code,cc,sub,fc,chkf,g)
 	if g:IsExists(Auxiliary.TuneMagFusFilter,1,nil,g,chkf) then return false end
 	local g1=g:Filter(Card.IsFusionCode,nil,code)
 	if not sub then
-		if chkf~=PLAYER_NONE then return g1:GetCount()>=cc and g1:FilterCount(Card.IsOnField,nil)~=0
+		if chkf~=PLAYER_NONE then return g1:GetCount()>=cc and g1:FilterCount(Auxiliary.FConditionCheckF,nil,chkf)~=0
 		else return g1:GetCount()>=cc end
 	end
 	g1=g1:Filter(Auxiliary.FConditionFilterCodeNotSub,nil,code,fc)
@@ -1438,7 +1438,7 @@ function Auxiliary.FConditionFilterCodeChk(code,cc,sub,fc,chkf,g)
 	local g3=g:Filter(Auxiliary.FConditionFilterx3,nil,fc,sub)
 	g1:Merge(g3)
 	if chkf~=PLAYER_NONE then
-		return (g1:FilterCount(Card.IsOnField,nil)~=0 or g2:FilterCount(Card.IsOnField,nil)~=0)
+		return (g1:FilterCount(Auxiliary.FConditionCheckF,nil,chkf)~=0 or g2:FilterCount(Auxiliary.FConditionCheckF,nil,chkf)~=0)
 			and g1:GetCount()>=cc-1 and g1:GetCount()+g2:GetCount()>=cc
 	else return g1:GetCount()>=cc-1 and g1:GetCount()+g2:GetCount()>=cc end
 end
@@ -1560,7 +1560,7 @@ function Auxiliary.FConditionFilterConNChk(f,cc,fc,chkf,g)
 	if g:IsExists(Auxiliary.TuneMagFusFilter,1,nil,g,chkf) then return false end
 	local g1=g:Filter(Auxiliary.FConditionFilterConAndSub,nil,f,true)
 	if chkf~=PLAYER_NONE then
-		return g1:FilterCount(Card.IsOnField,nil)~=0 and g1:GetCount()>=cc
+		return g1:FilterCount(Auxiliary.FConditionCheckF,nil,chkf)~=0 and g1:GetCount()>=cc
 	else return g1:GetCount()>=cc end
 end
 function Auxiliary.FConditionFunRep(f,cc,insf)
