@@ -79,7 +79,7 @@ function c19162134.initial_effect(c)
 	eb:SetCondition(c19162134.damcon2)
 	c:RegisterEffect(eb)
 	--gamble counters (to be removed after core update)
-	if Duel.GetTossedCoinCount and Duel.GetTossedDiceCount and not c19162134.global_flag then
+	if not (Duel.GetTossedCoinCount and Duel.GetTossedDiceCount) and not c19162134.global_flag then
 		c19162134.global_flag=true
 		c19162134[0]=0
 		c19162134[1]=0
