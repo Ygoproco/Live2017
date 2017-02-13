@@ -736,15 +736,15 @@ function Auxiliary.FConditionCode2(code1,code2,sub,insf)
 					if sub and gc:IsHasEffect(511002961) then bwx=1 end
 					if sub and gc:CheckFusionSubstitute(e:GetHandler()) then bw=1 end
 					if b1+b2+bw>0 then
-						if (not gc:IsLocation(LOCATION_MZONE) or chkf~=PLAYER_NONE) and not Auxiliary.FConditionCheckF(gc,chkf) then
+						if chkf~=PLAYER_NONE and not Auxiliary.FConditionCheckF(gc,chkf) then
 							mg1=mg1:Filter(Auxiliary.FConditionCheckF,nil,chkf)
 						end	
 						if b1+b2+bw>1 or bwx==1 then
 							if mg1:IsExists(Auxiliary.FFilterCodeOrSub,1,gc,code1,code2,nil,nil,sub,e:GetHandler()) then return true end
 						elseif b1==1 then
-							if mg1:IsExists(Auxiliary.FFilterCodeOrSub,1,gc,code1,nil,nil,nil,sub,e:GetHandler()) then return true end
-						elseif b2==1 then
 							if mg1:IsExists(Auxiliary.FFilterCodeOrSub,1,gc,code2,nil,nil,nil,sub,e:GetHandler()) then return true end
+						elseif b2==1 then
+							if mg1:IsExists(Auxiliary.FFilterCodeOrSub,1,gc,code1,nil,nil,nil,sub,e:GetHandler()) then return true end
 						else
 							if mg1:IsExists(function(c) return c:IsFusionCode(code1,code2) or (sub and c:IsHasEffect(511002961)) end,1,gc) then return true end
 						end
