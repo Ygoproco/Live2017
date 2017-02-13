@@ -303,9 +303,9 @@ function Auxiliary.AddXyzProcedure(c,f,lv,ct,alterf,desc,maxct,op,mustbemat)
 	end
 end
 function Auxiliary.XyzMatGenerate(e,tp,eg,ep,ev,re,r,rp)
-	local tck0=Duel.CreateToken(0,419)
+	local tck0=Duel.CreateToken(0,946)
 	xyztempg0:AddCard(tck0)
-	local tck1=Duel.CreateToken(1,419)
+	local tck1=Duel.CreateToken(1,946)
 	xyztempg1:AddCard(tck1)
 end
 --Xyz Summon(normal)
