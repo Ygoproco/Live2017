@@ -523,7 +523,7 @@ function Auxiliary.XyzTarget(f,lv,minc,maxc,mustbemat)
 						if max<maxc then maxc=max end
 					end
 					local matg=Group.CreateGroup()
-					while ct<minc or matg:IsExists(Auxiliary.XyzMatNumCheck,1,nil,matg:GetCount()) do
+					while ct<minc or not matg:IsExists(Auxiliary.XyzFCheck,1,nil,tp) or matg:IsExists(Auxiliary.XyzMatNumCheck,1,nil,matg:GetCount()) do
 						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 						local g=mg:FilterSelect(tp,Auxiliary.XyzFilterChk,1,1,nil,mg,c,tp,minc,maxc,matg,ct,false,false,sg,nil,nil,mustbemat)
 						local tc=g:GetFirst()
@@ -2466,6 +2466,9 @@ function Auxiliary.PersistentTgOp(anypos)
 				c:SetCardTarget(tc)
 			end
 		end
+end
+function Auxiliary.PersistentTargetFilter(e,c)
+	return e:GetHandler():IsHasCardTarget(c)
 end
 
 pcall(dofile,"init.lua")
