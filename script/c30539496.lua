@@ -67,11 +67,12 @@ function c30539496.spop(e,tp,eg,ep,ev,re,r,rp)
 		g2=g:FilterSelect(tp,Card.IsAttribute,1,1,nil,ATTRIBUTE_EARTH)
 	end
 	g1:Merge(g2)
+	local rm=g1:IsExists(Card.IsAttribute,2,nil,ATTRIBUTE_EARTH)
 	if Duel.Destroy(g1,REASON_EFFECT)==2 then
 		if not c:IsRelateToEffect(e) then return end
 		if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==1 then
 			local rg=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_EXTRA,nil)
-			if rg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(30539496,2)) then
+			if rm and rg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(30539496,2)) then
 				Duel.ConfirmCards(tp,rg)
 				local tg=Group.CreateGroup()
 				local i=3

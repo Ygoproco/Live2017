@@ -68,11 +68,12 @@ function c96746083.spop(e,tp,eg,ep,ev,re,r,rp)
 		g2=g:FilterSelect(tp,Card.IsAttribute,1,1,nil,ATTRIBUTE_FIRE)
 	end
 	g1:Merge(g2)
+	local rm=g1:IsExists(Card.IsAttribute,2,nil,ATTRIBUTE_FIRE)
 	if Duel.Destroy(g1,REASON_EFFECT)==2 then
 		if not c:IsRelateToEffect(e) then return end
 		if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==1 then
 			local rg=Duel.GetMatchingGroup(c96746083.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,nil,tp)
-			if rg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(96746083,0)) then
+			if rm and rg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(96746083,0)) then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 				local tg=rg:Select(tp,1,1,nil)
 				Duel.HintSelection(tg)
