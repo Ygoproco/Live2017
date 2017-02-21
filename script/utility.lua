@@ -523,7 +523,7 @@ function Auxiliary.XyzTarget(f,lv,minc,maxc,mustbemat)
 						if max<maxc then maxc=max end
 					end
 					local matg=Group.CreateGroup()
-					while ct<minc or matg:IsExists(Auxiliary.XyzMatNumCheck,1,nil,matg:GetCount()) do
+					while ct<minc or not matg:IsExists(Auxiliary.XyzFCheck,1,nil,tp) or matg:IsExists(Auxiliary.XyzMatNumCheck,1,nil,matg:GetCount()) do
 						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 						local g=mg:FilterSelect(tp,Auxiliary.XyzFilterChk,1,1,nil,mg,c,tp,minc,maxc,matg,ct,false,false,sg,nil,nil,mustbemat)
 						local tc=g:GetFirst()
@@ -719,8 +719,10 @@ function Auxiliary.FConditionCode2(code1,code2,sub,insf)
 	--gc:Material already used
 	--chkf: check field, default:PLAYER_NONE
 	return	function(e,g,gc,chkfnf)
+				local c=e:GetHandler()
+				if c:IsType(TYPE_PENDULUM) and c:IsLocation(LOCATION_EXTRA) and c:IsFaceup() then return false end
 				if g==nil then return insf end
-				local tp=e:GetHandlerPlayer() --not yet needed
+				local tp=c:GetControler() --not yet needed
 				local chkf=bit.band(chkfnf,0xff)
 				local notfusion=bit.rshift(chkfnf,8)~=0
 				local sub=sub or notfusion
@@ -897,6 +899,8 @@ function Auxiliary.TuneMagFusFilter(c,g,tp)
 end
 function Auxiliary.FConditionCode3(code1,code2,code3,sub,insf)
 	return	function(e,g,gc,chkfnf)
+				local c=e:GetHandler()
+				if c:IsType(TYPE_PENDULUM) and c:IsLocation(LOCATION_EXTRA) and c:IsFaceup() then return false end
 				if g==nil then return insf end
 				local chkf=bit.band(chkfnf,0xff)
 				local notfusion=bit.rshift(chkfnf,8)~=0
@@ -1114,6 +1118,8 @@ function Auxiliary.FConditionFilter42(code1,code2,code3,code4,sub,fc,chkf,g)
 end
 function Auxiliary.FConditionCode4(code1,code2,code3,code4,sub,insf)
 	return	function(e,g,gc,chkfnf)
+				local c=e:GetHandler()
+				if c:IsType(TYPE_PENDULUM) and c:IsLocation(LOCATION_EXTRA) and c:IsFaceup() then return false end
 				if g==nil then return insf end
 				local chkf=bit.band(chkfnf,0xff)
 				local notfusion=bit.rshift(chkfnf,8)~=0
@@ -1229,6 +1235,8 @@ function Auxiliary.FConditionFilterCF3(code,f,cc,sub,fc,chkf,g)
 end
 function Auxiliary.FConditionCodeFun(code,f,cc,sub,insf)
 	return	function(e,g,gc,chkfnf)
+				local c=e:GetHandler()
+				if c:IsType(TYPE_PENDULUM) and c:IsLocation(LOCATION_EXTRA) and c:IsFaceup() then return false end
 				if g==nil then return insf end
 				local chkf=bit.band(chkfnf,0xff)
 				local notfusion=bit.rshift(chkfnf,8)~=0
@@ -1343,6 +1351,8 @@ function Auxiliary.FConditionFilterF2chk(c,f1,f2,c2,chkf)
 end
 function Auxiliary.FConditionFun2(f1,f2,insf)
 	return	function(e,g,gc,chkfnf)
+				local c=e:GetHandler()
+				if c:IsType(TYPE_PENDULUM) and c:IsLocation(LOCATION_EXTRA) and c:IsFaceup() then return false end
 				if g==nil then return insf end
 				local chkf=bit.band(chkfnf,0xff)
 				local mg=g:Filter(Card.IsCanBeFusionMaterial,nil,e:GetHandler())
@@ -1444,6 +1454,8 @@ function Auxiliary.FConditionFilterCodeChk(code,cc,sub,fc,chkf,g)
 end
 function Auxiliary.FConditionCodeRep(code,cc,sub,insf)
 	return	function(e,g,gc,chkfnf)
+				local c=e:GetHandler()
+				if c:IsType(TYPE_PENDULUM) and c:IsLocation(LOCATION_EXTRA) and c:IsFaceup() then return false end
 				if g==nil then return insf end
 				local chkf=bit.band(chkfnf,0xff)
 				local notfusion=bit.rshift(chkfnf,8)~=0
@@ -1565,6 +1577,8 @@ function Auxiliary.FConditionFilterConNChk(f,cc,fc,chkf,g)
 end
 function Auxiliary.FConditionFunRep(f,cc,insf)
 	return	function(e,g,gc,chkfnf)
+				local c=e:GetHandler()
+				if c:IsType(TYPE_PENDULUM) and c:IsLocation(LOCATION_EXTRA) and c:IsFaceup() then return false end
 				if g==nil then return insf end
 				local chkf=bit.band(chkfnf,0xff)
 				local mg=g:Filter(Card.IsCanBeFusionMaterial,nil,e:GetHandler())
@@ -1710,6 +1724,8 @@ function Auxiliary.FConditionFilterFFR(c,f1,f2,mg,minc,chkf)
 end
 function Auxiliary.FConditionFunFunRep(f1,f2,minc,maxc,insf)
 	return	function(e,g,gc,chkfnf)
+			local c=e:GetHandler()
+			if c:IsType(TYPE_PENDULUM) and c:IsLocation(LOCATION_EXTRA) and c:IsFaceup() then return false end
 			if g==nil then return insf end
 			local chkf=bit.band(chkfnf,0xff)
 			local mg=g:Filter(Card.IsCanBeFusionMaterial,nil,e:GetHandler())
@@ -2466,6 +2482,9 @@ function Auxiliary.PersistentTgOp(anypos)
 				c:SetCardTarget(tc)
 			end
 		end
+end
+function Auxiliary.PersistentTargetFilter(e,c)
+	return e:GetHandler():IsHasCardTarget(c)
 end
 
 pcall(dofile,"init.lua")
