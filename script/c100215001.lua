@@ -30,9 +30,9 @@ function c100215001.initial_effect(c)
 	--multi attack
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(100215001,0))
-	e4:SetProperty(EFFECT_FLAG2_XMDETACH)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
+	e4:SetProperty(EFFECT_FLAG2_XMDETACH)
 	e4:SetCountLimit(1)
 	e4:SetCondition(c100215001.atkcon)
 	e4:SetCost(c100215001.atkcost)
@@ -109,6 +109,7 @@ function c100215001.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og,min,max)
 			if g2:GetCount()~=0 then
 				Duel.Overlay(c,g2)
 			end
+			c:SetMaterial(g)
 			Duel.Overlay(c,g)
 		else
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
