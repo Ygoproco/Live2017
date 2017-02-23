@@ -1581,15 +1581,18 @@ function Auxiliary.FConditionFunRep(f,cc,insf)
 				if c:IsType(TYPE_PENDULUM) and c:IsLocation(LOCATION_EXTRA) and c:IsFaceup() then return false end
 				if g==nil then return insf end
 				local chkf=bit.band(chkfnf,0xff)
-				local mg=g:Filter(Card.IsCanBeFusionMaterial,nil,e:GetHandler())
+				local mg=g:Filter(Card.IsCanBeFusionMaterial,gc,e:GetHandler())
 				mg=mg:Filter(Auxiliary.FConditionFilterConAndSub,nil,f,true)
 				local mg1=mg:Filter(function(c) return not c:IsHasEffect(73941492) or not c.fuslimitfilter end,nil)
 				if gc then
 					if not gc:IsCanBeFusionMaterial(e:GetHandler()) or not Auxiliary.FConditionFilterConAndSub(gc,f,true) then return false end
-					mg:RemoveCard(gc)
+					mg1:RemoveCard(gc)
 					if (gc:IsLocation(LOCATION_MZONE) or chkf==PLAYER_NONE or mg1:IsExists(Auxiliary.FConditionCheckF,1,nil,chkf)) 
 						and (not gc:IsHasEffect(73941492) or not gc.fuslimitfilter) and mg1:GetCount()>=cc-1 then return true end
-					return mg:IsExists(Auxiliary.FConditionFilterConNTune,1,nil,f,cc,e:GetHandler(),chkf,mg,nil,0,gc)
+					mg:AddCard(gc)
+					local res=mg:IsExists(Auxiliary.FConditionFilterConNTune,1,nil,f,cc,e:GetHandler(),chkf,mg,nil,0,gc)
+					mg:RemoveCard(gc)
+					return res
 				end
 				if mg1:GetCount()>=cc and (chkf==PLAYER_NONE or mg1:FilterCount(Auxiliary.FConditionCheckF,nil,chkf)~=0) then return true end
 				return mg:IsExists(Auxiliary.FConditionFilterConNTune,1,nil,f,cc,e:GetHandler(),chkf,mg,nil,0,nil)
@@ -1598,7 +1601,7 @@ end
 function Auxiliary.FOperationFunRep(f,cc,insf)
 	return	function(e,tp,eg,ep,ev,re,r,rp,gc,chkfnf)
 				local chkf=bit.band(chkfnf,0xff)
-				local g=eg:Filter(Card.IsCanBeFusionMaterial,nil,e:GetHandler())
+				local g=eg:Filter(Card.IsCanBeFusionMaterial,gc,e:GetHandler())
 				g=g:Filter(Auxiliary.FConditionFilterConAndSub,nil,f,true)
 				local mg1=g:Filter(function(c) return not c:IsHasEffect(73941492) or not c.fuslimitfilter end,nil)
 				local p=tp
@@ -1609,8 +1612,10 @@ function Auxiliary.FOperationFunRep(f,cc,insf)
 					if g:IsExists(Card.IsLocation,1,nil,LOCATION_HAND) then sfhchk=true end
 				end
 				if gc then
+					g:AddCard(gc)
 					local matg=Group.CreateGroup()
 					if g:IsExists(Auxiliary.FConditionFilterConNTune,1,nil,f,cc,e:GetHandler(),chkf,g,nil,0,gc) then
+						g:RemoveCard(gc)
 						local ct=1
 						if cc>1 then
 							matg:AddCard(gc)
@@ -1624,6 +1629,7 @@ function Auxiliary.FOperationFunRep(f,cc,insf)
 							matg:RemoveCard(gc)
 						end
 					else
+						g:RemoveCard(gc)
 						if chkf~=PLAYER_NONE and not gc:IsLocation(LOCATION_MZONE) then
 							Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
 							local g1=mg1:FilterSelect(tp,Auxiliary.FConditionCheckF,1,1,nil,chkf)
