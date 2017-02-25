@@ -1,6 +1,6 @@
 --薔薇の刻印
 function c45247637.initial_effect(c)
-	aux.AddEquipProcedure(c,nil,Card.IsControlerCanBeChanged,c45247637.eqlimit,c45247637.cost,c45247637.target)
+	aux.AddEquipProcedure(c,1,Card.IsControlerCanBeChanged,c45247637.eqlimit,c45247637.cost,c45247637.target)
 	--control
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(45247637,0))
