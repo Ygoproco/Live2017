@@ -50,7 +50,7 @@ function c100200128.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100200128.deffilter(c)
-	return c:GetBaseDefense()>=0 and c:IsSetCard(0x9f) and c:IsPosition(POS_FACEUP_DEFENSE)
+	return c:GetBaseDefense()>=0 and c:IsSetCard(0x9f)
 end
 function c100200128.defval(e,c)
 	local g=Duel.GetMatchingGroup(c100200128.deffilter,c:GetControler(),LOCATION_MZONE,0,c)
