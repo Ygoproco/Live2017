@@ -53,7 +53,7 @@ function c101001074.target1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 	local pe=Duel.GetChainInfo(ct-1,CHAININFO_TRIGGERING_EFFECT)
 	local tc=pe:GetHandler()
-	if pe:IsActiveType(TYPE_EFFECT) and pe:IsControler(1-tp)
+	if pe:IsActiveType(TYPE_EFFECT) and tc:IsControler(1-tp)
 		and Duel.SelectYesNo(tp,94) then
 		e:SetCategory(CATEGORY_TOHAND)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
