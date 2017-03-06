@@ -1,13 +1,6 @@
 --リボーンリボン
 function c37534148.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,c37534148.filter)
-	--Equip limit
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_EQUIP_LIMIT)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetValue(c37534148.eqlimit)
-	c:RegisterEffect(e2)
 	--special summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
@@ -50,7 +43,7 @@ end
 function c37534148.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
