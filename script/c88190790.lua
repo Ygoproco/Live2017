@@ -56,19 +56,8 @@ function c88190790.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	e1:SetReset(RESET_CHAIN)
 	e1:SetLabel(Duel.GetCurrentChain())
 	e1:SetLabelObject(e)
-	e1:SetOperation(c88190790.operation)
+	e1:SetOperation(aux.EquipEquip)
 	Duel.RegisterEffect(e1,tp)
-end
-function c88190790.operation(e,tp,eg,ep,ev,re,r,rp)
-	if re~=e:GetLabelObject() then return end
-	local c=e:GetHandler()
-	if c:IsType(TYPE_EQUIP) and c:IsLocation(LOCATION_SZONE) and c:IsFaceup() then
-		local ct=Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)
-		local tc=Duel.GetChainInfo(Duel.GetCurrentChain(),CHAININFO_TARGET_CARDS):GetFirst()
-		if ct==1 and tc and c:IsRelateToEffect(re) and tc:IsRelateToEffect(re) and tc:IsFaceup() then
-			Duel.Equip(tp,c,tc)
-		end
-	end
 end
 function c88190790.macon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
