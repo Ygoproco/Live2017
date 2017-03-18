@@ -68,7 +68,7 @@ function c100217025.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return st>=(SUMMON_TYPE_SPECIAL+100) and st<(SUMMON_TYPE_SPECIAL+150)
 end
 function c100217025.tgfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1019) and c:IsAbleToGrave()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x19) and c:IsAbleToGrave()
 end
 function c100217025.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100217025.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -103,7 +103,7 @@ function c100217025.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c100217025.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	if tc then
-		Duel.SpecialSummon(tc,104,tp,tp,false,false,POS_FACEUP)	 
+		Duel.SpecialSummon(tc,104,tp,tp,false,false,POS_FACEUP)  
 		tc:RegisterFlagEffect(tc:GetOriginalCode(),RESET_EVENT+0x1ff0000,0,0)
 	end
 end
