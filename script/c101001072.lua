@@ -13,6 +13,7 @@ function c101001072.initial_effect(c)
 	e1:SetCost(c101001072.cost)
 	e1:SetTarget(c101001072.target)
 	e1:SetOperation(c101001072.activate)
+	c:RegisterEffect(e1)
 	--to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
