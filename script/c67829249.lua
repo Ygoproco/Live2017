@@ -18,9 +18,8 @@ function c67829249.cfilter(c)
 end
 function c67829249.condition(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsExistingMatchingCard(c67829249.isfilter,tp,LOCATION_DECK,0,1,nil)
-	and Duel.IsExistingMatchingCard(c67829249.cfilter,tp,LOCATION_MZONE,0,1,nil)
-	then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-	else return Duel.GetLocationCount(tp,LOCATION_SZONE)>1
+	then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.IsExistingMatchingCard(c67829249.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	else return Duel.GetLocationCount(tp,LOCATION_SZONE)>1 and Duel.IsExistingMatchingCard(c67829249.cfilter,tp,LOCATION_MZONE,0,1,nil)
 	end
 end
 function c67829249.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -45,10 +44,5 @@ function c67829249.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CANNOT_TRIGGER)
 		e1:SetReset(RESET_EVENT+0x17a0000+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
-		local e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_CANNOT_USE_AS_COST)
-		e2:SetReset(RESET_EVENT+0x17a0000+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e2)
 	end
 end
