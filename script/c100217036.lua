@@ -29,7 +29,6 @@ function c100217036.initial_effect(c)
 	e4:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	c:RegisterEffect(e4)
 	local e5=e3:Clone()
-	e5:SetCondition(c100217036.damcon)
 	e5:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	c:RegisterEffect(e5)
 	--to deck
