@@ -10,16 +10,18 @@ function c67829249.initial_effect(c)
 	e1:SetOperation(c67829249.operation)
 	c:RegisterEffect(e1)
 end
-function c67829249.isfilter(c)
-	return c:IsType(TYPE_FIELD)
-end
 function c67829249.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x7)
 end
 function c67829249.condition(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsExistingMatchingCard(c67829249.isfilter,tp,LOCATION_DECK,0,1,nil)
-	then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.IsExistingMatchingCard(c67829249.cfilter,tp,LOCATION_MZONE,0,1,nil)
-	else return Duel.GetLocationCount(tp,LOCATION_SZONE)>1 and Duel.IsExistingMatchingCard(c67829249.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	if Duel.IsExistingMatchingCard(aux.FilterBoolFunction(Card.IsType,TYPE_FIELD),tp,LOCATION_DECK,0,1,nil) then
+		return Duel.IsExistingMatchingCard(c67829249.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	else 
+		if e:GetHandler():IsLocation(LOCATION_SZONE) then
+			return Duel.GetLocationCount(tp,LOCATION_SZONE)>=1 and Duel.IsExistingMatchingCard(c67829249.cfilter,tp,LOCATION_MZONE,0,1,nil)
+		else
+			return Duel.GetLocationCount(tp,LOCATION_SZONE)>1 and Duel.IsExistingMatchingCard(c67829249.cfilter,tp,LOCATION_MZONE,0,1,nil)
+		end
 	end
 end
 function c67829249.cost(e,tp,eg,ep,ev,re,r,rp,chk)
