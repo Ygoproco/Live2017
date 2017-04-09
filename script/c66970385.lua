@@ -13,8 +13,11 @@ function c66970385.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c66970385.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0 and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
-	and Duel.GetLocationCount(tp,LOCATION_SZONE)>1
+	if e:GetHandler():IsLocation(LOCATION_SZONE) then
+		return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0 and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>=1
+	else
+		return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0 and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>1
+	end
 end
 function c66970385.filter(c,e,tp)
 	return c:IsSetCard(0x107a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
