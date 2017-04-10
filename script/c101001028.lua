@@ -19,16 +19,26 @@ function c101001028.initial_effect(c)
 	e2:SetDescription(aux.Stringid(101001028,0))
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
+	if TIMINGS_CHECK_MONSTER_E then
+		e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
+	end
 	e2:SetCost(c101001028.cost)
 	e2:SetTarget(c101001028.target)
 	e2:SetOperation(c101001028.operation)
 	c:RegisterEffect(e2)
 	--mill
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e0:SetCode(EVENT_CHAINING)
+	e0:SetRange(LOCATION_MZONE)
+	e0:SetOperation(aux.chainreg)
+	c:RegisterEffect(e0)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(101001028,1))
 	e3:SetCategory(CATEGORY_DECKDES)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e3:SetCode(EVENT_CHAINING)
+	e3:SetCode(EVENT_CHAIN_SOLVED)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(c101001028.ddcon)
@@ -54,20 +64,19 @@ function c101001028.filter(c)
 	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and not (c:IsSetCard(0x38) and c:IsType(TYPE_MONSTER)) and c:IsAbleToDeck()
 end
 function c101001028.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
 	local g=Duel.GetMatchingGroup(c101001028.filter,tp,LOCATION_GRAVE+LOCATION_REMOVED,LOCATION_GRAVE+LOCATION_REMOVED,e:GetHandler())
+	if chk==0 then return g:GetCount()>0 end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
-	Duel.SetChainLimit(aux.FALSE)
 end
 function c101001028.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(c101001028.filter,tp,LOCATION_GRAVE+LOCATION_REMOVED,LOCATION_GRAVE+LOCATION_REMOVED,e:GetHandler())
+	local g=Duel.GetMatchingGroup(c101001028.filter,tp,LOCATION_GRAVE+LOCATION_REMOVED,LOCATION_GRAVE+LOCATION_REMOVED,nil)
 	Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 end
 function c101001028.ddcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
 	return re:IsActiveType(TYPE_MONSTER) and rc~=c
-		and rc:IsSetCard(0x38) and rc:IsControler(tp)
+		and rc:IsSetCard(0x38) and rc:IsControler(tp) and c:GetFlagEffect(1)>0
 end
 function c101001028.ddtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
