@@ -1,6 +1,6 @@
 --闇の進軍
 --March of Darkness
---Scripted by Eerie Code
+--Scripted by Eerie Code, fixed by senpaizuri
 function c101001059.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
@@ -35,6 +35,6 @@ function c101001059.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		local ol=tc:GetOriginalLevel()
 		local rg=Duel.GetDecktopGroup(tp,ol)
-		Duel.Remove(rg,POS_FACEUP_REASON_EFFECT)
+		Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)
 	end
 end
