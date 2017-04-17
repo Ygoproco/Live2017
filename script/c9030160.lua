@@ -47,8 +47,12 @@ function c9030160.initial_effect(c)
 	e8:SetOperation(c9030160.damop)
 	c:RegisterEffect(e8)
 end
+function c9030160.filter(c)
+	local seq=c:GetSequence()
+	return c:IsFaceup() and (seq==6 or seq==7) and c:IsSetCard(0xaf)
+end
 function c9030160.condition(e)
-	return Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_PZONE,0,2,nil,0xaf)
+	return Duel.IsExistingMatchingCard(c9030160.filter,e:GetHandlerPlayer(),LOCATION_SZONE,0,2,nil)
 end
 function c9030160.sumlimit(e,c)
 	if not c then return false end
