@@ -13,6 +13,7 @@ function c100418018.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetCountLimit(1)
 	e2:SetCondition(c100418018.econ)
 	e2:SetCost(c100418018.remcost)
 	e2:SetOperation(c100418018.remop)
@@ -23,22 +24,20 @@ function c100418018.initial_effect(c)
 	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_BATTLE_START)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCondition(c100418018.econ)
+	e3:SetRange(LOCATION_SZONE)
 	e3:SetCondition(c100418018.descon)
 	e3:SetTarget(c100418018.destg)
 	e3:SetOperation(c100418018.desop)
 	c:RegisterEffect(e3)
 end
-function c100418018.filter(c)
-	return c:IsCode(22702055) and c:GetActivateEffect():IsActivatable(tp)
+function c100418018.filter(c,tp)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsCode(22702055) and c:GetActivateEffect():IsActivatable(tp)
 end
 function c100418018.activate(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100418018.filter),tp,LOCATION_HAND+LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c100418018.filter),tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,tp)
 	if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(100418018,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-		local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100418018.filter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,tp):GetFirst()
+		local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c100418018.filter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,tp):GetFirst()
 		if tc then
 			local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 			if fc then
@@ -50,7 +49,7 @@ function c100418018.activate(e,tp,eg,ep,ev,re,r,rp)
 			local tep=tc:GetControler()
 			local cost=te:GetCost()
 			if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
-			Duel.RaiseEvent(tc,4179255,te,0,tp,tp,Duel.GetCurrentChain())
+			Duel.RaiseEvent(tc,EVENT_CHAIN_SOLVED,te,0,tp,tp,Duel.GetCurrentChain())
 		end
 	end
 end
@@ -68,13 +67,13 @@ function c100418018.remcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingMatchingCard(c100418018.costfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,c100418018.costfilter,tp,LOCATION_MZONE,0,1,1,nil)
-	if Duel.Remove(g,POS_FACEUP,REASON_COST+REASON_TEMPORARY)~=0 then
+	local tc=Duel.SelectMatchingCard(tp,c100418018.costfilter,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+	if Duel.Remove(tc,POS_FACEUP,REASON_COST+REASON_TEMPORARY)~=0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetReset(RESET_PHASE+PHASE_END)
-		e1:SetLabelObject(g)
+		e1:SetLabelObject(tc)
 		e1:SetCountLimit(1)
 		e1:SetOperation(c100418018.retop)
 		Duel.RegisterEffect(e1,tp)
@@ -105,7 +104,8 @@ function c100418018.descon(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsControler(1-tp) then tc,bc=bc,tc end
 	if tc:GetOriginalLevel()>=5 and tc:IsAttribute(ATTRIBUTE_WATER) then
 		e:SetLabelObject(bc)
-		return true
+		return Duel.IsExistingMatchingCard(c100418018.efilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+		or Duel.IsEnvironment(22702055)
 	else return false end
 end
 function c100418018.destg(e,tp,eg,ep,ev,re,r,rp,chk)
