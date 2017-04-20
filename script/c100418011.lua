@@ -29,6 +29,7 @@ function c100418011.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BATTLED)
 	e3:SetRange(LOCATION_SZONE)
+	e3:SetCondition(c100418011.rmcon)
 	e3:SetTarget(c100418011.rmtg)
 	e3:SetOperation(c100418011.rmop)
 	c:RegisterEffect(e3)
@@ -79,22 +80,22 @@ function c100418011.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function c100418011.check(c,tp)
-	return c and c:IsControler(tp) and c:IsSetCard(0x4)
+function c100418011.rmcon(e,tp,eg,ep,ev,re,r,rp)
+	local a=Duel.GetAttacker()
+	local d=a:GetAttackTarget()
+	if a:IsControler(1-tp) then a,d=d,a end
+	e:SetLabelObject(d)
+	return a:IsSetCard(0x4) and d and d:IsStatus(STATUS_OPPO_BATTLE) and d:IsRelateToBattle()
 end
 function c100418011.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetAttackTarget()~=nil
-		and (c100418011.check(Duel.GetAttacker(),tp) or c100418011.check(Duel.GetAttackTarget(),tp)) end
-	if c100418011.check(Duel.GetAttacker(),tp) then
-		Duel.SetTargetCard(Duel.GetAttackTarget())
-	else
-		Duel.SetTargetCard(Duel.GetAttacker())
-	end
+	local tc=e:GetLabelObject()
+	if chk==0 then return tc and tc:IsAbleToRemove() end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,tc,1,0,0)
 end
 function c100418011.rmop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+	local bc=e:GetLabelObject()
+	if bc:IsRelateToBattle() and bc:IsControler(1-tp) then
+		Duel.Remove(bc,POS_FACEUP,REASON_EFFECT)
 	end
 end
 function c100418011.spcon(e,tp,eg,ep,ev,re,r,rp)
