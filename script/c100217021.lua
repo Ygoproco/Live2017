@@ -46,13 +46,13 @@ function c100217021.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c100217021.filter(c)
-	return  c:IsType(TYPE_MONSTER) and c:IsSetCard(0x4) and not c:IsCode(100217021) and (c:IsAbleToHand() or c:IsAbleToDeck())
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x4) and not c:IsCode(100217021) and (c:IsAbleToHand() or c:IsAbleToDeck())
 end
 function c100217021.thtg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c100217021.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c100217021.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c100217021.filter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectTarget(tp,c100217021.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,c100217021.filter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function c100217021.thop2(e,tp,eg,ep,ev,re,r,rp)
@@ -61,6 +61,6 @@ function c100217021.thop2(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tc)
 	else
-		Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)
+		Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
 	end
 end

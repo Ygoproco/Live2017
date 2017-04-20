@@ -28,7 +28,7 @@ end
 function c100418010.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100418010.filter,tp,LOCATION_DECK,0,1,nil) end
 end
-function c100418010.operation(e,tp,eg,ep,ev,re,r,rp)
+function c100418010.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,c100418010.filter,tp,LOCATION_DECK,0,1,1,nil)
 	local tc=g:GetFirst()
@@ -53,9 +53,10 @@ function c100418010.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,c100418010.atkfilter,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function c100418010.atkop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		local e1=Effect.CreateEffect(e:GetHandler())
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_ATTACK_ALL)
 		e1:SetValue(1)
