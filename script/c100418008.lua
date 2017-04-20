@@ -28,7 +28,7 @@ function c100418008.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(100418008,1))
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e4:SetCost(c100418008.sumcost)
 	e4:SetTarget(c100418008.sumtg)
@@ -68,12 +68,12 @@ end
 function c100418008.sumfilter(c,e,tp)
 	return c:IsSetCard(0x4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c100418008.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c100418008.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
 		and Duel.IsExistingMatchingCard(c100418008.sumfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
-function c100418008.spop(e,tp,eg,ep,ev,re,r,rp)
+function c100418008.sumop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c100418008.sumfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
