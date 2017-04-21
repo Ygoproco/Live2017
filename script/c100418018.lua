@@ -102,7 +102,7 @@ function c100418018.descon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=Duel.GetAttackTarget()
 	if not bc then return false end
 	if tc:IsControler(1-tp) then tc,bc=bc,tc end
-	if tc:GetOriginalLevel()>=5 and tc:IsAttribute(ATTRIBUTE_WATER) then
+	if tc:GetOriginalLevel()>=5 and tc:IsAttribute(ATTRIBUTE_WATER) and tc:IsFaceup() then
 		e:SetLabelObject(bc)
 		return Duel.IsExistingMatchingCard(c100418018.efilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 		or Duel.IsEnvironment(22702055)
