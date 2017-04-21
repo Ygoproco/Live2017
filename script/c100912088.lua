@@ -32,24 +32,27 @@ function c100912088.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c100912088.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	local ec=e:GetHandler():GetEquipTarget()
-	if not (ec and eg:IsContains(ec)) then return false end
-	local bc=ec:GetBattleTarget()
-	e:SetLabelObject(bc)
-	return bc:IsLocation(LOCATION_GRAVE) and bc:IsReason(REASON_BATTLE) and bc:IsAbleToRemove() 
-		and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,bc)
+	return eg:GetFirst()==e:GetHandler():GetEquipTarget()
 end
 function c100912088.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,2,0,0)  
+	local bc=eg:GetFirst():GetBattleTarget()
+	e:SetLabelObject(bc)
+	if chk==0 then return bc:IsAbleToRemove()
+		and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,bc) end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,bc,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_ONFIELD)
 end
 function c100912088.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local bc=e:GetLabelObject()
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,1,bc)
-	if g:GetCount()==0 then return end
-	g:AddCard(bc) 
-	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+	if bc:IsAbleToRemove() then
+		local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,bc)
+		if g:GetCount()==0 then return end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+		local sg=g:Select(tp,nil,1,1)
+		Duel.HintSelection(sg)
+		sg:AddCard(bc)
+		Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
+	end
 end
 function c100912088.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
