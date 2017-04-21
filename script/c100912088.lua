@@ -36,8 +36,8 @@ function c100912088.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	if not (ec and eg:IsContains(ec)) then return false end
 	local bc=ec:GetBattleTarget()
 	e:SetLabelObject(bc)
-	return bc:IsLocation(LOCATION_GRAVE) and bc:IsReason(REASON_BATTLE) 
-		and bc:IsAbleToRemove() and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,bc)
+	return bc:IsLocation(LOCATION_GRAVE) and bc:IsReason(REASON_BATTLE) and bc:IsAbleToRemove() 
+		and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,bc)
 end
 function c100912088.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
