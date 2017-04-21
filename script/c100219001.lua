@@ -35,6 +35,7 @@ function c100219001.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,100219001+100)
+	e3:SetHintTiming(TIMING_BATTLE_START)
 	e3:SetCondition(c100219001.descon)
 	e3:SetTarget(c100219001.destg)
 	e3:SetOperation(c100219001.desop)
@@ -58,20 +59,23 @@ function c100219001.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local d=a:GetBattleTarget()
 	return a:IsFaceup() and a:IsRelateToBattle()
 		and d and d:IsFaceup() and d:IsRelateToBattle()
-		and d:GetAttack()>0 and a:GetControler()~=d:GetControler()
+		and (d:GetAttack()>0 or a:GetAttack()>0) and a:GetControler()~=d:GetControler()
 end
 function c100219001.atkop(e,tp,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=a:GetBattleTarget()
-	if e:GetHandler():IsRelateToEffect(e) 
+	local b,atk=nil,0
+	if a:IsControler(tp) then b,atk=a,d:GetAttack()
+	else b,atk=d,a:GetAttack() end
+	if e:GetHandler():IsRelateToEffect(e) and b
 		and a:IsFaceup() and a:IsRelateToBattle()
 		and d:IsFaceup() and d:IsRelateToBattle() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetValue(d:GetAttack())
+		e1:SetValue(atk)
 		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_DAMAGE_CAL)
-		a:RegisterEffect(e1)
+		b:RegisterEffect(e1)
 	end
 end
 function c100219001.disfilter(c)
