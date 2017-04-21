@@ -53,5 +53,5 @@ function c100418017.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function c100418017.disop(e,tp)
-	return e:GetLabel()
+	return e:GetLabel()*0x10000
 end
