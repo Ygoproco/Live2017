@@ -48,7 +48,7 @@ function c100912088.rmop(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,bc)
 		if g:GetCount()==0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local sg=g:Select(tp,nil,1,1)
+		local sg=g:Select(tp,1,1,nil)
 		Duel.HintSelection(sg)
 		sg:AddCard(bc)
 		Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
