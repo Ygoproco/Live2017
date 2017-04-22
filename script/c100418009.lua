@@ -34,6 +34,18 @@ function c100418009.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetValue(c100418009.val)
 	c:RegisterEffect(e4)
+	--limit
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetCode(EFFECT_CANNOT_SUMMON)
+	e5:SetCondition(c100418009.sumcon)
+	c:RegisterEffect(e5)
+	local e6=e5:Clone()
+	e6:SetCode(EFFECT_CANNOT_FLIP_SUMMON)
+	c:RegisterEffect(e6)
+	local e7=e5:Clone()
+	e7:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	c:RegisterEffect(e7)
 end
 function c100418009.cfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsSetCard(0x4)
@@ -53,4 +65,11 @@ function c100418009.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100418009.val(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsSetCard,c:GetControler(),LOCATION_GRAVE,0,nil,0x4)*100
+end
+function c100418009.sumfilter(c)
+	return c:IsFaceup() and c:IsCode(10979723)
+end
+function c100418009.sumcon(e)
+	local c=e:GetHandler()
+	return Duel.IsExistingMatchingCard(c100418009.sumfilter,c:GetControler(),LOCATION_MZONE,0,1,c)
 end
