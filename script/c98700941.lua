@@ -4,7 +4,7 @@
 function c98700941.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(98700941,0))
+	e1:SetDescription(aux.Stringid(60953949,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
@@ -49,7 +49,7 @@ function c98700941.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp
 end
 function c98700941.thfilter(c)
-	return c:IsSetCard(0x1fb) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0xfb) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c98700941.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c98700941.thfilter(chkc) end

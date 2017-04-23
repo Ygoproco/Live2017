@@ -31,7 +31,7 @@ function c100217039.initial_effect(c)
 	local e5=e3:Clone()
 	e5:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	c:RegisterEffect(e5)
-	--change lp
+	--to deck
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(100217039,1))
 	e6:SetCategory(CATEGORY_TODECK+CATEGORY_DAMAGE)
@@ -72,6 +72,7 @@ function c100217039.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
 		Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,500)
 	end
+	Duel.SetChainLimit(aux.FALSE)
 end
 function c100217039.tdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
