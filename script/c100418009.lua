@@ -67,7 +67,7 @@ function c100418009.val(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsSetCard,c:GetControler(),LOCATION_GRAVE,0,nil,0x4)*100
 end
 function c100418009.sumfilter(c)
-	return c:IsFaceup() and c:IsCode(10979723)
+	return c:IsFaceup() and c:GetOriginalCode()==10979723
 end
 function c100418009.sumcon(e)
 	local c=e:GetHandler()
