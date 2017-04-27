@@ -85,5 +85,5 @@ function c100217005.atkcon1(e)
 	return Duel.GetMatchingGroupCount(Card.IsFacedown,e:GetHandlerPlayer(),0,LOCATION_SZONE,nil)>=4
 end
 function c100217005.atkval(e,c)
-	return c:GetAttack()*2
+	return c:GetBaseAttack()*2
 end
