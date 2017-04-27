@@ -114,6 +114,7 @@ function c100219001.disop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100219001.descon(e,tp,eg,ep,ev,re,r,rp)
 	return (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
+		and e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO
 end
 function c100219001.desfilter(c)
 	return c:IsFaceup() and c:IsLevelAbove(5)
