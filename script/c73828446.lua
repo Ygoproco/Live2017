@@ -48,7 +48,7 @@ function c73828446.rmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,1,bc)
 	if g:GetCount()==0 then return end
-	g:Merge(bc) 
+	g:AddCard(bc) 
 	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 end
 function c73828446.spcon(e,tp,eg,ep,ev,re,r,rp)
