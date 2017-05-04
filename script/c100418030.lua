@@ -40,7 +40,7 @@ end
 function c100418030.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local loc=0
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>-1 then loc=loc+LOCATION_DECK end
-	if Duel.GetLocationCountFromEx(tp)>-1 then loc=loc+LOCATION_EXTRA end
+	if not Duel.GetLocationCountFromEx or Duel.GetLocationCountFromEx(tp)>-1 then loc=loc+LOCATION_EXTRA end
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and c100418030.spfilter1(chkc,e,tp,loc) end
 	if chk==0 then return loc~=0 and Duel.IsExistingTarget(c100418030.spfilter1,tp,0,LOCATION_MZONE,1,nil,e,tp,loc) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
@@ -50,7 +50,7 @@ end
 function c100418030.spop(e,tp,eg,ep,ev,re,r,rp)
 	local loc=0
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>-1 then loc=loc+LOCATION_DECK end
-	if Duel.GetLocationCountFromEx(tp)>-1 then loc=loc+LOCATION_EXTRA end
+	if not Duel.GetLocationCountFromEx or Duel.GetLocationCountFromEx(tp)>-1 then loc=loc+LOCATION_EXTRA end
 	local tc=Duel.GetFirstTarget()
 	if loc~=0 and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
