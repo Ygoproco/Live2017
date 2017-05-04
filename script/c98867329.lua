@@ -16,7 +16,7 @@ function c98867329.initial_effect(c)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetCondition(c98867329.eqcon)
 	e2:SetTarget(c98867329.eqtg)
-	e2:SetOperation(c98867329.op)
+	e2:SetOperation(c98867329.eqop)
 	c:RegisterEffect(e2)
 end
 function c98867329.atkval(e,c)
@@ -33,10 +33,10 @@ function c98867329.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
 end
-function c98867329.op(e,tp,eg,ep,ev,re,r,rp)
+function c98867329.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local tc=Duel.GetChainInfo(Duel.GetCurrentChain(),CHAININFO_TARGET_CARDS):GetFirst()
-	if tc and c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsFaceup() and Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true) then
+	local tc=Duel.GetFirstTarget()
+	if c:IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.Equip(tp,c,tc)
 	end
 end
