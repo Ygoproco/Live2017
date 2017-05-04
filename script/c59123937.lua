@@ -63,7 +63,7 @@ function c59123937.filter1(c,e)
 end
 function c59123937.filter2(c,e,tp,m,f,gc)
 	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x10af)
-		and c:IsLevelAbove(7) and (not f or f(c))
+		and c:IsLevelAbove(8) and (not f or f(c))
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,gc)
 end
 function c59123937.target(e,tp,eg,ep,ev,re,r,rp,chk)
