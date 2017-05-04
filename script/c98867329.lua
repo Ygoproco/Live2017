@@ -2,22 +2,22 @@
 function c98867329.initial_effect(c)
 	aux.AddEquipProcedure(c)
 	--Atk up
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_EQUIP)
-	e2:SetCode(EFFECT_UPDATE_ATTACK)
-	e2:SetValue(c98867329.atkval)
-	c:RegisterEffect(e2)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_EQUIP)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetValue(c98867329.atkval)
+	c:RegisterEffect(e1)
 	--equip
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(98867329,0))
-	e4:SetCategory(CATEGORY_EQUIP)
-	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e4:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
-	e4:SetCode(EVENT_TO_GRAVE)
-	e4:SetCondition(c98867329.eqcon)
-	e4:SetTarget(c98867329.eqtg)
-	e4:SetOperation(c98867329.op)
-	c:RegisterEffect(e4)
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(98867329,0))
+	e2:SetCategory(CATEGORY_EQUIP)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
+	e2:SetCode(EVENT_TO_GRAVE)
+	e2:SetCondition(c98867329.eqcon)
+	e2:SetTarget(c98867329.eqtg)
+	e2:SetOperation(c98867329.op)
+	c:RegisterEffect(e2)
 end
 function c98867329.atkval(e,c)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_MZONE,0)*-600
@@ -36,7 +36,7 @@ end
 function c98867329.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetChainInfo(Duel.GetCurrentChain(),CHAININFO_TARGET_CARDS):GetFirst()
-	if tc and c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsFaceup() and Duel.MoveToField(c,tp,1-tp,LOCATION_SZONE,POS_FACEUP,true) then
+	if tc and c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsFaceup() and Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true) then
 		Duel.Equip(tp,c,tc)
 	end
 end
