@@ -31,7 +31,7 @@ function c38299233.rdop(e,tp,eg,ep,ev,re,r,rp)
 	local d1=6
 	while d1==6 do
 		d1=Duel.TossDice(tp,1)
-		Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+19162135,re,r,rp,tp,1)
+		Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+19162135,e,r,rp,tp,1)
 	end
 	local tc=Duel.GetFieldCard(1-tp,LOCATION_MZONE,d1-1)
 	if tc then
