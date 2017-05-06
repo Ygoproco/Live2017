@@ -66,7 +66,7 @@ function c8491961.damcon(e,tp,eg,ep,ev,re,r,rp)
 		and bit.band(c:GetSummonType(),SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ
 end
 function c8491961.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(1-ep,Duel.GetBattleDamage(ep),false)
+	Duel.ChangeBattleDamage(1-tp,Duel.GetBattleDamage(tp),false)
 end
 function c8491961.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
