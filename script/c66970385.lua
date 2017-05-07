@@ -24,7 +24,7 @@ function c66970385.filter(c,e,tp)
 		and Duel.IsExistingTarget(c66970385.eqfilter,tp,LOCATION_GRAVE,0,1,nil,tp,c)
 end
 function c66970385.eqfilter(c,tp,ec)
-	return c:IsSetCard(0x207a) and (c:CheckUniqueOnField(tp) or c:IsOriginalCode(55569674)) and c:CheckEquipTarget(ec)
+	return c:IsSetCard(0x207a) and (c:CheckUniqueOnField(tp) or (c:GetOriginalCode()==55569674)) and c:CheckEquipTarget(ec)
 end
 function c66970385.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -44,7 +44,7 @@ function c66970385.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local ec=tg:GetFirst()
 	if ec==tc then ec=tg:GetNext() end
-	if tc:IsRelateToEffect(e) and ec:IsRelateToEffect(e) and (ec:CheckUniqueOnField(tp) or c:IsOriginalCode(55569674)) and ec:CheckEquipTarget(tc)
+	if tc:IsRelateToEffect(e) and ec:IsRelateToEffect(e) and (ec:CheckUniqueOnField(tp) or (c:GetOriginalCode()==55569674)) and ec:CheckEquipTarget(tc)
 		and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 then
 		Duel.Equip(tp,ec,tc)
 	end
