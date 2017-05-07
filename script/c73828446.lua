@@ -1,4 +1,4 @@
---SPYRAL GEAR – Fully Armed
+--SPYRAL GEAR - Fully Armed
 --Scripted by cybercatman
 function c73828446.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsCode,41091257))
@@ -49,7 +49,7 @@ function c73828446.rmop(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,bc)
 		if g:GetCount()==0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local sg=g:Select(tp,nil,1,1)
+		local sg=g:Select(tp,1,1,nil)
 		Duel.HintSelection(sg)
 		sg:AddCard(bc)
 		Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
