@@ -48,11 +48,8 @@ function c100217010.scop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SynchroSummon(tp,sg:GetFirst(),c)
 	end
 end
-function c100217010.spcon(e,c)
-	if c==nil then return true end
-	local tp=c:GetControler()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP)
+function c100217010.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP)
 end
 function c100217010.filter(c)
 	return c:IsFaceup() and c:IsLevelAbove(2) and c:IsSetCard(0x9a) and c:IsType(TYPE_SYNCHRO)
