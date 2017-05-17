@@ -38,9 +38,9 @@ function c100418017.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	local seq=0
 	while tc do
-		local s=bit.lshift(0x1,tc:GetSequence())
+		local s=tc:GetSequence()
 		if Duel.Destroy(tc,REASON_EFFECT)>0 then
-			seq=bit.bor(seq,s)
+			seq+=s
 		end
 		tc=g:GetNext()
 	end
