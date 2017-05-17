@@ -86,7 +86,7 @@ function c100217025.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c100217025.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToDeckAsCost() end
+	if chk==0 then return c:IsAbleToDeckOrExtraAsCost() end
 	Duel.SendtoDeck(c,nil,2,REASON_COST)
 end
 function c100217025.filter(c,e,tp)
