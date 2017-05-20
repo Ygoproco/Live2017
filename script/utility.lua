@@ -1,6 +1,13 @@
 Auxiliary={}
 aux=Auxiliary
 
+--To be removed after next core update
+if not Duel.GetLocationCountFromEx then
+	function Duel.GetLocationCountFromEx(tp)
+		return Duel.GetLocationCount(tp,LOCATION_MZONE)
+	end
+end
+
 function Auxiliary.Stringid(code,id)
 	return code*16+id
 end
