@@ -21,6 +21,7 @@ function c58242947.filter(c,e,tp,chk,chain)
 		te=c:GetActivateEffect()
 	end
 	if te==nil or c:GetType()~=0x4 or not c:IsAbleToRemoveAsCost() then return false end
+	local condition=te:GetCondition()
 	local target=te:GetTarget()
 	if te:GetCode()==EVENT_CHAINING and chk==1 then
 		if chain<=0 then return false end
@@ -29,7 +30,7 @@ function c58242947.filter(c,e,tp,chk,chain)
 		local g=Group.FromCards(tc)
 		eg,ep,ev,re,r,rp=g,p,chain,te2,REASON_EFFECT,p
 	end
-	return not target or target(e,tp,eg,ep,ev,re,r,rp,0)
+	return (not condition or condition(e,tp,eg,ep,ev,re,r,rp)) and (not target or target(e,tp,eg,ep,ev,re,r,rp,0))
 end
 function c58242947.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
