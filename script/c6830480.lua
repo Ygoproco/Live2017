@@ -1,6 +1,7 @@
 --黄昏の忍者－カゲン
 --Twilight Ninja Kagen
 --Scripted by Eerie Code
+--fixed by Larry126
 function c6830480.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
@@ -20,6 +21,7 @@ function c6830480.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetRange(LOCATION_PZONE)
+	e2:SetCountLimit(1)
 	e2:SetCondition(c6830480.atkcon)
 	e2:SetOperation(c6830480.atkop)
 	c:RegisterEffect(e2)
