@@ -34,7 +34,7 @@ function c6022371.initial_effect(c)
 end
 function c6022371.splimit(e,se,sp,st)
 	local sc=se:GetHandler()
-	return sc and sc:IsType(TYPE_SPELL+TYPE_TRAP) and (sc:IsSetCard(0x200) or sc:IsCode(45898858))
+	return sc and sc:IsType(TYPE_SPELL+TYPE_TRAP) and (sc:IsSetCard(0x100) or sc:IsCode(45898858))
 end
 function c6022371.atkfilter(c)
 	return aux.nzatk(c) and c:IsType(TYPE_EFFECT)
