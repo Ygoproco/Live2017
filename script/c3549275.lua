@@ -19,7 +19,7 @@ function c3549275.operation(e,tp,eg,ep,ev,re,r,rp)
 	while d1==d2 do
 		d1,d2=Duel.TossDice(tp,1,1)
 		if not first then
-			Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+19162135,re,r,rp,PLAYER_ALL,1)
+			Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+19162135,e,r,rp,PLAYER_ALL,1)
 		end
 		first=false
 	end
