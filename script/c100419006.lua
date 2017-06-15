@@ -3,6 +3,13 @@
 --Scripted by Eerie Code
 --Fusion procedure by edo9300
 function c100419006.initial_effect(c)
+	--fusion limit
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e0:SetValue(c100419006.splimit)
+	c:RegisterEffect(e0)
 	--Fusion procedure
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -48,6 +55,9 @@ function c100419006.initial_effect(c)
 	e5:SetValue(c100419006.repval)
 	e5:SetOperation(c100419006.repop)
 	c:RegisterEffect(e5)
+end
+function c100419006.splimit(e,se,sp,st)
+	return e:GetHandler():GetLocation()~=LOCATION_EXTRA
 end
 function c100419006.ffilter(c,fc)
 	return c:IsFusionSetCard(0x3d) and not c:IsHasEffect(6205579) and c:IsCanBeFusionMaterial(fc)
@@ -97,9 +107,9 @@ function c100419006.sprcon(e,c)
 end
 function c100419006.sprfilter1(c,tp,fc)
 	return c:IsFusionSetCard(0x3d) and c:IsAbleToGraveAsCost() and c:IsCanBeFusionMaterial(fc)
-		and Duel.IsExistingMatchingCard(c100419006.sprfilter2,tp,LOCATION_MZONE,0,1,c,fc,c:GetFusionAttribute())
+		and Duel.IsExistingMatchingCard(c100419006.sprfilter2,tp,LOCATION_MZONE,0,1,c,tp,fc,c:GetFusionAttribute())
 end
-function c100419006.sprfilter2(c,fc,att)
+function c100419006.sprfilter2(c,tp,fc,att)
 	return c:IsFusionSetCard(0x3d) and c:IsAbleToGraveAsCost() and c:IsCanBeFusionMaterial(fc) and not c:IsFusionAttribute(att)
 	and Duel.IsExistingMatchingCard(c100419006.sprfilter3,tp,LOCATION_MZONE,0,1,c,fc,att,c:GetFusionAttribute())
 end
@@ -108,11 +118,11 @@ function c100419006.sprfilter3(c,fc,att1,att2)
 end
 function c100419006.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g1=Duel.SelectMatchingCard(tp,c100419006.sprfilter1,tp,LOCATION_ONFIELD,0,1,1,nil,80019195)
+	local g1=Duel.SelectMatchingCard(tp,c100419006.sprfilter1,tp,LOCATION_ONFIELD,0,1,1,nil,tp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g2=Duel.SelectMatchingCard(tp,c100419006.sprfilter2,tp,LOCATION_ONFIELD,0,1,1,nil,g1:GetFirst():GetFusionAttribute())
+	local g2=Duel.SelectMatchingCard(tp,c100419006.sprfilter2,tp,LOCATION_ONFIELD,0,1,1,nil,tp,c,g1:GetFirst():GetFusionAttribute())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g3=Duel.SelectMatchingCard(tp,c100419006.sprfilter3,tp,LOCATION_ONFIELD,0,1,1,nil,g1:GetFirst():GetFusionAttribute(),g2:GetFirst():GetFusionAttribute())
+	local g3=Duel.SelectMatchingCard(tp,c100419006.sprfilter3,tp,LOCATION_ONFIELD,0,1,1,nil,c,g1:GetFirst():GetFusionAttribute(),g2:GetFirst():GetFusionAttribute())
 	g1:Merge(g2)
 	g1:Merge(g3)
 	Duel.SendtoGrave(g1,REASON_COST)
