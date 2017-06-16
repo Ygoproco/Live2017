@@ -68,7 +68,7 @@ function c100419006.fselect(c,mg,sg,tp,fc)
 	sg:AddCard(c)
 	local res=false
 	if sg:GetCount()==3 then
-		res=Duel.GetLocationCountFromEx(tp,tp,sg,fc)>0
+		res=true
 	else
 		res=mg:IsExists(c100419006.fselect,1,sg,mg,sg,tp,fc)
 	end
@@ -112,7 +112,6 @@ end
 function c100419006.sprfilter3(c,tp,fc,mc1,mc2)
 	local g=Group.FromCards(c,mc1,mc2)
 	return c:IsFusionSetCard(0x3d) and c:IsAbleToGraveAsCost() and c:IsCanBeFusionMaterial(fc) and not c:IsFusionAttribute(mc1:GetFusionAttribute()) and not c:IsFusionAttribute(mc2:GetFusionAttribute())
-		and Duel.GetLocationCountFromEx(tp,tp,g)>0
 end
 function c100419006.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
