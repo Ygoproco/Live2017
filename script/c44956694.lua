@@ -25,7 +25,7 @@ function c100332006.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c100332006.thfilter(c)
-	return c:IsRace(RACE_CYBERS) and c:IsAbleToHand() and not c:IsCode(100332008)
+	return c:IsRace(RACE_CYBERS) and c:IsAbleToHand() and not c:IsCode(100332006)
 end
 function c100332006.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100332006.thfilter(chkc) end
