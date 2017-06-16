@@ -75,7 +75,7 @@ function c101002070.negop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
 end
 function c101002070.repfilter(c,tp)
-	return c:IsFaceup() and c:IsRace(RACE_DRAGON) and c:IsLocation(LOCATION_MZONE)
+	return c:IsFaceup() and c:IsSetCard(0x205) and c:IsLocation(LOCATION_ONFIELD)
 		and c:IsControler(tp) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
 end
 function c101002070.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
