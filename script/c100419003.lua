@@ -39,7 +39,7 @@ function c100419003.filter4(c,e,tp,rc)
 	local g=Group.FromCards(c,rc)
 	local ct=g:FilterCount(c100419003.filter0,nil)
 	return c100419003.filter1(c) and ft+ct>0
-		and Duel.IsExistingTarget(c100419003.filter2,tp,LOCATION_GRAVE,0,1,g,e,tp)
+		and Duel.IsExistingTarget(c100419003.filter2,tp,LOCATION_GRAVE,0,1,nil,e,tp,g)
 end
 function c100419003.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100419003.filter3,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,1,nil,e,tp) end
@@ -50,8 +50,9 @@ function c100419003.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	g1:Merge(g2)
 	Duel.Remove(g1,POS_FACEUP,REASON_COST)
 end
-function c100419003.filter2(c,e,tp)
-	return c:IsSetCard(0x3d) and not c:IsCode(100419003) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function c100419003.filter2(c,e,tp,g)
+	return c:IsSetCard(0x3d) and not c:IsCode(100419003) and (not g or not g:IsContains(c))
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100419003.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100419003.filter2(chkc,e,tp) end
