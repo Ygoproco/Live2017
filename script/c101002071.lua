@@ -4,21 +4,27 @@
 function c101002071.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(101002071,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
 	--negate
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(20155904,0))
+	e2:SetDescription(aux.Stringid(101002071,1))
 	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
-	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetType(EFFECT_TYPE_ACTIVATE)
 	e2:SetCode(EVENT_CHAINING)
-	e2:SetRange(LOCATION_SZONE)
+	e2:SetCountLimit(1,101002071)
 	e2:SetCondition(c101002071.discon)
 	e2:SetCost(c101002071.discost)
 	e2:SetTarget(c101002071.distg)
 	e2:SetOperation(c101002071.disop)
 	c:RegisterEffect(e2)
+	local e0=e2:Clone()
+	e0:SetType(EFFECT_TYPE_QUICK_O)
+	e0:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e0:SetRange(LOCATION_SZONE)
+	c:RegisterEffect(e0)
 	--cannot disable
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
@@ -51,21 +57,21 @@ function c101002071.discfilter(c)
 end
 function c101002071.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(c101002071.discfilter,tp,LOCATION_ONFIELD,0,1,c)
-		and Duel.GetFlagEffect(tp,101002071)==0 end
+	if chk==0 then return Duel.IsExistingMatchingCard(c101002071.discfilter,tp,LOCATION_ONFIELD,0,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c101002071.discfilter,tp,LOCATION_ONFIELD,0,1,1,c)
 	Duel.SendtoGrave(g,REASON_COST)
-	Duel.RegisterFlagEffect(tp,101002071,RESET_PHASE+PHASE_END,0,1)
 end
 function c101002071.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
 	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
 	end
 end
 function c101002071.disop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
+	Duel.NegateActivation(ev)
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)
 	end

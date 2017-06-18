@@ -1,7 +1,6 @@
 --星遺物－『星鎧』
 --Starrelic – “Stararmor”
 function c101002022.initial_effect(c)
-	c:EnableReviveLimit()
 	--spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101002022,0))
@@ -70,7 +69,7 @@ function c101002022.op(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,tc)
 	end
 end
-function c100332003.thcon(e)
+function c101002022.thcon(e)
 	local c=e:GetHandler()
 	return bit.band(c:GetSummonType(),SUMMON_TYPE_SPECIAL)==0
 end

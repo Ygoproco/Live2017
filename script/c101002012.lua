@@ -32,7 +32,7 @@ function c101002012.setop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local g=Duel.SelectMatchingCard(tp,c101002012.setfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
-		Duel.SSet(tp,g:GetFirst())  
+		Duel.SSet(tp,g:GetFirst())
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
@@ -62,20 +62,19 @@ function c101002012.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if ft>0 then
 		g1=Duel.SelectTarget(tp,c101002012.thfilter1,tp,LOCATION_ONFIELD,0,1,1,nil)
 	else
-		g1=Duel.SelectTarget(tp,c101002012.thfilter2,tp,LOCATION_MZONE,0,1,1,nil)
+		g1=Duel.SelectTarget(tp,c101002012.thfilter2,tp,LOCATION_ONFIELD,0,1,1,nil)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g2=Duel.SelectTarget(tp,c101002012.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g2=Duel.SelectTarget(tp,c101002012.spfilter,tp,LOCATION_ONFIELD,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g1,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g2,1,0,0)
+	e:SetLabelObject(g1:GetFirst())
 end
 function c101002012.spop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	if g:GetCount()~=2 then return end
-	local tc1=g:GetFirst()
-	local tc2=g:GetNext()
-	if tc1:IsLocation(LOCATION_GRAVE) then tc1,tc2=tc2,tc1 end
-	if Duel.SendtoGrave(tc1,REASON_EFFECT)>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	local tc1,tc2=Duel.GetFirstTarget()
+	if tc1~=e:GetLabelObject() then tc1,tc2=tc2,tc1 end
+	if tc1:IsRelateToEffect(e) and Duel.SendtoGrave(tc1,REASON_EFFECT)>0
+		and tc1:IsLocation(LOCATION_GRAVE) and tc2:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc2,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
