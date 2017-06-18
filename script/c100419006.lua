@@ -103,11 +103,11 @@ function c100419006.sprcon(e,c)
 end
 function c100419006.sprfilter1(c,tp,fc)
 	return c:IsFusionSetCard(0x3d) and c:IsAbleToGraveAsCost() and c:IsCanBeFusionMaterial(fc)
-		and Duel.IsExistingMatchingCard(c100419006.sprfilter2,tp,LOCATION_MZONE,0,1,c,fc,c:GetFusionAttribute())
+		and Duel.IsExistingMatchingCard(c100419006.sprfilter2,tp,LOCATION_MZONE,0,1,c,tp,fc,c)
 end
 function c100419006.sprfilter2(c,tp,fc,mc)
 	return c:IsFusionSetCard(0x3d) and c:IsAbleToGraveAsCost() and c:IsCanBeFusionMaterial(fc) and not c:IsFusionAttribute(mc:GetFusionAttribute())
-		and Duel.IsExistingMatchingCard(c100419006.sprfilter3,tp,LOCATION_MZONE,0,1,c,fc,att,c:GetFusionAttribute())
+		and Duel.IsExistingMatchingCard(c100419006.sprfilter3,tp,LOCATION_MZONE,0,1,c,tp,fc,mc,c)
 end
 function c100419006.sprfilter3(c,tp,fc,mc1,mc2)
 	local g=Group.FromCards(c,mc1,mc2)
