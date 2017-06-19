@@ -37,7 +37,7 @@ function c34294855.regop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(34294855,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,1)
 end
 function c34294855.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(34294855)>0
+	return e:GetHandler():GetFlagEffect(34294855)>0 and Duel.GetTurnPlayer()==tp
 end
 function c34294855.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,500) end
