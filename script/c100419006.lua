@@ -125,13 +125,13 @@ function c100419006.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.SendtoGrave(g1,REASON_COST)
 end
 function c100419006.costfilter(c,tp)
-	return c:IsSetCard(0x3d) and c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
+	return c:IsSetCard(0x3d) and c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
 		and Duel.IsExistingTarget(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 end
 function c100419006.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100419006.costfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c100419006.costfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,c100419006.costfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,1,nil,tp)
+	local g=Duel.SelectMatchingCard(tp,c100419006.costfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,1,nil,tp)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c100419006.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
