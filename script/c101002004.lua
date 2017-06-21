@@ -9,6 +9,8 @@ function c101002004.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCode(EVENT_DAMAGE)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
+	e1:SetCountLimit(1,101002004)
 	e1:SetCondition(c101002004.sumcon)
 	e1:SetTarget(c101002004.sumtg)
 	e1:SetOperation(c101002004.sumop)
@@ -43,7 +45,7 @@ function c101002004.sumop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function c101002004.regop(e,tp,eg,ep,ev,re,r,rp)
-	if rp~=tp and re:IsActiveType(TYPE_MONSTER)	and (re:GetActivateLocation()==LOCATION_GRAVE or re:GetActivateLocation()==LOCATION_HAND) then
+	if rp~=tp and re:IsActiveType(TYPE_MONSTER) and (re:GetActivateLocation()==LOCATION_GRAVE or re:GetActivateLocation()==LOCATION_HAND) then
 		e:GetHandler():RegisterFlagEffect(101002004,RESET_EVENT+0x1fc0000+RESET_CHAIN,0,1)
 	end
 end
