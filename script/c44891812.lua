@@ -42,6 +42,7 @@ end
 function c44891812.deftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local a=Duel.GetAttacker()
 	local d=a:GetBattleTarget()
+	if a==nil or d==nil then return false end
 	if a:IsControler(1-tp) then a,d=d,a end
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) 
 		and c44891812.deffilter(chkc) and chkc~=e:GetLabelObject() end
