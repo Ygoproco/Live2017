@@ -22,5 +22,5 @@ function c101002036.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c101002036.aclimit(e,re,tp)
-	return not re:GetHandler():IsType(TYPE_SPIRIT)
+	return not re:GetHandler():IsType(TYPE_SPIRIT) and re:GetHandler():IsType(TYPE_MONSTER)
 end
