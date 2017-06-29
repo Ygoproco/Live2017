@@ -48,9 +48,9 @@ function c101002073.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		if b1 and b2 then
 			op=Duel.SelectOption(tp,aux.Stringid(101002073,0),aux.Stringid(101002073,1))
 		elseif b1 then
-			op=Duel.SelectOption(tp,aux.Stringid(37055344,0))
+			op=Duel.SelectOption(tp,aux.Stringid(101002073,0))
 		else
-			op=Duel.SelectOption(tp,aux.Stringid(37055344,1))+1
+			op=Duel.SelectOption(tp,aux.Stringid(101002073,1))+1
 		end
 		e:SetLabel(op)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
