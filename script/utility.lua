@@ -2313,7 +2313,7 @@ end
 function Auxiliary.qlifilter(e,te)
 	if te:IsActiveType(TYPE_MONSTER) and te:IsActivated() then
 		local lv=e:GetHandler():GetLevel()
-		local ec=te:GetOwner()
+		local ec=te:GetHandler()
 		if ec:IsType(TYPE_XYZ) then
 			return ec:GetOriginalRank()<lv
 		else
