@@ -90,7 +90,7 @@ function c73734821.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c73734821.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousPosition(POS_FACEUP)
+	return e:GetHandler():IsPreviousPosition(POS_FACEUP) and not e:GetHandler():IsLocation(LOCATION_DECK)
 end
 function c73734821.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end
@@ -101,7 +101,7 @@ function c73734821.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c73734821.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
