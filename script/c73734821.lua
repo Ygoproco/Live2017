@@ -1,22 +1,25 @@
 --EMスカイ・マジシャン
 function c73734821.initial_effect(c)
 	--atk up
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e0:SetCode(EVENT_CHAINING)
+	e0:SetRange(LOCATION_MZONE)
+	e0:SetOperation(aux.chainreg)
+	c:RegisterEffect(e0)
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetCode(EVENT_CHAINING)
+	e1:SetDescription(aux.Stringid(73734821,0))
+	e1:SetCategory(CATEGORY_ATKCHANGE)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e1:SetCode(EVENT_CHAIN_SOLVED)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetOperation(aux.chainreg)
+	e1:SetCountLimit(1)
+	e1:SetCondition(c73734821.atkcon)
+	e1:SetOperation(c73734821.atkop)
 	c:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(73734821,0))
-	e2:SetCategory(CATEGORY_ATKCHANGE)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e2:SetCode(EVENT_CHAIN_SOLVED)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1)
-	e2:SetCondition(c73734821.atkcon)
-	e2:SetOperation(c73734821.atkop)
+	local e2=e1:Clone()
+	e2:SetCode(73734821)
 	c:RegisterEffect(e2)
 	--to hand
 	local e3=Effect.CreateEffect(c)
@@ -68,9 +71,7 @@ function c73734821.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function c73734821.tffilter(c,tp)
-	return c:IsSetCard(0x98) and c:GetType()==TYPE_SPELL+TYPE_CONTINUOUS
-		and c:GetActivateEffect()
-		and (c:GetActivateEffect():IsActivatable(tp) or Duel.GetTurnPlayer()~=tp)
+	return c:IsSetCard(0x98) and c:GetType()==TYPE_SPELL+TYPE_CONTINUOUS and c:GetActivateEffect():IsActivatable(tp,true)
 end
 function c73734821.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -85,12 +86,12 @@ function c73734821.thop(e,tp,eg,ep,ev,re,r,rp)
 			local tep=sc:GetControler()
 			local cost=te:GetCost()
 			if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
-			Duel.RaiseEvent(sc,EVENT_CHAIN_SOLVED,te,0,tp,tp,Duel.GetCurrentChain())
+			Duel.RaiseEvent(sc,73734821,te,0,tp,tp,Duel.GetCurrentChain())
 		end
 	end
 end
 function c73734821.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousPosition(POS_FACEUP)
+	return e:GetHandler():IsPreviousPosition(POS_FACEUP) and not e:GetHandler():IsLocation(LOCATION_DECK)
 end
 function c73734821.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end
@@ -101,7 +102,7 @@ function c73734821.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c73734821.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
