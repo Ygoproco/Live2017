@@ -10,9 +10,17 @@ function c100419024.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCountLimit(1,100419024+EFFECT_COUNT_CODE_OATH)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+0x1c0)
+	e1:SetCondition(c100419024.condition)
 	e1:SetTarget(c100419024.target)
 	e1:SetOperation(c100419024.activate)
 	c:RegisterEffect(e1)
+end
+function c100419024.cfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x206)
+end
+function c100419024.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(c100419024.cfilter,tp,LOCATION_MZONE,0,1,nil)
+		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function c100419024.filter(c)
 	return not (c:GetAttack()==0 and c:GetDefense()==0 and c:IsDisabled())
