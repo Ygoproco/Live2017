@@ -31,8 +31,11 @@ function c60349525.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=eg:GetFirst()
 	return c:GetLevel()>0
 end
+function c60349525.filter(c,e,tp)
+	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsCanBeEffectTarget(e) and c:GetSummonPlayer()~=tp
+end
 function c60349525.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return eg:IsExists(c60349525.filter,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,eg:GetFirst():GetLevel()*200)
 end
 function c60349525.operation(e,tp,eg,ep,ev,re,r,rp)
