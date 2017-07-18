@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 --Prototype, might require a core update for full functionality
 function c100419041.initial_effect(c)
-	c:SetUniqueOnField(100419041,1,0)
+	c:SetUniqueOnField(1,0,100419041)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -54,6 +54,7 @@ function c100419041.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetPlayer(htp)
 	Duel.SetTargetParam(1)
 	e:SetLabelObject(ec)
+	ec:CreateEffectRelation(e)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,ec,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,htp,1)
 end
