@@ -41,7 +41,7 @@ function c76647978.filter2(c,e,tp,mc,f,chkf)
 	local mg=Group.FromCards(c,mc)
 	return Duel.IsExistingMatchingCard(c76647978.ffilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg,f,chkf)
 end
-function c76647978.ffilter(c,e,tp,m,f)
+function c76647978.ffilter(c,e,tp,m,f,chkf)
 	return c:IsType(TYPE_FUSION) and (not f or f(c))
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
 end
