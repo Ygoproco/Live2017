@@ -48,7 +48,8 @@ end
 function c101001088.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=eg:GetFirst()
-	return rc:IsRelateToBattle() and rc:IsSetCard(0x20a) and rc:IsFaceup() and rc:IsControler(tp)
+	return rc:IsRelateToBattle() and rc:IsStatus(STATUS_OPPO_BATTLE)
+		and rc:IsFaceup() and rc:IsSetCard(0x20a) and rc:IsControler(tp)
 end
 function c101001088.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
