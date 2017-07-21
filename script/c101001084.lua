@@ -21,12 +21,14 @@ function c101001084.initial_effect(c)
 end
 c101001084.fit_monster={101001082}
 function c101001084.filter(c,e,tp,m1,m2,ft)
-	if not c:IsSetCard(0x209) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
+	if not c:IsSetCard(0x209) or bit.band(c:GetType(),0x81)~=0x81 
+		or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
 	local mg=m1:Filter(Card.IsCanBeRitualMaterial,c,c)
 	mg:Merge(m2)
 	if c.mat_filter then
 		mg=mg:Filter(c.mat_filter,nil)
 	end
+	if mg:IsContains(c) then mg:RemoveCard(c) end
 	if ft>0 then
 		return mg:CheckWithSumGreater(Card.GetRitualLevel,c:GetLevel(),c)
 	else
@@ -61,6 +63,7 @@ function c101001084.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		local mg=mg1:Filter(Card.IsCanBeRitualMaterial,tc,tc)
 		mg:Merge(mg2)
+		if mg:IsContains(c) then mg:RemoveCard(c) end
 		local mat=nil
 		if ft>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
