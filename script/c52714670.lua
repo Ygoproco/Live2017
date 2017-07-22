@@ -42,7 +42,7 @@ function c52714670.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg and eg:IsExists(Card.IsControler,1,nil,1-tp)
 end
 function c52714670.spfilter(c,e,tp)
-	return c:IsFaceup() and (c:IsCode(89189982,36898537) or c:IsSetCard(0x202))
+	return c:IsFaceup() and (c:IsCode(89189982,36898537) or c:IsSetCard(0x105))
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c52714670.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -84,7 +84,7 @@ function c52714670.ermop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 end
 function c52714670.rmcfilter(c,tp)
-	return c:IsControler(tp) and c:IsFaceup() and (c:IsCode(89189982,36898537) or c:IsSetCard(0x202))
+	return c:IsControler(tp) and c:IsFaceup() and (c:IsCode(89189982,36898537) or c:IsSetCard(0x105))
 end
 function c52714670.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg and eg:IsExists(c52714670.rmcfilter,1,e:GetHandler(),tp)

@@ -26,7 +26,7 @@ function c83293307.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c83293307.filter(c)
-	return c:IsSetCard(0x204) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x104) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c83293307.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c83293307.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -46,7 +46,7 @@ function c83293307.spcon(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp
 end
 function c83293307.filter1(c,e,tp)
-	return c:IsSetCard(0x204) and not c:IsCode(83293307) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x104) and not c:IsCode(83293307) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c83293307.filter2(c,g)
 	return g:IsExists(c83293307.filter3,1,c,c:GetCode())

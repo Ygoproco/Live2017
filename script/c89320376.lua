@@ -85,7 +85,7 @@ function c89320376.posop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c89320376.cfilter(c)
-	return c:IsSetCard(0x204) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeckOrExtraAsCost()
+	return c:IsSetCard(0x104) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeckOrExtraAsCost()
 end
 function c89320376.poscost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c89320376.cost(e,tp,eg,ep,ev,re,r,rp,0)

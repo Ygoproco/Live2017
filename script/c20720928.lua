@@ -32,7 +32,7 @@ function c20720928.ntcon(e,c,minc)
 	return minc==0 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function c20720928.nttg(e,c)
-	return c:IsLevelAbove(5) and (c:IsCode(89189982,36898537) or c:IsSetCard(0x202))
+	return c:IsLevelAbove(5) and (c:IsCode(89189982,36898537) or c:IsSetCard(0x105))
 end
 function c20720928.ntop(e,tp,eg,ep,ev,re,r,rp,c)
 	c:RegisterFlagEffect(20720928,RESET_EVENT+0xff0000,0,1)
@@ -63,7 +63,7 @@ function c20720928.rmop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c20720928.chainop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	if (rc:IsCode(89189982,36898537) or rc:IsSetCard(0x202)) and re:IsActiveType(TYPE_MONSTER) then
+	if (rc:IsCode(89189982,36898537) or rc:IsSetCard(0x105)) and re:IsActiveType(TYPE_MONSTER) then
 		Duel.SetChainLimit(c20720928.chainlm)
 	end
 end

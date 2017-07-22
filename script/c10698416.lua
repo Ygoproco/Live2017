@@ -26,7 +26,7 @@ function c10698416.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c10698416.filter(c)
-	return c:IsSetCard(0x204) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x104) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c10698416.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c10698416.filter(chkc) end
@@ -47,7 +47,7 @@ function c10698416.spcon(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp
 end
 function c10698416.filter1(c,e,tp)
-	return c:IsSetCard(0x204) and not c:IsCode(10698416) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x104) and not c:IsCode(10698416) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c10698416.filter2(c,g)
 	return g:IsExists(c10698416.filter3,1,c,c:GetCode())

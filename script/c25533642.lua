@@ -51,7 +51,7 @@ function c25533642.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c25533642.thfilter(c)
-	return c:IsSetCard(0x205) and c:IsType(TYPE_MONSTER) and not c:IsCode(25533642) and c:IsAbleToHand()
+	return c:IsSetCard(0x103) and c:IsType(TYPE_MONSTER) and not c:IsCode(25533642) and c:IsAbleToHand()
 end
 function c25533642.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c25533642.thfilter,tp,LOCATION_DECK,0,1,nil) end
