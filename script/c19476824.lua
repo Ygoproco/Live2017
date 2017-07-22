@@ -29,7 +29,7 @@ function c19476824.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c19476824.rmfilter(c)
-	return c:IsCode(89189982,36898537) or c:IsSetCard(0x202)
+	return c:IsCode(89189982,36898537) or c:IsSetCard(0x105)
 end
 function c19476824.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rg=Duel.GetDecktopGroup(tp,3)
@@ -56,7 +56,7 @@ function c19476824.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp
 end
 function c19476824.spfilter(c,e,tp)
-	return (c:IsCode(89189982,36898537) or c:IsSetCard(0x202)) and c:IsLevelAbove(5)
+	return (c:IsCode(89189982,36898537) or c:IsSetCard(0x105)) and c:IsLevelAbove(5)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c19476824.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -29,7 +29,7 @@ function c89538537.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c89538537.rthcfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x205) and c:IsAbleToHandAsCost()
+	return c:IsFaceup() and c:IsSetCard(0x103) and c:IsAbleToHandAsCost()
 end
 function c89538537.rthcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -55,7 +55,7 @@ function c89538537.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c89538537.thfilter(c)
-	return c:IsSetCard(0x205) and c:IsType(TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x103) and c:IsType(TYPE_TRAP) and c:IsAbleToHand()
 end
 function c89538537.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c89538537.thfilter(chkc) end

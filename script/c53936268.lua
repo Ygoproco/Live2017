@@ -24,10 +24,10 @@ function c53936268.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c53936268.cfilter(c)
-	return c:IsSetCard(0x205) and c:IsAbleToDeckAsCost() and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
+	return c:IsSetCard(0x103) and c:IsAbleToDeckAsCost() and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
 end
 function c53936268.thfilter(c)
-	return c:IsSetCard(0x205) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x103) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c53936268.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

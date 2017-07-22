@@ -39,7 +39,7 @@ function c66719533.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c66719533.drfilter(c)
-	return (c:IsCode(89189982,36898537) or c:IsSetCard(0x202)) and c:IsAbleToRemove()
+	return (c:IsCode(89189982,36898537) or c:IsSetCard(0x105)) and c:IsAbleToRemove()
 end
 function c66719533.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
@@ -59,7 +59,7 @@ function c66719533.drop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c66719533.effilter(c,tp)
-	return c:IsFaceup() and (c:IsCode(89189982,36898537) or c:IsSetCard(0x202)) and c:IsControler(tp)
+	return c:IsFaceup() and (c:IsCode(89189982,36898537) or c:IsSetCard(0x105)) and c:IsControler(tp)
 end
 function c66719533.effcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg and eg:IsExists(c66719533.effilter,1,nil,tp)
@@ -68,7 +68,7 @@ function c66719533.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return c66719533.effcon(e,tp,eg,ep,ev,re,r,rp) and Duel.GetTurnPlayer()==tp
 end
 function c66719533.filter(c)
-	return c:IsFaceup() and not (c:IsCode(89189982,36898537) or c:IsSetCard(0x202))
+	return c:IsFaceup() and not (c:IsCode(89189982,36898537) or c:IsSetCard(0x105))
 end
 function c66719533.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
