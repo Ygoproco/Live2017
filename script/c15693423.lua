@@ -25,7 +25,7 @@ end
 function c15693423.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
 	local ct=g:GetCount()-Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)
-	if chk==0 then return ct>0 and g:IsExists(Card.IsAbleToRemove,1,nil) end
+	if chk==0 then return ct>0 and g:IsExists(Card.IsAbleToRemove,1,nil,nil,POS_FACEDOWN) end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,ct,0,0)
 end
 function c15693423.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -33,8 +33,8 @@ function c15693423.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ct=g:GetCount()-Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)
 	if ct>0 then
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_REMOVE)
-		local sg=g:Select(1-tp,ct,ct,nil)
-		Duel.Remove(sg,POS_FACEDOWN,REASON_RULE)
+		local sg=g:FilterSelect(1-tp,Card.IsAbleToRemove,ct,ct,nil,nil,POS_FACEDOWN)
+		Duel.Remove(sg,POS_FACEDOWN,REASON_EFFECT)
 	end
 end
 function c15693423.handcon(e)
