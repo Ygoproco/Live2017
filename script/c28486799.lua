@@ -1,6 +1,7 @@
 --補充部隊
 --Replenishment Squad
 --Scripted by Eerie Code
+--fixed by MLD
 function c28486799.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
@@ -20,7 +21,10 @@ function c28486799.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c28486799.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and rp~=tp and bit.band(r,REASON_BATTLE+REASON_EFFECT)~=0 and ev>=1000
+	if ep~=tp or ev<1000 then return false end
+	if bit.band(r,REASON_EFFECT)==REASON_EFFECT then return rp~=tp 
+	elseif bit.band(r,REASON_BATTLE)==REASON_BATTLE then return Duel.GetAttacker() and Duel.GetAttacker():IsControler(1-tp) end
+	return false
 end
 function c28486799.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local d=math.floor(ev/1000)
