@@ -5,7 +5,7 @@ Instant update files for Ygopro Percy. Files in this repository will override ex
 - card databases
 - card lua scripts in /script/
 - /script/utility.lua
-- /script/contant.lua
+- /script/constant.lua
 - lflist.conf
 - strings.conf
 

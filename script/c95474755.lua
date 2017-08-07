@@ -40,6 +40,7 @@ function c95474755.initial_effect(c)
 	e4:SetCategory(CATEGORY_REMOVE)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_REMOVE)
+	e4:SetProperty(EFFECT_FLAG_DELAY)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1,95474755)
 	e4:SetCondition(c95474755.dkcon)
@@ -81,21 +82,21 @@ function c95474755.grop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Remove(tc,POS_FACEDOWN,REASON_EFFECT)
 	end
 end
-function c95474755.dkfilter(c)
-	return not c:IsType(TYPE_TOKEN) and c:IsFacedown()
+function c95474755.dkfilter(c,tp)
+	return not c:IsType(TYPE_TOKEN) and c:IsFacedown() and c:GetPreviousControler()~=tp
 end
 function c95474755.dkcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c95474755.dkfilter,1,nil)
+	return eg:IsExists(c95474755.dkfilter,1,nil,tp)
 end
 function c95474755.dktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=Duel.GetMatchingGroupCount(c95474755.dkfilter,tp,0,LOCATION_REMOVED,nil)
+	local ct=Duel.GetMatchingGroupCount(Card.IsFacedown,tp,0,LOCATION_REMOVED,nil)
 	local tg=Duel.GetDecktopGroup(1-tp,ct)
 	if chk==0 then return ct>0
 		and tg:FilterCount(Card.IsAbleToRemove,nil)==ct end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,n,0,0)
 end
 function c95474755.dkop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetMatchingGroupCount(c95474755.dkfilter,tp,0,LOCATION_REMOVED,nil)
+	local ct=Duel.GetMatchingGroupCount(Card.IsFacedown,tp,0,LOCATION_REMOVED,nil)
 	if ct==0 then return end
 	local tg=Duel.GetDecktopGroup(1-tp,ct)
 	Duel.DisableShuffleCheck()

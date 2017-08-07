@@ -1,6 +1,23 @@
 Auxiliary={}
 aux=Auxiliary
 
+--To be removed after next core update
+if not Duel.GetLocationCountFromEx then
+	function Duel.GetLocationCountFromEx(tp)
+		return Duel.GetLocationCount(tp,LOCATION_MZONE)
+	end
+end
+local rmf=Card.IsAbleToRemove
+Card.IsAbleToRemove=function(c,player,pos)
+	if not rmf(c,player) then return false end
+	return not pos or not c:IsType(TYPE_TOKEN) or bit.band(pos,POS_FACEDOWN)<=0
+end
+local rmfc=Card.IsAbleToRemoveAsCost
+Card.IsAbleToRemoveAsCost=function(c,pos)
+	if not rmfc(c) then return false end
+	return not pos or not c:IsType(TYPE_TOKEN) or bit.band(pos,POS_FACEDOWN)<=0
+end
+
 function Auxiliary.Stringid(code,id)
 	return code*16+id
 end
@@ -2306,7 +2323,7 @@ end
 function Auxiliary.qlifilter(e,te)
 	if te:IsActiveType(TYPE_MONSTER) and te:IsActivated() then
 		local lv=e:GetHandler():GetLevel()
-		local ec=te:GetOwner()
+		local ec=te:GetHandler()
 		if ec:IsType(TYPE_XYZ) then
 			return ec:GetOriginalRank()<lv
 		else
@@ -2491,6 +2508,29 @@ function Auxiliary.PersistentTgOp(anypos)
 end
 function Auxiliary.PersistentTargetFilter(e,c)
 	return e:GetHandler():IsHasCardTarget(c)
+end
+--Checks whether 2 cards are on the same column
+--skip_ex is optional, indicates whether the Extra Monster Zone should be ignored (used in Blasting Fuse)
+function Auxiliary.checksamecolumn(c1,c2,skip_ex)
+	if not c1 or not c1:IsOnField() or not c2 or not c2:IsOnField() then return false end
+	if c1==c2 then return false end
+	local s1=c1:GetSequence()
+	local s2=c2:GetSequence()
+	if (c1:IsLocation(LOCATION_SZONE) and s1>=5)
+		or (c2:IsLocation(LOCATION_SZONE) and s2>=5) then return false end
+	if c1:GetControler()==c2:GetControler() then
+		if skip_ex then
+			return s2==s1
+		else
+			return s2==s1 or (s1==1 and s2==5) or (s1==3 and s2==6)
+		end
+	else
+		if skip_ex then
+			return s2==4-s1
+		else
+			return s2==4-s1 or (s1==1 and s2==6) or (s1==3 and s2==5)
+		end
+	end
 end
 
 pcall(dofile,"init.lua")
