@@ -32,7 +32,7 @@ function c90809975.initial_effect(c)
 	c:RegisterEffect(e2)
 	--to hand
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(90809975,2))
+	e3:SetDescription(aux.Stringid(90809975,3))
 	e3:SetCategory(CATEGORY_TOHAND)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
@@ -94,7 +94,7 @@ function c90809975.negop(e,tp,eg,ep,ev,re,r,rp)
 	if rc:IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT)~=0 and not rc:IsLocation(LOCATION_HAND+LOCATION_DECK) then
 		if rc:IsType(TYPE_MONSTER) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 			and rc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
-			and Duel.SelectYesNo(tp,aux.Stringid(90809975,3)) then
+			and Duel.SelectYesNo(tp,aux.Stringid(90809975,2)) then
 			Duel.BreakEffect()
 			Duel.SpecialSummon(rc,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
 			Duel.ConfirmCards(1-tp,rc)

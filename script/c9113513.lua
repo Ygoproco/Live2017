@@ -9,6 +9,8 @@ function c9113513.initial_effect(c)
     e1:SetTarget(c9113513.target)
     e1:SetOperation(c9113513.activate)
     c:RegisterEffect(e1)
+	if not AshBlossomTable then AshBlossomTable={} end
+	table.insert(AshBlossomTable,e1)
 end
 function c9113513.condition(e,tp,eg,ep,ev,re,r,rp)
     return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
