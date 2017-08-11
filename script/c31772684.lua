@@ -49,7 +49,7 @@ end
 function c31772684.mtop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,31772684)~=0 then return end
 	local c=e:GetHandler()
-	local g=eg:Filter(Card.IsSetCard,nil,0x209)
+	local g=eg:Filter(Card.IsSetCard,nil,0x106)
 	local rc=g:GetFirst()
 	if not rc then return end
 	local e1=Effect.CreateEffect(c)
@@ -60,6 +60,7 @@ function c31772684.mtop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
+	e1:SetHintTiming(0,0x1e0)
 	e1:SetTarget(c31772684.rmtg)
 	e1:SetOperation(c31772684.rmop)
 	e1:SetReset(RESET_EVENT+0x1fe0000)
