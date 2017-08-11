@@ -16,7 +16,9 @@ function c17988746.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c17988746.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and tp~=rp and bit.band(r,REASON_BATTLE)~=0
+	if ep~=tp then return false  end
+	if bit.band(r,REASON_BATTLE)==REASON_BATTLE then return Duel.GetAttacker() and Duel.GetAttacker():IsControler(1-tp) end
+	return false
 end
 function c17988746.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
