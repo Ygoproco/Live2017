@@ -54,9 +54,8 @@ function c58383100.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function c58383100.spop(e,tp,eg,ep,ev,re,r,rp)
-	local tg=nil
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-    	tg=Duel.SelectMatchingCard(tp,c58383100.filter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil,tp)
+    	local tg=Duel.SelectMatchingCard(tp,c58383100.filter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil,tp)
 	local tc=tg:GetFirst()
 	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_GRAVE) then
 		local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
