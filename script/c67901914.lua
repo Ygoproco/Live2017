@@ -33,7 +33,7 @@ function c67901914.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function c67901914.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x206) and c:GetFlagEffect(67901914)==0
+	return c:IsFaceup() and c:IsSetCard(0x108) and c:GetFlagEffect(67901914)==0
 end
 function c67901914.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c67901914.filter(chkc) end

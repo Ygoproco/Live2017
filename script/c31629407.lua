@@ -7,7 +7,7 @@ function c31629407.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_QP_ACT_IN_NTPHAND)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x206))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x108))
 	e1:SetTargetRange(LOCATION_HAND,0)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
@@ -40,7 +40,7 @@ function c31629407.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.checksamecolumn(c,rc)
 end
 function c31629407.spfilter(c,e,tp)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x206) and not c:IsCode(31629407) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsLevelBelow(4) and c:IsSetCard(0x108) and not c:IsCode(31629407) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c31629407.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

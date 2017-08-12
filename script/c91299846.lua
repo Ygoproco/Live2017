@@ -43,7 +43,7 @@ function c91299846.tfcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c91299846.tffilter(c,cc,tp)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x207) and not c:IsForbidden() 
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x109) and not c:IsForbidden() 
 		and (c:CheckUniqueOnField(tp) or (cc and c:IsCode(cc:GetCode())))
 end
 function c91299846.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -60,7 +60,7 @@ function c91299846.spreg(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	if c:IsReason(REASON_COST) and rc:IsSetCard(0x207) then
+	if c:IsReason(REASON_COST) and rc:IsSetCard(0x109) then
 		e:SetLabel(Duel.GetTurnCount()+1)
 		c:RegisterFlagEffect(91299846,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,2)
 	end

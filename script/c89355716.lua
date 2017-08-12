@@ -19,7 +19,7 @@ function c89355716.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c89355716.efffilter(c,seq,ignore_flag)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsSetCard(0x207)
+	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsSetCard(0x109)
 		and c:GetSequence()<5 and math.abs(c:GetSequence()-seq)<=1 and (ignore_flag or c:GetFlagEffect(89355716)==0)
 end
 function c89355716.effop(e,tp,eg,ep,ev,re,r,rp)
@@ -50,7 +50,7 @@ function c89355716.spcfilter(c,e,tp)
 		and Duel.IsExistingMatchingCard(c89355716.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp,c:GetCode())
 end
 function c89355716.spfilter(c,e,tp,code)
-	return c:IsSetCard(0x207) and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x109) and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c89355716.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c89355716.spcfilter(chkc,e,tp) end
