@@ -32,14 +32,14 @@ function c54895237.initial_effect(c)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
-function c54895237.gspcfilter(c)
+function c54895237.gspcfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_CONTINUOUS) and c:IsAbleToGraveAsCost()
 		and Duel.IsExistingMatchingCard(c54895237.gspfilter,tp,LOCATION_HAND,0,1,nil,c,tp)
 end
 function c54895237.gspcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c54895237.gspcfilter,tp,LOCATION_SZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c54895237.gspcfilter,tp,LOCATION_SZONE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c54895237.gspcfilter,tp,LOCATION_SZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c54895237.gspcfilter,tp,LOCATION_SZONE,0,1,1,nil,tp)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c54895237.gspfilter(c,cc,tp)
