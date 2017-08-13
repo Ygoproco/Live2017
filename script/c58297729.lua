@@ -58,7 +58,7 @@ function c58297729.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	if chk==0 then return d and a:GetControler()~=d:GetControler()
-		and a:IsAbleToRemove(nil,POS_FACEDOWN) and d:IsAbleToRemove(nil,POS_FACEDOWN) end
+		and a:IsAbleToRemove(a:GetControler(),POS_FACEDOWN) and d:IsAbleToRemove(d:GetControler(),POS_FACEDOWN) end
 end
 function c58297729.activate(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
@@ -67,8 +67,8 @@ function c58297729.activate(e,tp,eg,ep,ev,re,r,rp)
 	if a:IsControler(1-tp) then a,d=d,a end
 	local res=Duel.RockPaperScissors()
 	if res==tp then
-		Duel.Remove(d,POS_FACEDOWN,REASON_EFFECT)
+		Duel.Remove(d,POS_FACEDOWN,REASON_RULE)
 	else
-		Duel.Remove(a,POS_FACEDOWN,REASON_EFFECT)
+		Duel.Remove(a,POS_FACEDOWN,REASON_RULE)
 	end
 end
