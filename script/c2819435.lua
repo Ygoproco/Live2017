@@ -41,7 +41,7 @@ function c2819435.initial_effect(c)
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(2819435,1))
 	e6:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
-	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_F)
 	e6:SetCode(EVENT_CUSTOM+2819435)
 	e6:SetProperty(EFFECT_FLAG_DELAY)
 	e6:SetRange(LOCATION_FZONE)
@@ -50,6 +50,13 @@ function c2819435.initial_effect(c)
 	e6:SetOperation(c2819435.spop)
 	c:RegisterEffect(e6)
 	e5:SetLabelObject(e6)
+	local e7=Effect.CreateEffect(c)
+	e7:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e7:SetCode(EVENT_ADJUST)
+	e7:SetRange(LOCATION_FZONE)
+	e7:SetOperation(c2819435.regop2)
+	c:RegisterEffect(e7)
+	e6:SetLabelObject(e7)
 	--
 	Duel.AddCustomActivityCounter(2819435,ACTIVITY_SUMMON,c2819435.counterfilter)
 	Duel.AddCustomActivityCounter(2819435,ACTIVITY_SPSUMMON,c2819435.counterfilter)
@@ -102,10 +109,8 @@ function c2819435.regop(e,tp,eg,ep,ev,re,r,rp)
 		or c:GetFlagEffect(1)<=0 or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 
 		or not Duel.IsPlayerCanSpecialSummonMonster(tp,2819436,0xfa,0x4011,2000,2000,6,RACE_WYRM,ATTRIBUTE_WATER) 
 		or c:GetFlagEffect(2819436)>0 or not e:GetLabelObject():IsActivatable(tp) then return end
-	if Duel.SelectEffectYesNo(tp,c) then
-		c:RegisterFlagEffect(2819436,RESET_EVENT+0x1fe0000+RESET_CHAIN,0,1)
-		Duel.RaiseEvent(c,EVENT_CUSTOM+2819435,re,REASON_EFFECT,rp,ep,ev)
-	end
+	c:RegisterFlagEffect(2819436,RESET_EVENT+0x1fe0000+RESET_CHAIN,0,1)
+	e:GetLabelObject():GetLabelObject():SetLabel(1)
 end
 function c2819435.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -118,4 +123,13 @@ function c2819435.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsPlayerCanSpecialSummonMonster(tp,2819436,0xfa,0x4011,2000,2000,6,RACE_WYRM,ATTRIBUTE_WATER) then return end
 	local token=Duel.CreateToken(tp,2819436)
 	Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
+end
+function c2819435.regop2(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if c:GetFlagEffect(2819436)==0 and e:GetLabel()==1 then
+		e:SetLabel(0)
+		if Duel.SelectEffectYesNo(tp,c) then
+			Duel.RaiseEvent(c,EVENT_CUSTOM+2819435,e,REASON_EFFECT,rp,ep,ev)
+		end
+	end
 end
