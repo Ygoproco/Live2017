@@ -31,15 +31,15 @@ function c91299846.initial_effect(c)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
-function c91299846.cfilter(c)
+function c91299846.cfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_CONTINUOUS) and c:IsAbleToGraveAsCost()
 		and Duel.IsExistingMatchingCard(c91299846.tffilter,tp,LOCATION_DECK,0,1,nil,c,tp)
 end
 function c91299846.tfcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>-1
-		and Duel.IsExistingMatchingCard(c91299846.cfilter,tp,LOCATION_SZONE,0,1,nil) end
+		and Duel.IsExistingMatchingCard(c91299846.cfilter,tp,LOCATION_SZONE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c91299846.cfilter,tp,LOCATION_SZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c91299846.cfilter,tp,LOCATION_SZONE,0,1,1,nil,tp)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c91299846.tffilter(c,cc,tp)
