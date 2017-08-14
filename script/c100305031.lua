@@ -21,12 +21,15 @@ function c100305031.cfilter(c)
 end
 function c100305031.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c100305031.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler())
-		and Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler())
+		and (Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) 
+			or Duel.IsPlayerAffectedByEffect(tp,EFFECT_DISCARD_COST_CHANGE))
 		and Duel.CheckLPCost(tp,1000) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local cg=Duel.SelectMatchingCard(tp,c100305031.cfilter,tp,LOCATION_HAND,0,1,1,nil)
 	Duel.ConfirmCards(1-tp,cg)
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	if not Duel.IsPlayerAffectedByEffect(tp,EFFECT_DISCARD_COST_CHANGE) then 
+		Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	end
 	Duel.PayLPCost(tp,1000)
 end
 function c100305031.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -38,7 +41,7 @@ function c100305031.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c100305031.spfilter(c,e,tp)
-	return c:IsSetCard(0x208) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsSetCard(0x208) or c:IsCode(18036057,69514125,76925842,12510878)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c100305031.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ec=re:GetHandler()
