@@ -73,5 +73,5 @@ function c55794644.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c55794644.sanctfilter(c)
-	return c:IsFaceup() and c:IsCode(22702055)
+	return c:IsFaceup() and c:IsCode(56433456)
 end

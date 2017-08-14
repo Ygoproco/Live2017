@@ -36,12 +36,6 @@ function c12510878.initial_effect(c)
 	local e5=e4:Clone()
 	e5:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e5)
-	--
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_SINGLE)
-	e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e6:SetCode(90162951)
-	c:RegisterEffect(e6)
 end
 function c12510878.spcon(e,c)
 	if c==nil then return true end
@@ -70,5 +64,5 @@ function c12510878.val(e,c)
 	if v>0 then return v else return 0 end
 end
 function c12510878.sanctfilter(c)
-	return c:IsFaceup() and c:IsCode(22702055)
+	return c:IsFaceup() and c:IsCode(56433456)
 end

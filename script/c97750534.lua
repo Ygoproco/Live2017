@@ -20,7 +20,7 @@ function c97750534.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c97750534.spcon(e,c)
-	if c==nil then return Duel.IsExistingMatchingCard(c97750534.sanctfilter,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) or (Duel.IsEnvironment(56433456)) end
+	if c==nil then return Duel.IsExistingMatchingCard(c97750534.sanctfilter,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) or Duel.IsEnvironment(56433456) end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function c97750534.filter(c)
@@ -46,5 +46,5 @@ function c97750534.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c97750534.sanctfilter(c)
-	return c:IsFaceup() and c:IsCode(22702055)
+	return c:IsFaceup() and c:IsCode(56433456)
 end

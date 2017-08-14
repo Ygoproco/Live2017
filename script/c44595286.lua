@@ -47,5 +47,5 @@ function c44595286.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c44595286.sanctfilter(c)
-	return c:IsFaceup() and c:IsCode(22702055)
+	return c:IsFaceup() and c:IsCode(56433456)
 end

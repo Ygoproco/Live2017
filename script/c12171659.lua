@@ -39,8 +39,8 @@ function c12171659.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c12171659.descon(e)
-	return not (Duel.IsExistingMatchingCard(c12171659.sanctfilter,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) or (Duel.IsEnvironment(56433456)))
+	return not (Duel.IsExistingMatchingCard(c12171659.sanctfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) or (Duel.IsEnvironment(56433456)))
 end
 function c12171659.sanctfilter(c)
-	return c:IsFaceup() and c:IsCode(22702055)
+	return c:IsFaceup() and c:IsCode(56433456)
 end

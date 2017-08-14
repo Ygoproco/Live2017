@@ -85,5 +85,5 @@ function c28573958.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c28573958.sanctfilter(c)
-	return c:IsFaceup() and c:IsCode(22702055)
+	return c:IsFaceup() and c:IsCode(56433456)
 end
