@@ -36,5 +36,5 @@ function c91123920.val(e,c)
 	if v>0 then return v else return 0 end
 end
 function c91123920.sanctfilter(c)
-	return c:IsFaceup() and c:IsCode(22702055)
+	return c:IsFaceup() and c:IsCode(56433456)
 end
