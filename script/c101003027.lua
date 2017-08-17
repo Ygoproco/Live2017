@@ -80,7 +80,7 @@ function c101003027.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101003027.acop(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and e:GetHandler():GetFlagEffect(1)>0 then
-		e:GetHandler():AddCounter(0x1,1)
+		e:GetHandler():AddCounter(0x1,2)
 	end
 end
 function c101003027.incon(e)
@@ -106,6 +106,7 @@ function c101003027.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=0 and c:IsFaceup() and c:IsRelateToEffect(e) then
 		local atk=tc:GetBaseAttack()
+		if atk<0 then atk=0 end
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
