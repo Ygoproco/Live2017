@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 function c101003022.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
-	c:EnableCounterPermit(0x1)
+	c:EnableCounterPermit(0x1,LOCATION_MZONE)
 	--destroy & counter
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101003022,0))
