@@ -33,7 +33,8 @@ function c101003074.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,tc,1,0,0)
 end
 function c101003074.actfilter(c,tp)
-	return c:IsType(TYPE_FIELD) and c:GetActivateEffect():IsActivatable(tp)
+	return c:IsType(TYPE_FIELD) and c:GetActivateEffect()
+		and (c:GetActivateEffect():IsActivatable(tp) or Duel.GetTurnPlayer()~=tp)
 end
 function c101003074.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
