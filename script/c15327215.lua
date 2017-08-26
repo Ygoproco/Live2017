@@ -1,6 +1,6 @@
 --六武衆の真影
 --Legendary Shadow of the Six Samurai
---Script by nekrozar
+--Script by nekrozar; fixed by senpaizuri
 function c15327215.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -60,6 +60,7 @@ function c15327215.operation(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		local lv=tc:GetLevel()
 		local att=tc:GetAttribute()
+		local race=tc:GetRace()
 		local atk=tc:GetAttack()
 		local def=tc:GetDefense()
 		local e1=Effect.CreateEffect(c)
@@ -70,7 +71,7 @@ function c15327215.operation(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_CHANGE_RACE)
-		e2:SetValue(att)
+		e2:SetValue(race)
 		c:RegisterEffect(e2)
 		local e3=e1:Clone()
 		e3:SetCode(EFFECT_SET_ATTACK_FINAL)
@@ -80,5 +81,9 @@ function c15327215.operation(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetCode(EFFECT_SET_DEFENSE_FINAL)
 		e4:SetValue(def)
 		c:RegisterEffect(e4)
+		local e5=e1:Clone()
+		e5:SetCode(EFFECT_CHANGE_ATTRIBUTE)
+		e5:SetValue(att)
+		c:RegisterEffect(e5)
 	end
 end
