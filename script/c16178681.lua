@@ -33,10 +33,11 @@ end
 function c16178681.rdcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
-	return ep==tp and tc and tc:IsType(TYPE_PENDULUM)
+	return ep==tp and tc and tc:IsType(TYPE_PENDULUM) and Duel.GetFlagEffect(tp,16178681)==0
 end
 function c16178681.rdop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFlagEffect(tp,16178681)==0 and Duel.SelectYesNo(tp,aux.Stringid(16178681,2)) then
+	if Duel.GetFlagEffect(tp,16178681)~=0 then return end
+	if Duel.SelectYesNo(tp,aux.Stringid(16178681,2)) then
 		Duel.RegisterFlagEffect(tp,16178681,RESET_PHASE+PHASE_END,0,1)
 		Duel.ChangeBattleDamage(tp,0)
 	end
