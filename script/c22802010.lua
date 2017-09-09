@@ -22,7 +22,7 @@ function c22802010.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function c22802010.filter2(c,lv)
-	return c:IsFaceup() and (c:IsLevelBelow(lv) or c:IsRankBelow(lv))
+	return c:IsFaceup() and (c:IsLevelBelow(lv-1) or c:IsRankBelow(lv-1))
 end
 function c22802010.activate(e,tp,eg,ep,ev,re,r,rp)
 	local d1,d2=Duel.TossDice(tp,2)
