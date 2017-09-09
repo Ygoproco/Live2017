@@ -33,7 +33,7 @@ function c101003059.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsControler(tp) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 		local g=Duel.SelectMatchingCard(tp,c101003059.eqfilter,tp,LOCATION_DECK,0,1,1,nil,tc,tp)
-		if g:GetCounter()>0 then
+		if g:GetCount()>0 then
 			Duel.Equip(tp,g:GetFirst(),tc)
 		end
 	end
