@@ -22,7 +22,9 @@ function c101003059.eqfilter(c,tc,tp)
 end
 function c101003059.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c101003059.filter(chkc,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+	local ft=0
+	if e:GetHandler():IsLocation(LOCATION_HAND) then ft=1 end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>ft
 		and Duel.IsExistingTarget(c101003059.filter,tp,LOCATION_MZONE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,c101003059.filter,tp,LOCATION_MZONE,0,1,1,nil,tp)
