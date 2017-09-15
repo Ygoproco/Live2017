@@ -1,4 +1,4 @@
---寄生虫パラノイド
+--寄生虫パラノイド 
 --Parasite Paranoid
 --Scripted by Eerie Code
 function c100419007.initial_effect(c)
