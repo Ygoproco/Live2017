@@ -1,6 +1,6 @@
 --超進化の繭
 --Super Cocoon of Evolution
---Scripted by Eerie Code
+--Scripted by Eerie Code + GameMaster(GM)
 function c100419009.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
@@ -68,6 +68,7 @@ function c100419009.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and	Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0
 		and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then
+		Duel.ShuffleDeck(tp)
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end

@@ -1,6 +1,6 @@
 --究極変異態・インセクト女王
 --Ultimately Mutated Insect Queen
---Scripted by Eerie Code
+--Scripted by Eerie Code + GameMaster(GM)
 function c100419008.initial_effect(c)
 	c:EnableUnsummonable()
 	--cannot special summon
@@ -40,18 +40,37 @@ function c100419008.initial_effect(c)
 	e4:SetCost(c100419008.atcost)
 	e4:SetOperation(c100419008.atop)
 	c:RegisterEffect(e4)
-	--spsummon
-	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(91512835,0))
-	e5:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
-	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e5:SetRange(LOCATION_MZONE)
-	e5:SetCode(EVENT_PHASE+PHASE_END)
-	e5:SetCountLimit(1)
-	e5:SetTarget(c100419008.sptg)
-	e5:SetOperation(c100419008.spop)
-	c:RegisterEffect(e4)
+	--spsummon token at end-phase
+	local e6=Effect.CreateEffect(c)
+	e6:SetDescription(aux.Stringid(100419008,0))
+	e6:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
+	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e6:SetRange(LOCATION_MZONE)
+	e6:SetCode(EVENT_PHASE+PHASE_END)
+	e6:SetCountLimit(1)
+	e6:SetCondition(c100419008.spcon)
+	e6:SetTarget(c100419008.sptg)
+	e6:SetOperation(c100419008.spop)
+	c:RegisterEffect(e6)
 end
+
+function c100419008.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetTurnPlayer()==tp and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+end
+
+function c100419008.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
+end
+
+function c100419008.spop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if not Duel.IsPlayerCanSpecialSummonMonster(tp,91512836,0,0x4011,100,100,1,RACE_INSECT,ATTRIBUTE_EARTH) then return end
+	local token=Duel.CreateToken(tp,91512836)
+	Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
+end
+
 function c100419008.splimit(e,se,sp,st)
 	return se:IsHasType(EFFECT_TYPE_ACTIONS)
 end
@@ -84,15 +103,4 @@ function c100419008.atop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_BATTLE+PHASE_DAMAGE_CAL)
 	c:RegisterEffect(e1)
 end
-function c100419008.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,91512836,0,0x4011,100,100,1,RACE_INSECT,ATTRIBUTE_EARTH) end
-	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
-end
-function c100419008.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	if not Duel.IsPlayerCanSpecialSummonMonster(tp,91512836,0,0x4011,100,100,1,RACE_INSECT,ATTRIBUTE_EARTH) then return end
-	local token=Duel.CreateToken(tp,91512836)
-	Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
-end
+
