@@ -1,6 +1,5 @@
 --無差別崩壊
 --Blind Ruination
---Script by nekrozar
 function c22802010.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -12,14 +11,17 @@ function c22802010.initial_effect(c)
 	e1:SetOperation(c22802010.activate)
 	c:RegisterEffect(e1)
 end
+function c22802010.cfilter(c)
+	return c:IsFaceup() and (c:IsLevelBelow(1) or c:IsRankBelow(1))
+end
 function c22802010.filter1(c)
 	return c:IsFaceup() and (c:IsLevelBelow(11) or c:IsRankBelow(11))
 end
 function c22802010.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c22802010.filter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
-	local g=Duel.GetMatchingGroup(c22802010.filter1,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(c22802010.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,tp,2)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 end
 function c22802010.filter2(c,lv)
 	return c:IsFaceup() and (c:IsLevelBelow(lv) or c:IsRankBelow(lv))
