@@ -71,7 +71,6 @@ function c63519819.EquipMonster(c,tp,tc)
 	if not Duel.Equip(tp,tc,c,false) then return end
 	--Add Equip limit
 	tc:RegisterFlagEffect(63519819,RESET_EVENT+0x1fe0000,0,0)
-	e:SetLabelObject(tc)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
