@@ -36,7 +36,7 @@ function c100407004.filter3(c)
 end
 function c100407004.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local chkf=tp
+		local chkf=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and PLAYER_NONE or tp
 		local mg1=Duel.GetFusionMaterial(tp):Filter(c100407004.filter0,nil)
 		local mg2=Duel.GetMatchingGroup(c100407004.filter3,tp,LOCATION_MZONE+LOCATION_HAND+LOCATION_GRAVE,0,nil)
 		mg1:Merge(mg2)
@@ -55,7 +55,7 @@ function c100407004.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c100407004.activate(e,tp,eg,ep,ev,re,r,rp)
-	local chkf=tp
+	local chkf=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and PLAYER_NONE or tp
 	local mg1=Duel.GetFusionMaterial(tp):Filter(c100407004.filter1,nil,e)
 	local mg2=Duel.GetMatchingGroup(c100407004.filter3,tp,LOCATION_MZONE+LOCATION_HAND+LOCATION_GRAVE,0,nil)
 	mg1:Merge(mg2)
@@ -98,7 +98,7 @@ function c100407004.filter(c)
 end
 function c100407004.eqfilter(c)
 	local m=_G["c"..c:GetCode()]
-	return c:IsFaceup() and (c:IsSetCard(0x20a) or c:IsCode(64631466,63519819)) and m.CanEquipMonster(c)
+	return c:IsFaceup() and (c:IsSetCard(0x20a) or c:IsCode(64631466,63519819)) and m and m.CanEquipMonster(c)
 end
 function c100407004.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c100407004.filter(chkc) end

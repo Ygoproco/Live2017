@@ -36,7 +36,7 @@ function c100407001.filter(c)
 end
 function c100407001.eqfilter(c)
 	local m=_G["c"..c:GetCode()]
-	return c:IsFaceup() and ((c:IsSetCard(0x20a) and c:IsType(TYPE_FUSION)) or c:IsCode(64631466,63519819)) and m.CanEquipMonster(c)
+	return c:IsFaceup() and ((c:IsSetCard(0x20a) and c:IsType(TYPE_FUSION)) or c:IsCode(64631466,63519819)) and m and m.CanEquipMonster(c)
 end
 function c100407001.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and c100407001.filter(chkc) and chkc~=e:GetHandler() end
