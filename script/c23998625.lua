@@ -51,7 +51,7 @@ function c23998625.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c23998625.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_EFFECT) end
+	if chk==0 then return not e:GetHandler():IsReason(REASON_REPLACE) and e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_EFFECT) end
 	if Duel.SelectYesNo(tp,aux.Stringid(23998625,2)) then
 		e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_EFFECT)
 		return true

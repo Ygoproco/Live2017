@@ -49,7 +49,7 @@ function c80476891.repfilter(c,tp,e)
 end
 function c80476891.desfilter(c,tp)
 	return c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD)
-		and not c:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED)
+		and not c:IsReason(REASON_REPLACE) and not c:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED)
 end
 function c80476891.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c80476891.desfilter,tp,LOCATION_ONFIELD,0,1,nil,tp)
