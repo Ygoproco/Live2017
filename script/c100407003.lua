@@ -47,10 +47,10 @@ function c100407003.initial_effect(c)
 	e5:SetTarget(c100407003.distg)
 	c:RegisterEffect(e5)
 	--Equip check
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_SINGLE)
-	e5:SetCode(100407003)	
-	c:RegisterEffect(e5)
+	local e6=Effect.CreateEffect(c)
+	e6:SetType(EFFECT_TYPE_SINGLE)
+	e6:SetCode(100407003)	
+	c:RegisterEffect(e6)
 end
 function c100407003.CanEquipMonster(c)
 	return true
@@ -122,5 +122,5 @@ function c100407003.disfilter(c)
 end
 function c100407003.distg(e,c)
 	local g=e:GetHandler():GetEquipGroup():Filter(c100407003.disfilter,nil)
-	return c:IsFaceup() and g:IsExists(Card.IsCode,1,nil,c:GetCode())
+	return c:IsFaceup() and g:IsExists(Card.IsCode,1,nil,c:GetCode()) and c:IsType(TYPE_MONSTER)
 end
