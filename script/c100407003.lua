@@ -46,6 +46,11 @@ function c100407003.initial_effect(c)
 	e5:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e5:SetTarget(c100407003.distg)
 	c:RegisterEffect(e5)
+	--Equip check
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetCode(100407003)	
+	c:RegisterEffect(e5)
 end
 function c100407003.CanEquipMonster(c)
 	return true
@@ -65,7 +70,7 @@ function c100407003.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
 end
 function c100407003.eqlimit(e,c)
-	return e:GetOwner()==c
+	return e:GetOwner()==c and c:IsHasEffect(100407003)
 end
 function c100407003.EquipMonster(c,tp,tc)
 	if not Duel.Equip(tp,tc,c,false) then return end
