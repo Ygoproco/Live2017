@@ -39,6 +39,11 @@ function c64631466.initial_effect(c)
 	e4:SetCondition(c64631466.damcon)
 	e4:SetOperation(c64631466.damop)
 	c:RegisterEffect(e4)
+	--Equip check
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetCode(64631466)	
+	c:RegisterEffect(e5)
 end
 function c64631466.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -60,7 +65,7 @@ function c64631466.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
 end
 function c64631466.eqlimit(e,c)
-	return e:GetOwner()==c
+	return e:GetOwner()==c and c:IsHasEffect(64631466)
 end
 function c64631466.EquipMonster(c,tp,tc)
 	if not Duel.Equip(tp,tc,c,false) then return end

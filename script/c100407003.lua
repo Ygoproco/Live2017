@@ -35,7 +35,7 @@ function c100407003.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetCode(EFFECT_DISABLE)
 	e4:SetRange(LOCATION_MZONE)
-	e4:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e4:SetTargetRange(0xff,0xff)
 	e4:SetTarget(c100407003.distg)
 	c:RegisterEffect(e4)
 	--atk limit
@@ -43,9 +43,14 @@ function c100407003.initial_effect(c)
 	e5:SetType(EFFECT_TYPE_FIELD)
 	e5:SetCode(EFFECT_CANNOT_ATTACK)
 	e5:SetRange(LOCATION_MZONE)
-	e5:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e5:SetTargetRange(0xff,0xff)
 	e5:SetTarget(c100407003.distg)
 	c:RegisterEffect(e5)
+	--Equip check
+	local e6=Effect.CreateEffect(c)
+	e6:SetType(EFFECT_TYPE_SINGLE)
+	e6:SetCode(100407003)	
+	c:RegisterEffect(e6)
 end
 function c100407003.CanEquipMonster(c)
 	return true
@@ -65,7 +70,7 @@ function c100407003.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
 end
 function c100407003.eqlimit(e,c)
-	return e:GetOwner()==c
+	return e:GetOwner()==c and c:IsHasEffect(100407003)
 end
 function c100407003.EquipMonster(c,tp,tc)
 	if not Duel.Equip(tp,tc,c,false) then return end
@@ -117,5 +122,5 @@ function c100407003.disfilter(c)
 end
 function c100407003.distg(e,c)
 	local g=e:GetHandler():GetEquipGroup():Filter(c100407003.disfilter,nil)
-	return c:IsFaceup() and g:IsExists(Card.IsCode,1,nil,c:GetCode())
+	return c:IsFaceup() and g:IsExists(Card.IsCode,1,nil,c:GetCode()) and c:IsType(TYPE_MONSTER)
 end
