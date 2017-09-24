@@ -73,6 +73,7 @@ function c100407021.spcon(e,c)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-3
 		and Duel.IsExistingMatchingCard(c100407021.spfilter,tp,LOCATION_ONFIELD,0,1,nil,84243274)
 		and Duel.IsExistingMatchingCard(c100407021.spfilter,tp,LOCATION_ONFIELD,0,1,nil,73879377)
+		and Duel.GetFlagEffect(tp,100407021)~=0 and Duel.GetFlagEffect(tp,100407021+100)~=0
 end
 function c100407021.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
