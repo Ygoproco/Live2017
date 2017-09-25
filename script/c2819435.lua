@@ -128,7 +128,9 @@ function c2819435.regop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:GetFlagEffect(2819436)==0 and e:GetLabel()==1 then
 		e:SetLabel(0)
-		if Duel.SelectEffectYesNo(tp,c) then
+		if not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_MZONE,0,1,nil,TYPE_TOKEN) 
+			and Duel.IsPlayerCanSpecialSummonMonster(tp,2819436,0xfa,0x4011,2000,2000,6,RACE_WYRM,ATTRIBUTE_WATER)
+			and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectEffectYesNo(tp,c) then
 			Duel.RaiseEvent(c,EVENT_CUSTOM+2819435,e,REASON_EFFECT,rp,ep,ev)
 		end
 	end
