@@ -1,6 +1,5 @@
 --魔弾の射手 ドクトル
 --Magibullet Shooter Doctor
---Scripted by Eerie Code
 function c68246154.initial_effect(c)
 	--activate from hand
 	local e1=Effect.CreateEffect(c)
@@ -22,37 +21,69 @@ function c68246154.initial_effect(c)
 	e0:SetOperation(aux.chainreg)
 	c:RegisterEffect(e0)
 	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_TOHAND)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_CHAIN_SOLVING)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetCode(EVENT_CHAIN_SOLVED)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1,68246154)
-	e3:SetCondition(c68246154.thcon)
-	e3:SetTarget(c68246154.thtg)
-	e3:SetOperation(c68246154.thop)
+	e3:SetOperation(c68246154.regop)
 	c:RegisterEffect(e3)
+	local e4=Effect.CreateEffect(c)
+	e4:SetCategory(CATEGORY_TOHAND)
+	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e4:SetCode(EVENT_CUSTOM+68246154)
+	e4:SetProperty(EFFECT_FLAG_DELAY)
+	e4:SetCountLimit(1,68246154)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetTarget(c68246154.thtg)
+	e4:SetOperation(c68246154.thop)
+	c:RegisterEffect(e4)
+	e3:SetLabelObject(e4)
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e5:SetCode(EVENT_ADJUST)
+	e5:SetRange(LOCATION_MZONE)
+	e5:SetOperation(c68246154.regop2)
+	e5:SetLabelObject(e4)
+	c:RegisterEffect(e5)
+	e4:SetLabelObject(e5)
+	if not SameColumnChain then SameColumnChain={} end
 end
-function c68246154.thcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local rc=re:GetHandler()
-	if not re:IsHasType(EFFECT_TYPE_ACTIVATE) or c:GetFlagEffect(1)<=0 then return false end
-	e:SetLabelObject(rc)
-	return aux.checksamecolumn(c,rc)
-end
-function c68246154.thfilter(c,rc)
-	return c:IsSetCard(0x108) and not c:IsCode(rc:GetCode()) and c:IsAbleToHand()
+function c68246154.thfilter(c,g)
+	return c:IsSetCard(0x108) and c:IsAbleToHand() and not g:IsExists(Card.IsCode,1,nil,c:GetCode())
 end
 function c68246154.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local rc=re:GetHandler()
-	if chk==0 then return rc and Duel.IsExistingMatchingCard(c68246154.thfilter,tp,LOCATION_GRAVE,0,1,nil,rc) end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end
 function c68246154.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c68246154.thfilter,tp,LOCATION_GRAVE,0,1,1,nil,e:GetLabelObject())
+	local g=Duel.SelectMatchingCard(tp,c68246154.thfilter,tp,LOCATION_GRAVE,0,1,1,nil,eg)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
+	end
+end
+function c68246154.regop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local rc=re:GetHandler()
+	if not re:IsHasType(EFFECT_TYPE_ACTIVATE) or c:GetFlagEffect(1)<=0 or not aux.checksamecolumn(c,rc) 
+		or not e:GetLabelObject():IsActivatable(tp) then return end
+	c:RegisterFlagEffect(68246155,RESET_EVENT+0x1fe0000+RESET_CHAIN,0,1)
+	if not SameColumnChain[e:GetLabelObject()] then
+		SameColumnChain[e:GetLabelObject()]=Group.CreateGroup()
+		SameColumnChain[e:GetLabelObject()]:KeepAlive()
+	end
+	SameColumnChain[e:GetLabelObject()]:AddCard(rc)
+	e:GetLabelObject():GetLabelObject():SetLabel(1)
+end
+function c68246154.regop2(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local te=e:GetLabelObject()
+	if c:GetFlagEffect(68246155)==0 and e:GetLabel()==1 then
+		e:SetLabel(0)
+		if Duel.IsExistingMatchingCard(c68246154.thfilter,tp,LOCATION_DECK,0,1,nil,SameColumnChain[te]) and Duel.SelectEffectYesNo(tp,c) then
+			Duel.RaiseEvent(SameColumnChain[te],EVENT_CUSTOM+68246154,e,REASON_EFFECT,rp,ep,ev)
+		end
+		SameColumnChain[te]=nil
 	end
 end
