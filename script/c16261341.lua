@@ -1,6 +1,5 @@
 --天空聖騎士アークパーシアス
 --Angel Paladin Arch-Parshath
---Scripted by sahim
 function c16261341.initial_effect(c)
 	--counter
 	local e01=Effect.CreateEffect(c)
@@ -60,6 +59,7 @@ function c16261341.spcon1(e,tp,eg,ep,ev,re,r,rp,chk)
 	return e:GetLabel()==1
 end
 function c16261341.spcon2(e,tp,eg,ep,ev,re,r,rp,chk)
+	if not re:IsActiveType(TYPE_MONSTER) and not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
 	local de,dp=Duel.GetChainInfo(ev,CHAININFO_DISABLE_REASON,CHAININFO_DISABLE_PLAYER)
 	return dp==tp
 end

@@ -1,6 +1,5 @@
 --力天使ヴァルキリア
 --Power Angel Valkyria
---Scripted by Eerie Code
 function c89055154.initial_effect(c)
 	--counter
 	local e1=Effect.CreateEffect(c)
@@ -34,6 +33,7 @@ function c89055154.chop1(e,tp,eg,ep,ev,re,r,rp)
 	e:GetLabelObject():SetLabel(0)
 end
 function c89055154.chop2(e,tp,eg,ep,ev,re,r,rp)
+	if not re:IsActiveType(TYPE_MONSTER) and not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
 	local de,dp=Duel.GetChainInfo(ev,CHAININFO_DISABLE_REASON,CHAININFO_DISABLE_PLAYER)
 	if dp==tp then
 		e:SetLabel(1)
