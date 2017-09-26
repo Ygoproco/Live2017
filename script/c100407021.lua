@@ -67,21 +67,21 @@ function c100407021.splimit(e,se,sp,st)
 	return e:GetHandler():GetLocation()~=LOCATION_EXTRA
 end
 function c100407021.spfilter(c,code)
-	return c:IsFaceup() and c:IsFusionCode(code) and c:IsAbleToRemoveAsCost() 
+	return c:IsFusionCode(code) and c:IsAbleToRemoveAsCost() and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 function c100407021.spcon(e,c)
 	if c==nil then return true end 
 	local tp=c:GetControler()
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-3
-		and Duel.IsExistingMatchingCard(c100407021.spfilter,tp,LOCATION_ONFIELD,0,1,nil,84243274)
-		and Duel.IsExistingMatchingCard(c100407021.spfilter,tp,LOCATION_ONFIELD,0,1,nil,73879377)
+		and Duel.IsExistingMatchingCard(c100407021.spfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil,84243274)
+		and Duel.IsExistingMatchingCard(c100407021.spfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil,73879377)
 		and Duel.GetFlagEffect(tp,100407021)~=0 and Duel.GetFlagEffect(tp,100407021+100)~=0
 end
 function c100407021.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g1=Duel.SelectMatchingCard(tp,c100407021.spfilter,tp,LOCATION_ONFIELD,0,1,1,nil,84243274)
+	local g1=Duel.SelectMatchingCard(tp,c100407021.spfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,1,nil,84243274)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g2=Duel.SelectMatchingCard(tp,c100407021.spfilter,tp,LOCATION_ONFIELD,0,1,1,nil,73879377)
+	local g2=Duel.SelectMatchingCard(tp,c100407021.spfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,1,nil,73879377)
 	g1:Merge(g2)
 	Duel.Remove(g1,POS_FACEUP,REASON_COST)
 end
