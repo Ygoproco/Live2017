@@ -37,7 +37,6 @@ function c2819435.initial_effect(c)
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e5:SetCode(EVENT_CHAIN_SOLVED)
 	e5:SetProperty(EFFECT_FLAG_DELAY)
-	e5:SetCountLimit(1)
 	e5:SetRange(LOCATION_FZONE)
 	e5:SetCondition(c2819435.spcon)
 	e5:SetCost(c2819435.cost)
@@ -95,7 +94,7 @@ end
 function c2819435.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,2819436,0xfa,0x4011,2000,2000,6,RACE_WYRM,ATTRIBUTE_WATER)
-		and e:GetHandler():GetFlagEffect(2819435)==0 end
+		and e:GetHandler():GetFlagEffect(2819435)==0 and not e:GetHandler():IsStatus(STATUS_CHAINING) end
 		e:GetHandler():RegisterFlagEffect(2819435,RESET_EVENT+0x1fe0000+RESET_CHAIN,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
