@@ -63,7 +63,7 @@ function c100407032.activate(e,tp,eg,ep,ev,re,r,rp)
 		local mf=ce:GetValue()
 		sg3=Duel.GetMatchingGroup(c100407032.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg3,mf,chkf)
 	end
-	if sg2:GetCount()>0 and (sg1:GetCount()==0 or Duel.SelectYesNo(tp,aux.Stringid(100407032,0)) then
+	if sg2:GetCount()>0 and (sg1:GetCount()==0 or Duel.SelectYesNo(tp,aux.Stringid(100407032,0))) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
 		local agc=sg2:Select(tp,1,1,nil):GetFirst()
 		mg1:Merge(mg2)
