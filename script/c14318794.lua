@@ -13,7 +13,6 @@ function c14318794.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetCountLimit(1)
 	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e2:SetCondition(c14318794.reccon)
 	e2:SetTarget(c14318794.rectg)
@@ -30,7 +29,7 @@ function c14318794.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 		local ge2=Effect.CreateEffect(c)
 		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_PHASE_START+PHASE_DRAW)
+		ge2:SetCode(EVENT_TURN_END)
 		ge2:SetOperation(c14318794.clear)
 		Duel.RegisterEffect(ge2,0)
 	end
@@ -42,16 +41,26 @@ function c14318794.checkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c14318794.clear(e,tp,eg,ep,ev,re,r,rp)
-	c14318794[2]={table.unpack(c14318794[Duel.GetTurnPlayer()])}
-	c14318794[Duel.GetTurnPlayer()]={}
+	local p=Duel.GetTurnPlayer()
+	c14318794[p+2]={table.unpack(c14318794[p])}
+	c14318794[p]={}
 end
 function c14318794.reccon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer()
 end
 function c14318794.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return c14318794[2][1] end
+	local c=e:GetHandler()
+	if chk==0 then return #c14318794[tp+2]>0 and (c:GetFlagEffect(14318794)==0 or c14318794[tp+2][c:GetFlagEffectLabel(14318794)+1]) end
+	local rec
+	if c:GetFlagEffect(14318794)==0 then
+		rec=c14318794[tp+2][1]
+		c:RegisterFlagEffect(14318794,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_STANDBY,0,1,1)
+	else
+		rec=c14318794[tp+2][c:GetFlagEffectLabel(14318794)+1]
+		c:SetFlagEffectLabel(14318794,c:GetFlagEffectLabel(14318794)+1)
+	end
 	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(c14318794[2][1])
+	Duel.SetTargetParam(rec)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,c14318794[2][1])
 end
 function c14318794.recop(e,tp,eg,ep,ev,re,r,rp)
