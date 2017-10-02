@@ -109,16 +109,18 @@ function c100221001.hspfilter1(c,g,ft)
 	local rg=Group.FromCards(c)
 	local ct=ft
 	if c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 then ct=ct+1 end
-	return c:IsType(TYPE_FUSION) and g:IsExists(c100221001.hspfilter2,1,rg,g,rg,ft)
+	return c:IsType(TYPE_FUSION) and g:IsExists(c100221001.hspfilter2,1,nil,g,rg,ft)
 end
 function c100221001.hspfilter2(c,g,rg,ft)
+	if rg:IsContains(c) then return false end
 	local rg2=rg:Clone()
 	rg2:AddCard(c)
 	local ct=ft
 	if c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 then ct=ct+1 end
-	return c:IsType(TYPE_SYNCHRO) and g:IsExists(c100221001.hspfilter3,1,rg2,ft)
+	return c:IsType(TYPE_SYNCHRO) and g:IsExists(c100221001.hspfilter3,1,nil,rg2,ft)
 end
-function c100221001.hspfilter3(c,ft)
+function c100221001.hspfilter3(c,g,ft)
+	if g:IsContains(c) then return false end
 	local ct=ft
 	if c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 then ct=ct+1 end
 	return c:IsType(TYPE_XYZ) and ct>0
@@ -137,10 +139,10 @@ function c100221001.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local g1=g:FilterSelect(tp,c100221001.hspfilter1,1,1,nil,g,ft)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g2=g:FilterSelect(tp,c100221001.hspfilter2,1,1,g1,g,g1,ft)
+	local g2=g:FilterSelect(tp,c100221001.hspfilter2,1,1,nil,g,g1,ft)
 	g1:Merge(g2)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g3=g:FilterSelect(tp,c100221001.hspfilter3,1,1,g1,ft)
+	local g3=g:FilterSelect(tp,c100221001.hspfilter3,1,1,nil,g1,ft)
 	g1:Merge(g3)
 	Duel.Release(g1,REASON_COST+REASON_MATERIAL)
 end
