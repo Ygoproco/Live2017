@@ -27,6 +27,7 @@ function c101002087.initial_effect(c)
 	e3:SetTarget(c101002087.tglimit)
 	e3:SetValue(c101002087.tgval)
 	c:RegisterEffect(e3)
+
 	--lv up
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
@@ -68,6 +69,9 @@ function c101002087.atglimit(e,c)
 	else return false end
 end
 function c101002087.atlimit(e,c)
+	return c~=e:GetHandler()
+end
+function c101002087.tglimit(e,c)
 	return c~=e:GetHandler()
 end
 function c101002087.tgval(e,re,rp)
