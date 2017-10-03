@@ -25,7 +25,7 @@ function c101002088.initial_effect(c)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetCountLimit(1,101002088)
 	e3:SetCondition(c101002088.descon)
-	e3:SetTarget(c101002088.destarg)
+	e3:SetTarget(c101002088.destg)
 	e3:SetOperation(c101002088.desop)
 	c:RegisterEffect(e3)
 	--to hand
@@ -46,8 +46,7 @@ function c101002088.lvcon(e)
 	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
 end
 function c101002088.cfilter(c,tp)
-	local rc=c:GetReasonCard()
-	return c:IsReason(REASON_BATTLE) and c:GetPreviousControler()==tp and c:IsPreviousSetCard(0x107)
+	return c:GetPreviousControler()==tp and c:IsPreviousSetCard(0x107) 
 end
 function c101002088.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c101002088.cfilter,1,nil,tp)

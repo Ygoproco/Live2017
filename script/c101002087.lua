@@ -70,6 +70,9 @@ end
 function c101002087.atlimit(e,c)
 	return c~=e:GetHandler()
 end
+function c101002087.tglimit(e,c)
+	return c~=e:GetHandler()
+end
 function c101002087.tgval(e,re,rp)
 	if not aux.tgoval(e,re,rp) then return end
 	local c=re:GetHandler()
@@ -105,7 +108,4 @@ function c101002087.actcon(e)
 	local d=a:GetBattleTarget()
 	if a:IsControler(1-tp) then a,d=d,a end
 	return a and a:IsSetCard(0x107)
-end
-function c101002087.excon(e)
-	return e:GetHandler():IsLevelAbove(7)
 end
