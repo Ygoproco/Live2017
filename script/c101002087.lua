@@ -27,7 +27,6 @@ function c101002087.initial_effect(c)
 	e3:SetTarget(c101002087.tglimit)
 	e3:SetValue(c101002087.tgval)
 	c:RegisterEffect(e3)
-
 	--lv up
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
@@ -109,7 +108,4 @@ function c101002087.actcon(e)
 	local d=a:GetBattleTarget()
 	if a:IsControler(1-tp) then a,d=d,a end
 	return a and a:IsSetCard(0x107)
-end
-function c101002087.excon(e)
-	return e:GetHandler():IsLevelAbove(7)
 end
