@@ -24,7 +24,7 @@ function c101002087.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e3:SetTarget(c101002087.tglimit)
+	e3:SetTarget(c101002087.atlimit)
 	e3:SetValue(c101002087.tgval)
 	c:RegisterEffect(e3)
 	--lv up
@@ -44,7 +44,7 @@ function c101002087.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCondition(c101002087.lvcon)
 	e4:SetOperation(c101002087.lvop)
-	c:RegisterEffect(e4) 
+	c:RegisterEffect(e4)
 	--actlimit
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_FIELD)
@@ -70,9 +70,6 @@ end
 function c101002087.atlimit(e,c)
 	return c~=e:GetHandler()
 end
-function c101002087.tglimit(e,c)
-	return c~=e:GetHandler()
-end
 function c101002087.tgval(e,re,rp)
 	if not aux.tgoval(e,re,rp) then return end
 	local c=re:GetHandler()
@@ -81,7 +78,7 @@ function c101002087.tgval(e,re,rp)
 		return c:GetOriginalRank()<lv
 	elseif c:GetLevel()>0 then
 		return c:GetOriginalLevel()<lv
-	else return false end 
+	else return false end
 end
 function c101002087.lvcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:GetHandler():IsSetCard(0x107) and e:GetHandler():GetFlagEffect(1)>0
