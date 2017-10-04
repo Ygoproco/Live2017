@@ -63,8 +63,7 @@ function c101002088.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c101002088.thcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_EFFECT)
-		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
+	return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
 end
 function c101002088.thfilter2(c)
 	return c:IsSetCard(0x107) and not c:IsCode(101002088) and c:IsAbleToHand()
