@@ -101,6 +101,7 @@ function c101002087.aclimit(e,re,tp)
 end
 function c101002087.actcon(e)
 	if not e:GetHandler():IsLevelAbove(7) then return false end
+	local tp=e:GetHandlerPlayer()
 	local a=Duel.GetAttacker()
 	local d=a:GetBattleTarget()
 	if a:IsControler(1-tp) then a,d=d,a end

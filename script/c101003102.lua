@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 function c101003102.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
-	c:EnableCounterPermit(0x1)
+	c:EnableCounterPermit(0x1,LOCATION_MZONE)
 	--destroy & summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(101003102,0))
@@ -43,25 +43,26 @@ function c101003102.initial_effect(c)
 	e4:SetCost(c101003102.cost)
 	e4:SetTarget(c101003102.target)
 	e4:SetOperation(c101003102.operation)
-	c:RegisterEffect(e1)
+	c:RegisterEffect(e4)
 end
+c101003102.spell_counter_permit=99
 function c101003102.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)
+	return Duel.CheckLocation(tp,LOCATION_SZONE,6) or Duel.CheckLocation(tp,LOCATION_SZONE,7)
 end
 function c101003102.spfilter(c,e,tp)
 	return c:IsSetCard(0x209) and c:IsFaceup() and c:IsType(TYPE_PENDULUM)
 		and not c:IsCode(101003102) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c101003102.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDestructable()	and Duel.GetLocationCountFromEx(tp)>0
-		and Duel.IsExistingTarget(c101003022.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+	if chk==0 then return e:GetHandler():IsDestructable()   and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingTarget(c101003102.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c101003102.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.Destroy(c,REASON_EFFECT)~=0 then
-		if Duel.GetLocationCountFromEx(tp)<1 then return end
+		if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,c101003102.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 		if g:GetCount()>0 then
@@ -80,7 +81,6 @@ function c101003102.condition(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and re:IsActiveType(TYPE_MONSTER) and not c:IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
 end
 function c101003102.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
 	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x1,2,REASON_COST) end
 	Duel.RemoveCounter(tp,1,0,0x1,2,REASON_COST)
 end
