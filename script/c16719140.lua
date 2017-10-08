@@ -25,6 +25,23 @@ function c16719140.initial_effect(c)
 	e2:SetTarget(c16719140.sptg2)
 	e2:SetOperation(c16719140.spop2)
 	c:RegisterEffect(e2)
+	if not c16719140.global_check then
+		c16719140.global_check=true
+		c16719140[0]=Group.CreateGroup()
+		c16719140[0]:KeepAlive()
+		local ge1=Effect.CreateEffect(c)
+		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+		ge1:SetCode(EVENT_FLIP)
+		ge1:SetOperation(c16719140.regop)
+		Duel.RegisterEffect(ge1,0)
+		local ge2=Effect.CreateEffect(c)
+		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge2:SetCode(EVENT_BATTLED)
+		ge2:SetOperation(c16719140.trigop)
+		Duel.RegisterEffect(ge2,0)
+		c16719140[1]=ge2
+	end
 end
 function c16719140.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
@@ -59,7 +76,7 @@ function c16719140.spop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<-1 then return end
 	local tc=Duel.GetFirstTarget()
-	if not tc:IsRelateToEffect(e) then return end
+	if not tc or not tc:IsRelateToEffect(e) then return end
 	local mg=Duel.GetReleaseGroup(tp):Filter(Card.IsLevelAbove,nil,1)
 	if not mg:IsContains(c) then return end
 	mg:RemoveCard(c)
@@ -87,7 +104,7 @@ function c16719140.cfilter(c,tp)
 	return c:IsSetCard(0x10ed) and c:IsControler(tp)
 end
 function c16719140.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c16719140.cfilter,1,nil,tp)
+	return eg:IsExists(c16719140.cfilter,1,nil,tp) and (not Duel.GetAttacker() or re==c16719140[1])
 end
 function c16719140.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -99,4 +116,13 @@ function c16719140.spop2(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
+end
+function c16719140.regop(e,tp,eg,ep,ev,re,r,rp)
+	if not Duel.GetAttacker() then return end
+	c16719140[0]:Merge(eg)
+end
+function c16719140.trigop(e,tp,eg,ep,ev,re,r,rp)
+	local g=c16719140[0]:Clone()
+	Duel.RaiseEvent(g,EVENT_FLIP,e,0,0,0,0)
+	c16719140[0]:Clear()
 end
