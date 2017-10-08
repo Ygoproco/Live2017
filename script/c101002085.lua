@@ -76,8 +76,11 @@ function c101002085.activate(e,tp,eg,ep,ev,re,r,rp)
 		local og=Duel.GetOperatedGroup()
 		Duel.ConfirmCards(1-tp,og)
 		Duel.BreakEffect()
+		rc:SetMaterial(og)
 		if Duel.Release(og,REASON_EFFECT+REASON_RITUAL+REASON_MATERIAL)==og:GetCount() then
 			Duel.SpecialSummon(rc,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP)
+			Duel.BreakEffect()
+			rc:CompleteProcedure()
 		end
 	end
 end
