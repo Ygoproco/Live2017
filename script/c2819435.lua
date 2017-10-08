@@ -32,31 +32,17 @@ function c2819435.initial_effect(c)
 	e4:SetOperation(aux.chainreg)
 	c:RegisterEffect(e4)
 	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e5:SetDescription(aux.Stringid(2819435,1))
+	e5:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
+	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e5:SetCode(EVENT_CHAIN_SOLVED)
 	e5:SetProperty(EFFECT_FLAG_DELAY)
 	e5:SetRange(LOCATION_FZONE)
-	e5:SetOperation(c2819435.regop)
+	e5:SetCondition(c2819435.spcon)
+	e5:SetCost(c2819435.cost)
+	e5:SetTarget(c2819435.sptg)
+	e5:SetOperation(c2819435.spop)
 	c:RegisterEffect(e5)
-	local e6=Effect.CreateEffect(c)
-	e6:SetDescription(aux.Stringid(2819435,1))
-	e6:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
-	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e6:SetCode(EVENT_CUSTOM+2819435)
-	e6:SetProperty(EFFECT_FLAG_DELAY)
-	e6:SetRange(LOCATION_FZONE)
-	e6:SetCost(c2819435.cost)
-	e6:SetTarget(c2819435.sptg)
-	e6:SetOperation(c2819435.spop)
-	c:RegisterEffect(e6)
-	e5:SetLabelObject(e6)
-	local e7=Effect.CreateEffect(c)
-	e7:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e7:SetCode(EVENT_ADJUST)
-	e7:SetRange(LOCATION_FZONE)
-	e7:SetOperation(c2819435.regop2)
-	c:RegisterEffect(e7)
-	e6:SetLabelObject(e7)
 	--
 	Duel.AddCustomActivityCounter(2819435,ACTIVITY_SUMMON,c2819435.counterfilter)
 	Duel.AddCustomActivityCounter(2819435,ACTIVITY_SPSUMMON,c2819435.counterfilter)
@@ -102,18 +88,14 @@ function c2819435.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function c2819435.regop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if Duel.GetCustomActivityCount(2819435,tp,ACTIVITY_SUMMON)~=0 or Duel.GetCustomActivityCount(2819435,tp,ACTIVITY_SPSUMMON)~=0 
-		or rp==tp or Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_MZONE,0,1,nil,TYPE_TOKEN) 
-		or c:GetFlagEffect(1)<=0 or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,2819436,0xfa,0x4011,2000,2000,6,RACE_WYRM,ATTRIBUTE_WATER) 
-		or c:GetFlagEffect(2819436)>0 or not e:GetLabelObject():IsActivatable(tp) then return end
-	c:RegisterFlagEffect(2819436,RESET_EVENT+0x1fe0000+RESET_CHAIN,0,1)
-	e:GetLabelObject():GetLabelObject():SetLabel(1)
+function c2819435.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return rp~=tp and not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_MZONE,0,1,nil,TYPE_TOKEN) and e:GetHandler():GetFlagEffect(1)>0 and e:GetHandler():GetFlagEffect(2819435)==0 and e:GetHandler():RegisterFlagEffect(2819435,RESET_EVENT+0x1fe0000+RESET_CHAIN,0,1)
 end
 function c2819435.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,2819436,0xfa,0x4011,2000,2000,6,RACE_WYRM,ATTRIBUTE_WATER)
+		and e:GetHandler():GetFlagEffect(2819435)==0 end
+		e:GetHandler():RegisterFlagEffect(2819435,RESET_EVENT+0x1fe0000+RESET_CHAIN,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
@@ -123,13 +105,4 @@ function c2819435.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsPlayerCanSpecialSummonMonster(tp,2819436,0xfa,0x4011,2000,2000,6,RACE_WYRM,ATTRIBUTE_WATER) then return end
 	local token=Duel.CreateToken(tp,2819436)
 	Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
-end
-function c2819435.regop2(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if c:GetFlagEffect(2819436)==0 and e:GetLabel()==1 then
-		e:SetLabel(0)
-		if Duel.SelectEffectYesNo(tp,c) then
-			Duel.RaiseEvent(c,EVENT_CUSTOM+2819435,e,REASON_EFFECT,rp,ep,ev)
-		end
-	end
 end
