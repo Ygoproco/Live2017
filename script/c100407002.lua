@@ -53,7 +53,7 @@ function c100407002.filter(c,e,tp)
 	return ((c:IsSetCard(0x20a) and c:IsType(TYPE_FUSION)) or c:IsCode(64631466,63519819))
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c100407002.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c100407002.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c100407002.filter(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(c100407002.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
