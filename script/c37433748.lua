@@ -70,11 +70,15 @@ end
 function c37433748.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
+function c37433748.cfilter(c,ec)
+	return c:IsAbleToGraveAsCost() and c~=ec
+end
 function c37433748.dircost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_ONFIELD,0,1,c) end
+	local ec=c:GetEquipTarget()
+	if chk==0 then return Duel.IsExistingMatchingCard(c37433748.cfilter,tp,LOCATION_ONFIELD,0,1,c,ec) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_ONFIELD,0,1,1,c)
+	local g=Duel.SelectMatchingCard(tp,c37433748.cfilter,tp,LOCATION_ONFIELD,0,1,1,c,ec)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c37433748.dirop(e,tp,eg,ep,ev,re,r,rp)
