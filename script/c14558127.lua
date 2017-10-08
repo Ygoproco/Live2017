@@ -18,6 +18,7 @@ function c14558127.initial_effect(c)
 	if not AshBlossomTable then AshBlossomTable={} end
 end
 function c14558127.discon(e,tp,eg,ep,ev,re,r,rp)
+	if re:GetHandler():IsDisabled() then return false end
 	local ex1,g1,gc1,dp1,dv1=Duel.GetOperationInfo(ev,CATEGORY_TOHAND)
 	local ex2,g2,gc2,dp2,dv2=Duel.GetOperationInfo(ev,CATEGORY_SPECIAL_SUMMON)
 	local ex3,g3,gc3,dp3,dv3=Duel.GetOperationInfo(ev,CATEGORY_TOGRAVE)
