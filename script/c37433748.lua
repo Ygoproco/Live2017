@@ -82,12 +82,12 @@ function c37433748.dircost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c37433748.dirop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local ec=e:GetHandler():GetEquipTarget()
-	if not ec then return end
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_DIRECT_ATTACK)
-	e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-	ec:RegisterEffect(e1)
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_EQUIP)
+	e3:SetProperty(EFFECT_CANNOT_DISABLE)
+	e3:SetCode(EFFECT_DIRECT_ATTACK)
+	e3:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+	c:RegisterEffect(e3)
 end
