@@ -46,7 +46,7 @@ function c101002082.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101002082.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,c101002082.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	Duel.Remove(g,REASON_COST)
+	Duel.Remove(g,0,REASON_COST)
 end
 function c101002082.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
