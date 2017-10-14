@@ -45,7 +45,7 @@ function c101003036.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c101003036.sprfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_DINOSAUR) not c:IsAbleToDeckOrExtraAsCost()
+	return c:IsFaceup() and c:IsRace(RACE_DINOSAUR) and c:IsAbleToDeckOrExtraAsCost()
 end
 function c101003036.sprcon(e,c)
 	if c==nil then return true end
