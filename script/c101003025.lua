@@ -81,8 +81,8 @@ function c101003025.thfilter(c)
 end
 function c101003025.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x1,2,REASON_COST) end
-	Duel.RemoveCounter(tp,1,0,0x1,2,REASON_COST)
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x1,3,REASON_COST) end
+	Duel.RemoveCounter(tp,1,0,0x1,3,REASON_COST)
 end
 function c101003025.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c101003025.thfilter,tp,LOCATION_SZONE+LOCATION_EXTRA,0,1,nil) end
