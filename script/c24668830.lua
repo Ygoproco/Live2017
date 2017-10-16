@@ -28,6 +28,7 @@ function c24668830.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c24668830.regop(e,tp,eg,ep,ev,re,r,rp)
+	if not eg:IsExists(aux.FilterEqualFunction(Card.GetEquipTarget,e:GetHandler()),1,nil) then return end
 	local pe=e:GetLabelObject()
 	pe:SetValue(0)
 end
