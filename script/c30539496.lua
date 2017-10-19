@@ -40,7 +40,11 @@ function c30539496.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and g:GetCount()>=2 and g:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_EARTH)
 		and (ft>0 or g:IsExists(c30539496.locfilter,-ft+1,nil,tp)) end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,2,tp,loc)
+	if (g:GetCount()==2 and g:FilterCount(Card.IsLocation,nil,LOCATION_HAND)==1) or not g:IsExists(Card.IsLocation,1,nil,LOCATION_HAND) then
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,2,0,0)
+	else
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,2,tp,loc)
+	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function c30539496.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -70,24 +74,26 @@ function c30539496.spop(e,tp,eg,ep,ev,re,r,rp)
 	local rm=g1:IsExists(Card.IsAttribute,2,nil,ATTRIBUTE_EARTH)
 	if Duel.Destroy(g1,REASON_EFFECT)==2 then
 		if not c:IsRelateToEffect(e) then return end
-		if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==1 then
-			local rg=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_EXTRA,nil)
-			if rm and rg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(30539496,2)) then
-				Duel.ConfirmCards(tp,rg)
-				local tg=Group.CreateGroup()
-				local i=3
-				repeat
-					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-					local tc=rg:Select(tp,1,1,nil):GetFirst()
-					rg:Remove(Card.IsCode,nil,tc:GetCode())
-					tg:AddCard(tc)
-					i=i-1
-				until i<1 or rg:GetCount()==0 or not Duel.SelectYesNo(tp,aux.Stringid(30539496,3))
-				Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)
-		   end
-		elseif Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
-			and c:IsCanBeSpecialSummoned(e,0,tp,false,false) then
-			Duel.SendtoGrave(c,REASON_RULE)
+		if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==0 then
+			if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
+				and c:IsCanBeSpecialSummoned(e,0,tp,false,false) then
+				Duel.SendtoGrave(c,REASON_RULE)
+			end
+			return
+		end
+		local rg=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_EXTRA,nil)
+		if rm and rg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(30539496,2)) then
+			Duel.ConfirmCards(tp,rg)
+			local tg=Group.CreateGroup()
+			local i=3
+			repeat
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+				local tc=rg:Select(tp,1,1,nil):GetFirst()
+				rg:Remove(Card.IsCode,nil,tc:GetCode())
+				tg:AddCard(tc)
+				i=i-1
+			until i<1 or rg:GetCount()==0 or not Duel.SelectYesNo(tp,aux.Stringid(30539496,3))
+			Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)
 		end
 	end
 end

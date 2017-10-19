@@ -1,6 +1,4 @@
 --オルターガイスト・プロトコル
---Altergeist Protocol
---Scripted by Eerie Code
 function c27541563.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
@@ -10,7 +8,7 @@ function c27541563.initial_effect(c)
 	c:RegisterEffect(e1)
 	--negate
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(27541563,0))
+	e2:SetDescription(aux.Stringid(27541563,1))
 	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_ACTIVATE)
 	e2:SetCode(EVENT_CHAINING)
@@ -77,8 +75,8 @@ function c27541563.disop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c27541563.effectfilter(e,ct)
 	local p=e:GetHandler():GetControler()
-	local te,tp=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_PLAYER)
-	return p==tp and te:GetHandler():IsSetCard(0x103)
+	local te,tp,loc=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_PLAYER,CHAININFO_TRIGGERING_LOCATION)
+	return p==tp and te:GetHandler():IsSetCard(0x103) and bit.band(loc,LOCATION_ONFIELD)~=0
 end
 function c27541563.distarget(e,c)
 	return c:IsSetCard(0x103)
