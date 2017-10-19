@@ -14,7 +14,7 @@ function c14745409.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_EQUIP)
 	e3:SetOperation(c14745409.regop)
-	e3:SetRange(LOCATION_SZONE)
+	e3:SetRange(0xff)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 	--atkdown
