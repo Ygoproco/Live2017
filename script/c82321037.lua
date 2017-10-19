@@ -38,7 +38,11 @@ function c82321037.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and g:GetCount()>=2 and g:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_WATER)
 		and (ft>0 or g:IsExists(c82321037.locfilter,-ft+1,nil,tp)) end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,2,tp,loc)
+	if (g:GetCount()==2 and g:FilterCount(Card.IsLocation,nil,LOCATION_HAND)==1) or not g:IsExists(Card.IsLocation,1,nil,LOCATION_HAND) then
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,2,0,0)
+	else
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,2,tp,loc)
+	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function c82321037.rmfilter(c)
@@ -71,17 +75,19 @@ function c82321037.spop(e,tp,eg,ep,ev,re,r,rp)
 	local rm=g1:IsExists(Card.IsAttribute,2,nil,ATTRIBUTE_WATER)
 	if Duel.Destroy(g1,REASON_EFFECT)==2 then
 		if not c:IsRelateToEffect(e) then return end
-		if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==1 then
-		   local rg=Duel.GetMatchingGroup(c82321037.rmfilter,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE,nil)
-		   if rm and rg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(82321037,0)) then
-			   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-			   local tg=rg:Select(tp,1,2,nil)
-			   Duel.HintSelection(tg)
-			   Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)
-		   end
-		elseif Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
-			and c:IsCanBeSpecialSummoned(e,0,tp,false,false) then
-			Duel.SendtoGrave(c,REASON_RULE)
+		if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==0 then
+			if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
+				and c:IsCanBeSpecialSummoned(e,0,tp,false,false) then
+				Duel.SendtoGrave(c,REASON_RULE)
+			end
+			return
+		end
+		local rg=Duel.GetMatchingGroup(c82321037.rmfilter,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE,nil)
+		if rm and rg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(82321037,0)) then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+			local tg=rg:Select(tp,1,2,nil)
+			Duel.HintSelection(tg)
+			Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)
 		end
 	end
 end
@@ -89,12 +95,12 @@ function c82321037.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_EFFECT)
 end
 function c82321037.thfilter(c,e,tp)
-	return not c:IsAttribute(ATTRIBUTE_WATER) and c:IsRace(RACE_WYRM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return not c:IsAttribute(ATTRIBUTE_WATER) and c:IsRace(RACE_WYRM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c82321037.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c82321037.thfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_DECK)
 end
 function c82321037.spop2(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
