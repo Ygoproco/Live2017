@@ -1,6 +1,7 @@
 --EM五虹の魔術師
---Performapal Five-Arc Magician
+--Performapal Five-Rainbow Magician
 --Scripted by Eerie Code
+--Fixed by TheOnePharaoh
 function c19619755.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
 	--scale
@@ -68,21 +69,24 @@ end
 function c19619755.splimit(e,c,tp,sumtp,sumpos)
 	return not c:IsLocation(LOCATION_EXTRA) and bit.band(sumtp,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
+function c19619755.filter(c)
+	return c:IsFacedown() and c:GetSequence()<5
+end
 function c19619755.atktg(e,c)
 	local tp=c:GetControler()
-	return Duel.GetMatchingGroupCount(Card.IsFacedown,tp,LOCATION_SZONE,0,nil)==0
+	return Duel.GetMatchingGroupCount(c19619755.filter,tp,LOCATION_SZONE,0,nil)==0
 end
 function c19619755.limval(e,re,rp)
 	local rc=re:GetHandler()
 	local tp=rc:GetControler()
 	return rc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and not rc:IsImmuneToEffect(e)
-		and Duel.GetMatchingGroupCount(Card.IsFacedown,tp,LOCATION_SZONE,0,nil)==0
+		and Duel.GetMatchingGroupCount(c19619755.filter,tp,LOCATION_SZONE,0,nil)==0
 end
 function c19619755.atkcon0(e)
-	return Duel.GetMatchingGroupCount(Card.IsFacedown,e:GetHandlerPlayer(),LOCATION_SZONE,0,nil)>=4
+	return Duel.GetMatchingGroupCount(c19619755.filter,e:GetHandlerPlayer(),LOCATION_SZONE,0,nil)>=4
 end
 function c19619755.atkcon1(e)
-	return Duel.GetMatchingGroupCount(Card.IsFacedown,e:GetHandlerPlayer(),0,LOCATION_SZONE,nil)>=4
+	return Duel.GetMatchingGroupCount(c19619755.filter,e:GetHandlerPlayer(),0,LOCATION_SZONE,nil)>=4
 end
 function c19619755.atkval(e,c)
 	return c:GetBaseAttack()*2

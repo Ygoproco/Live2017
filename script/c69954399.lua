@@ -1,6 +1,14 @@
 --疫病ウィルス ブラックダスト
 function c69954399.initial_effect(c)
 	aux.AddEquipProcedure(c)
+	--register
+	local e1=Effect.CreateEffect(c)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_EQUIP)
+	e1:SetOperation(c69954399.regop)
+	e1:SetRange(LOCATION_SZONE)
+	c:RegisterEffect(e1)
 	--Cannot attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
@@ -37,6 +45,9 @@ function c69954399.initial_effect(c)
 	e6:SetOperation(c69954399.retop)
 	c:RegisterEffect(e6)
 end
+function c69954399.regop(e,tp,eg,ep,ev,re,r,rp)
+	e:GetHandler():SetTurnCounter(0)
+end
 function c69954399.turncon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
 	return ec:GetControler()==Duel.GetTurnPlayer()
@@ -45,14 +56,15 @@ function c69954399.turnop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ct=c:GetTurnCounter()
 	c:SetTurnCounter(ct+1)
+	c:RegisterFlagEffect(69954399,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,0)
 end
 function c69954399.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetTurnCounter()==2
+	return e:GetHandler():GetTurnCounter()==2 and e:GetHandler():GetFlagEffect(69954399)>0
 end
 function c69954399.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local ec=e:GetHandler():GetEquipTarget()
-	ec:CreateEffectRelation(e)
+	Duel.SetTargetCard(ec)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,ec,1,0,0)
 end
 function c69954399.desop(e,tp,eg,ep,ev,re,r,rp)
