@@ -13,7 +13,7 @@ function c24668830.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_EQUIP)
 	e3:SetOperation(c24668830.regop)
-	e3:SetRange(0xff)
+	e3:SetRange(LOCATION_SZONE)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 	--atkdown
@@ -28,7 +28,7 @@ function c24668830.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c24668830.regop(e,tp,eg,ep,ev,re,r,rp)
-	if not eg:IsExists(aux.FilterEqualFunction(Card.GetEquipTarget,e:GetHandler()),1,nil) then return end
+	if not eg:IsContains(e:GetHandler()) then return end
 	local pe=e:GetLabelObject()
 	pe:SetValue(0)
 end
