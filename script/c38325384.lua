@@ -1,7 +1,7 @@
 --魔導加速
 --Magical Boost
 --Scripted by Eerie Code
---updated by MLD
+--updated by MLD (and Steelren)
 function c38325384.initial_effect(c)
 	--counter
 	local e1=Effect.CreateEffect(c)
@@ -42,11 +42,10 @@ end
 function c38325384.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		if tc:IsCanAddCounter(0x1,2) and Duel.SelectYesNo(tp,aux.Stringid(38325384,0)) then
-			tc:AddCounter(0x1,2)
-		else
-			tc:AddCounter(0x1,1)
-		end
+		if tc:IsCanAddCounter(0x1,2) then
+		scn=Duel.SelectOption(tp,aux.Stringid(38325384,0),aux.Stringid(38325384,1))
+		tc:AddCounter(0x1,scn+1)
+	end
 	end
 end
 function c38325384.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -68,11 +67,10 @@ function c38325384.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,c38325384.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
-		if tc:IsCanAddCounter(0x1,2) and Duel.SelectYesNo(tp,aux.Stringid(38325384,0)) then
-			tc:AddCounter(0x1,2)
-		else
-			tc:AddCounter(0x1,1)
-		end
+		if tc:IsCanAddCounter(0x1,2) then
+		scn=Duel.SelectOption(tp,aux.Stringid(38325384,0),aux.Stringid(38325384,1))
+		tc:AddCounter(0x1,scn+1)
+	end
 	end
 end
 
