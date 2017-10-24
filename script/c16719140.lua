@@ -40,11 +40,11 @@ function c16719140.initial_effect(c)
 		ge2:SetCode(EVENT_BATTLED)
 		ge2:SetOperation(c16719140.trigop)
 		Duel.RegisterEffect(ge2,0)
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_ATTACK_DISABLED)
-		ge1:SetOperation(c16719140.clearop)
-		Duel.RegisterEffect(ge1,0)
+		local ge3=Effect.CreateEffect(c)
+		ge3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge3:SetCode(EVENT_ATTACK_DISABLED)
+		ge3:SetOperation(c16719140.clearop)
+		Duel.RegisterEffect(ge3,0)
 		c16719140[1]=ge2
 	end
 end
