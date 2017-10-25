@@ -7,7 +7,7 @@ function c65172015.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetValue(c65172015.splimit)
+	e1:SetValue(aux.FALSE)
 	c:RegisterEffect(e1)
 	--special summon rule
 	local e2=Effect.CreateEffect(c)
@@ -44,9 +44,6 @@ function c65172015.initial_effect(c)
 	e4:SetTarget(c65172015.sptg)
 	e4:SetOperation(c65172015.spop2)
 	c:RegisterEffect(e4)
-end
-function c65172015.splimit(e,se,sp,st)
-	return not e:GetHandler():IsLocation(LOCATION_EXTRA)
 end
 function c65172015.spfilter(c,code)
 	return c:GetOriginalCode()==code and c:IsAbleToRemoveAsCost()
