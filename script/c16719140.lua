@@ -40,6 +40,11 @@ function c16719140.initial_effect(c)
 		ge2:SetCode(EVENT_BATTLED)
 		ge2:SetOperation(c16719140.trigop)
 		Duel.RegisterEffect(ge2,0)
+		local ge3=Effect.CreateEffect(c)
+		ge3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge3:SetCode(EVENT_ATTACK_DISABLED)
+		ge3:SetOperation(c16719140.clearop)
+		Duel.RegisterEffect(ge3,0)
 		c16719140[1]=ge2
 	end
 end
@@ -124,5 +129,8 @@ end
 function c16719140.trigop(e,tp,eg,ep,ev,re,r,rp)
 	local g=c16719140[0]:Clone()
 	Duel.RaiseEvent(g,EVENT_FLIP,e,0,0,0,0)
+	c16719140[0]:Clear()
+end
+function c16719140.clearop(e,tp,eg,ep,ev,re,r,rp)
 	c16719140[0]:Clear()
 end
