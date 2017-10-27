@@ -14,7 +14,7 @@ function c88733579.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp
 end
 function c88733579.filter(c)
-	return c:IsCode(27911549) and c:GetPosition()~=POS_FACEUP_DEFENSE
+	return c:IsCode(27911549) --and c:GetPosition()~=POS_FACEUP_DEFENSE
 end
 function c88733579.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c88733579.filter,tp,LOCATION_DECK,0,1,nil) end
