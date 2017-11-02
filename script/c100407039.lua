@@ -1,5 +1,5 @@
 --宝玉の絆
-
+--Crystal Bonds
 --Script by nekrozar
 function c100407039.initial_effect(c)
 	--Activate
@@ -7,6 +7,7 @@ function c100407039.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCountLimit(1,100407039+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(c100407039.target)
 	e1:SetOperation(c100407039.activate)
 	c:RegisterEffect(e1)
