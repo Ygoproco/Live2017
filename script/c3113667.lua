@@ -39,7 +39,7 @@ function c3113667.indtg(e,c)
 	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_DARK)
 end
 function c3113667.indct(e,re,r,rp)
-	if r & REASON_BATTLE ==0 then return 0 end
+	if r and bit.band(r,REASON_BATTLE)==0 then return 0 end
 	local tp=e:GetHandlerPlayer()
 	local a=Duel.GetAttacker()
 	local tc=a:GetBattleTarget()
