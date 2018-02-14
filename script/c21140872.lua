@@ -58,7 +58,7 @@ end
 function c21140872.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c21140872.eqfilter(chkc,tp) end
 	if chk==0 then return Duel.IsExistingTarget(c21140872.eqfilter,tp,LOCATION_GRAVE,0,1,nil,tp)
-		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
+		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and not Duel.IsEnvironment(47355498) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	local g=Duel.SelectTarget(tp,c21140872.eqfilter,tp,LOCATION_GRAVE,0,1,1,nil,tp)
 end
@@ -128,7 +128,7 @@ end
 function c21140872.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetLabelObject():GetLabelObject()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and g:IsExists(c21140872.spfilter2,1,nil,e,tp) end
+		and g:IsExists(c21140872.spfilter2,1,nil,e,tp) and not Duel.IsEnvironment(47355498) end
 	local sg=g:Filter(c21140872.spfilter2,nil,e,tp)
 	Duel.SetTargetCard(sg)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,sg,sg:GetCount(),0,0)
